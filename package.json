@@ -1,0 +1,8 @@
+{
+  "name": "js-pro-game",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/godlinpz/js-pro-game.git",
+  "author": "Dmitry Pavlichenko <godlin.pz@gmail.com>",
+  "license": "MIT"
+}
