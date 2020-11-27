@@ -44,6 +44,11 @@
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0"
   },
+  "husky": {
+    "hooks": {
+        "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css}": [
       "yarn pretty-quick --staged",
