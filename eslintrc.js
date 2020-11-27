@@ -11,7 +11,7 @@ module.exports = {
     plugins: ['import', 'prettier', 'jsx-a11y', 'sonarjs', 'promise'],
     rules: {
         'no-shadow': 'off',
-        'no-console': 'worn',
+        'no-console': 'warn',
         'sonarjs/cognitive-complexity': ['error', 30],
         'import/extensions': [
             'error',
