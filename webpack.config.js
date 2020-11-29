@@ -1,7 +1,10 @@
 const path = require('path');
+
 const HTMLWebpackPlagin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV;
+const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 module.exports = {
     resolve: {
@@ -12,6 +15,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js',
+        publicPath: ASSET_PATH,
     },
     watch: true,
     watchOptions: {
@@ -65,6 +69,9 @@ module.exports = {
     plugins: [
         new HTMLWebpackPlagin({
             template: path.resolve(__dirname, 'public/index.html'),
+        }),
+        new CopyWebpackPlugin({
+            patterns: [{ from: 'assets', to: 'assets' }],
         }),
     ],
     devServer: {

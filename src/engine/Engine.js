@@ -9,19 +9,61 @@ class Engine {
         this.onRender = null;
         this.onKeyDown = null;
 
+        this.startTime = 0;
+        this.lastRenderTime = 0;
+
+        this.sprites = {};
+        this.images = {};
+
+        this.thisLoop = this.loop.bind(this);
+
         canvas.addEventListener('keydown', (e) => this.onKeyDown && this.onKeyDown(e), false);
+    }
+
+    loadSprites(spriteGroups) {
+        const imageLoaders = [];
+
+        for (let groupName in spriteGroups) {
+            const group = spriteGroups[groupName];
+            this.sprites[groupName] = group;
+
+            for (let spriteName in group) {
+                const sprite = group[spriteName];
+
+                const img = sprite.img;
+                if (!this.images[img]) imageLoaders.push(this.loadImage(img));
+            }
+        }
+
+        return Promise.all(imageLoaders);
+    }
+
+    loadImage(url) {
+        return new Promise((resolve) => {
+            let i = new Image();
+            this.images[url] = i;
+            i.onload = () => resolve(i);
+            i.src = url;
+        });
     }
 
     start(onRender, onKeyDown) {
         this.onRender = onRender;
         this.onKeyDown = onKeyDown;
+
         this.loop();
     }
 
-    loop() {
-        this.onRender && this.onRender();
+    loop(timestamp) {
+        if (!this.startTime) {
+            this.startTime = timestamp;
+            this.lastRenderTime = timestamp;
+        }
 
-        window.requestAnimationFrame(this.loop.bind(this));
+        this.onRender && this.onRender(timestamp - this.startTime, timestamp - this.lastRenderTime);
+        this.lastRenderTime = timestamp;
+
+        window.requestAnimationFrame(this.thisLoop);
     }
 }
 
