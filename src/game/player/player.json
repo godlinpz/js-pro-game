@@ -2,7 +2,6 @@
     "player": {
         "name": "player",
         "type": "animated",
-        "isMoving": false,
         "size": 80,
         "sprite": ["characters", "boy3"],
         "states": {

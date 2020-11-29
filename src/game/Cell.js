@@ -7,8 +7,13 @@ class Cell {
         this.objects = []; // GameObjects stack
     }
 
-    render(position, time, timeGap) {
-        this.objects.forEach((o) => o && o.render(position, time, timeGap));
+    render(window, time, timeGap) {
+        const w = this.map.cellWidth;
+        const h = this.map.cellHeight;
+        const x = (this.x - window.x) * w;
+        const y = (this.y - window.y) * h;
+
+        this.objects.forEach((o) => o && o.render({ x, y, w, h }, time, timeGap));
     }
 
     push(obj) {

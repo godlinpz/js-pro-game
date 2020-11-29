@@ -55,10 +55,7 @@ class GameMap {
         for (let y = 0; y < win.height; ++y)
             for (let x = 0; x < win.width; ++x) {
                 const cell = level[y + win.y][x + win.x];
-                const cellX = x * cellW,
-                    cellY = y * cellH;
-
-                cell.render({ x: cellX, y: cellY, w: cellW, h: cellH }, time, timeGap);
+                cell.render(win, time, timeGap);
             }
     }
 
