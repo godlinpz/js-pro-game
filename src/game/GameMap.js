@@ -2,6 +2,7 @@ import { clamp } from '../engine/util';
 import _ from 'lodash';
 import Cell from './Cell';
 import GameObject from './GameObject';
+import GameMapWindow from './GameMapWindow';
 
 class GameMap {
     constructor(game, engine, levelCfg) {
@@ -10,19 +11,26 @@ class GameMap {
         this.height = levelCfg.map.length;
         this.width = levelCfg.map[0].length;
         this.levelCfg = levelCfg;
-        this.window = levelCfg.window;
+        this.window = new GameMapWindow(this, levelCfg.window);
         this.level = [];
         this.cellWidth = 0;
         this.cellHeight = 0;
+        this.worldWidth = 0;
+        this.worldHeight = 0;
     }
 
     init() {
-        const win = this.window;
-        this.initMap(this.levelCfg);
+        const win = this.window.cfg;
         this.cellWidth = (this.engine.canvas.width / win.width) | 0;
         this.cellHeight = (this.engine.canvas.height / win.height) | 0;
-        this.moveWindowTo(win.x, win.y);
-        console.log(this.engine.canvas.height, win.height, this.cellHeight);
+        this.worldWidth = this.cellWidth * this.width;
+        this.worldHeight = this.cellHeight * this.height;
+
+        this.window.init();
+        this.initMap(this.levelCfg);
+
+        // this.window.focus(this.cell(win.x, win.y));
+        // console.log(this.engine.canvas.height, win.height, this.cellHeight);
     }
 
     initMap(levelCfg) {
@@ -33,51 +41,48 @@ class GameMap {
                 this.level[y] || (this.level[y] = []);
                 const cell = (this.level[y][x] = new Cell(this, x, y));
 
+                // console.log('map cell', cell);
+
                 cfgCell.forEach((name) => {
                     const objCfg = _.cloneDeep(gameObjs[name]);
                     const obj = new GameObject(objCfg);
 
-                    cell.push(obj);
-                    if (name === 'player') this.game.setPlayer(obj);
+                    obj.moveToCell(cell, false);
+                    // cell.push(obj);
+
+                    if (name === 'player') {
+                        this.game.setPlayer(obj);
+                        this.window.focus(obj);
+                    }
                 });
             }),
         );
     }
 
     render(time, timeGap) {
-        const eng = this.engine;
-        const ctx = this.engine.ctx;
         const level = this.level;
         const win = this.window;
-        // console.log(map);
-        const [cellW, cellH] = [this.cellWidth, this.cellHeight];
+        const winBottomRight = win.worldPosition(100, 100);
 
-        for (let y = 0; y < win.height; ++y)
-            for (let x = 0; x < win.width; ++x) {
-                const cell = level[y + win.y][x + win.x];
-                cell.render(win, time, timeGap);
+        const startCell = win.startCell();
+        const endCell = win.endCell();
+
+        for (let y = startCell.cellY; y <= endCell.cellY; ++y)
+            for (let x = startCell.cellX; x <= endCell.cellX; ++x) {
+                const cell = this.cell(x, y);
+                cell.render(time, timeGap);
             }
     }
 
-    moveWindow(dx, dy) {
-        const win = this.window;
-        this.moveWindowTo(win.x + dx, win.y + dy);
+    cell(cellX, cellY) {
+        return this.level[cellY] && this.level[cellY][cellX];
     }
 
-    moveWindowTo(x, y) {
-        const win = this.window;
-
-        win.x = clamp(x, 0, this.width - win.width);
-        win.y = clamp(y, 0, this.height - win.height);
-    }
-
-    centerWindowAt(x, y) {
-        const win = this.window;
-        this.moveWindowTo(x - ((win.width / 2) | 0), y - ((win.height / 2) | 0));
-    }
-
-    cell(x, y) {
-        return this.level[y] && this.level[y][x];
+    cellAt(x, y) {
+        return this.cell(
+            clamp((x / this.cellWidth) | 0, 0, this.width - 1),
+            clamp((y / this.cellHeight) | 0, 0, this.height - 1),
+        );
     }
 }
 

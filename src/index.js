@@ -3,5 +3,10 @@ import Game from './game/Game';
 import $ from 'jquery';
 
 $(() => {
-    Game.init();
+    try {
+        Game.init();
+    } catch (e) {
+        console.log('Exception!');
+        console.log(e);
+    }
 });

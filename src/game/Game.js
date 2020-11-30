@@ -30,18 +30,17 @@ class Game {
     initEngine() {
         this.engine
             .loadSprites(sprites)
-            .then(() => {
-                [playerCfg, terrainCfg].forEach((cfg) => this.loadGameObjects(cfg));
+            .then(() => this.onEngineReady())
+            .catch((e) => console.log('Init engine error!', e));
+    }
 
-                this.map.init();
+    onEngineReady() {
+        [playerCfg, terrainCfg].forEach((cfg) => this.loadGameObjects(cfg));
 
-                this.engine.start(
-                    () => this.onRender(),
-                    (e) => this.onKeyDown(e),
-                );
-                return this;
-            })
-            .catch(() => alert('Error loading sprites!'));
+        this.map.init();
+
+        this.engine.start(this.onRender.bind(this), this.onKeyDown.bind(this));
+        return this;
     }
 
     setPlayer(player) {
@@ -66,17 +65,16 @@ class Game {
 
         if (player && !player.isMoving) {
             const cell = player.cell;
-            const [newX, newY] = [cell.x + dx, cell.y + dy];
+            const [newX, newY] = [cell.cellX + dx, cell.cellY + dy];
             const newCell = this.map.cell(newX, newY);
 
             if (newCell && newCell.filter((obj) => obj.cfg.name === 'grass').length) {
                 // console.log();
                 // console.log(newCell.objects);
 
-                cell.remove(player);
-                newCell.push(player);
+                player.moveToCell(newCell);
 
-                this.map.centerWindowAt(newX, newY);
+                this.map.window.focus(player);
             }
         }
     }
