@@ -29,7 +29,7 @@ class Cell {
 
                 if (name === 'player') {
                     map.game.setPlayer(obj);
-                    map.window.focus(obj, false);
+                    map.window.follow(obj);
                 }
             }),
         );

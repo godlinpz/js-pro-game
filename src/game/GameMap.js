@@ -38,7 +38,7 @@ class GameMap {
         levelCfg.map.forEach((cfgRow, y) =>
             cfgRow.forEach((cfgCell, x) => {
                 this.level[y] || (this.level[y] = []);
-                const cell = (this.level[y][x] = new Cell(cfgCell, this, x, y));
+                this.level[y][x] = new Cell(cfgCell, this, x, y);
             }),
         );
     }

@@ -19,6 +19,8 @@ class GameMapWindow {
         this.speed = 0;
 
         this.animationStartTime = 0;
+
+        this.followedObject = null;
     }
 
     init() {
@@ -78,8 +80,18 @@ class GameMapWindow {
         this.moveTo(pos.x - this.width / 2, pos.y - this.height / 2, smooth, speed);
     }
 
+    follow(obj) {
+        this.followedObject = obj;
+    }
+
+    unfollow() {
+        this.followedObject = null;
+    }
+
     render(time, timeGap) {
-        if (this.speed) {
+        if (this.followedObject) {
+            this.focus(this.followedObject, false);
+        } else if (this.speed) {
             animateObject(this, { time });
         }
     }
