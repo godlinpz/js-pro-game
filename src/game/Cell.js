@@ -1,12 +1,38 @@
+import _ from 'lodash';
+import GameObject from './GameObject';
+
 class Cell {
-    constructor(map, cellX, cellY) {
+    constructor(cfg, map, cellX, cellY) {
         this.map = map;
         this.cellX = cellX;
         this.cellY = cellY;
         this.x = cellX * this.map.cellWidth;
         this.y = cellY * this.map.cellHeight;
+        this.cfg = cfg;
 
         this.objects = []; // GameObjects stack
+
+        this.initCell();
+    }
+
+    initCell() {
+        const { cfg, map } = this;
+        const gameObjs = map.game.gameObjects;
+
+        cfg.forEach((layer, level) =>
+            layer.forEach((name) => {
+                const objCfg = _.cloneDeep(gameObjs[name]);
+                objCfg.layer = level;
+                const obj = new GameObject(objCfg);
+
+                obj.moveToCell(this, false);
+
+                if (name === 'player') {
+                    map.game.setPlayer(obj);
+                    map.window.focus(obj, false);
+                }
+            }),
+        );
     }
 
     /**
@@ -34,24 +60,36 @@ class Cell {
         };
     }
 
-    render(time, timeGap) {
-        this.objects.forEach((o) => o && o.render(time, timeGap));
+    render(layer, time, timeGap) {
+        const objs = this.objects;
+        if (objs[layer] && objs[layer].length)
+            objs.forEach((layer) => layer.forEach((o) => o && o.render(time, timeGap)));
     }
 
     push(obj) {
+        const objs = this.objects;
         obj.setCell(this);
-        this.objects.push(obj);
+
+        objs[obj.layer] || (objs[obj.layer] = []);
+
+        objs[obj.layer].push(obj);
+
         return obj;
     }
 
     remove(obj) {
-        this.objects = this.objects.filter((o) => o !== obj);
+        const objs = this.objects;
+        objs[obj.layer] = objs[obj.layer].filter((o) => o !== obj);
+
         obj.setCell(null);
         return obj;
     }
 
     filter(callback) {
-        return this.objects.filter(callback);
+        return this.objects
+            .map((l) => l.filter(callback))
+            .filter((l) => l.length)
+            .flat();
     }
 }
 

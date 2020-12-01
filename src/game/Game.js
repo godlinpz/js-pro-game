@@ -53,7 +53,6 @@ class Game {
 
     onRender(time, timeGap) {
         this.map.render(time, timeGap);
-        // console.log(1);
     }
 
     onKeyDown({ key }) {
@@ -63,17 +62,13 @@ class Game {
     movePlayer(dx, dy) {
         const player = this.player;
 
-        if (player && !player.isMoving) {
+        if (player && !player.speed) {
             const cell = player.cell;
             const [newX, newY] = [cell.cellX + dx, cell.cellY + dy];
             const newCell = this.map.cell(newX, newY);
 
             if (newCell && newCell.filter((obj) => obj.cfg.name === 'grass').length) {
-                // console.log();
-                // console.log(newCell.objects);
-
                 player.moveToCell(newCell);
-
                 this.map.window.focus(player);
             }
         }

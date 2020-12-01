@@ -1,5 +1,7 @@
 // This class is abstract
 
+import { animateObject, clamp } from '../engine/util';
+
 class GameObject {
     constructor(cfg, cell = null) {
         Object.assign(this, cfg);
@@ -9,11 +11,21 @@ class GameObject {
         this.state = this.state || 'main';
         this.size = cfg.size || 100;
         this.spriteSize = cfg.spriteSize || 80;
+        this.layer = cfg.layer || 0;
 
         this.cell = cell;
         this.isMoving = false;
 
         Object.assign(this, cell ? cell.worldPosition() : { x: 0, y: 0 });
+
+        this.toX = 0;
+        this.toY = 0;
+        this.deltaX = 0;
+        this.deltaY = 0;
+
+        this.speed = 0;
+
+        this.animationStartTime = 0;
     }
 
     /**
@@ -48,10 +60,13 @@ class GameObject {
     render(time, timeGap) {
         const map = this.cell.map;
         const ctx = this.cell.map.engine.ctx;
-        const cell = this.cell;
+        // const cell = this.cell;
+
+        if (this.speed) {
+            animateObject(this, { time });
+        }
 
         const pos = this.realPosition();
-
         const [x, y, w, h] = [pos.x, pos.y, map.cellWidth, map.cellHeight];
 
         // if(Math.random() < 0.001)
@@ -82,12 +97,22 @@ class GameObject {
         this.cell = cell;
     }
 
-    moveTo(x, y, smooth = true, speed = 300) {
-        this.x = x;
-        this.y = y;
+    moveTo(x, y, smooth = true, speed = 200) {
+        const map = this.cell.map;
+        const [newX, newY] = [
+            clamp(x, 0, map.worldWidth - map.cellWidth - 1),
+            clamp(y, 0, map.worldHeight - map.cellHeight - 1),
+        ];
+
+        if (smooth) {
+            animateObject(this, { newX, newY, map, speed });
+        } else {
+            this.x = newX;
+            this.y = newY;
+        }
     }
 
-    moveToCell(cell, smooth = true, speed = 300) {
+    moveToCell(cell, smooth = true, speed = 200) {
         if (this.cell) this.cell.remove(this);
 
         cell.push(this);

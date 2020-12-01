@@ -1,4 +1,4 @@
-import { clamp } from '../engine/util';
+import { animateObject, clamp } from '../engine/util';
 
 class GameMapWindow {
     constructor(map, cfg) {
@@ -10,6 +10,15 @@ class GameMapWindow {
         this.y = 0;
         this.width = 0;
         this.height = 0;
+
+        this.toX = 0;
+        this.toY = 0;
+        this.deltaX = 0;
+        this.deltaY = 0;
+
+        this.speed = 0;
+
+        this.animationStartTime = 0;
     }
 
     init() {
@@ -48,21 +57,31 @@ class GameMapWindow {
         );
     }
 
-    moveTo(x, y) {
+    moveTo(x, y, smooth = true, speed = 200) {
         const map = this.map;
-        this.x = clamp(x, 0, map.worldWidth - this.width - 1);
-        this.y = clamp(y, 0, map.worldHeight - this.height - 1);
+        const [newX, newY] = [
+            clamp(x, 0, map.worldWidth - this.width - 1),
+            clamp(y, 0, map.worldHeight - this.height - 1),
+        ];
 
-        console.log('moveTo', x, y, this.x);
+        if (smooth) {
+            animateObject(this, { newX, newY, map, speed });
+        } else {
+            this.x = newX;
+            this.y = newY;
+        }
     }
 
-    focus(obj) {
+    focus(obj, smooth = true, speed = 200) {
         // сфокусироваться можно только на тех, у кого есть метод worldPosition
         const pos = obj.worldPosition(50, 50);
-        // console.log('map focus', pos.x, this.width, pos.y, this.height);
-        this.moveTo(pos.x - this.width / 2, pos.y - this.height / 2);
-        console.log('map focus', this.x, this.y);
-        // console.log('map after focus');
+        this.moveTo(pos.x - this.width / 2, pos.y - this.height / 2, smooth, speed);
+    }
+
+    render(time, timeGap) {
+        if (this.speed) {
+            animateObject(this, { time });
+        }
     }
 }
 

@@ -1,7 +1,5 @@
 import { clamp } from '../engine/util';
-import _ from 'lodash';
 import Cell from './Cell';
-import GameObject from './GameObject';
 import GameMapWindow from './GameMapWindow';
 
 class GameMap {
@@ -17,6 +15,7 @@ class GameMap {
         this.cellHeight = 0;
         this.worldWidth = 0;
         this.worldHeight = 0;
+        this.maxLayer = 0;
     }
 
     init() {
@@ -39,22 +38,7 @@ class GameMap {
         levelCfg.map.forEach((cfgRow, y) =>
             cfgRow.forEach((cfgCell, x) => {
                 this.level[y] || (this.level[y] = []);
-                const cell = (this.level[y][x] = new Cell(this, x, y));
-
-                // console.log('map cell', cell);
-
-                cfgCell.forEach((name) => {
-                    const objCfg = _.cloneDeep(gameObjs[name]);
-                    const obj = new GameObject(objCfg);
-
-                    obj.moveToCell(cell, false);
-                    // cell.push(obj);
-
-                    if (name === 'player') {
-                        this.game.setPlayer(obj);
-                        this.window.focus(obj);
-                    }
-                });
+                const cell = (this.level[y][x] = new Cell(cfgCell, this, x, y));
             }),
         );
     }
@@ -62,16 +46,24 @@ class GameMap {
     render(time, timeGap) {
         const level = this.level;
         const win = this.window;
+
+        win.render(time, timeGap);
+
         const winBottomRight = win.worldPosition(100, 100);
 
         const startCell = win.startCell();
         const endCell = win.endCell();
 
-        for (let y = startCell.cellY; y <= endCell.cellY; ++y)
-            for (let x = startCell.cellX; x <= endCell.cellX; ++x) {
-                const cell = this.cell(x, y);
-                cell.render(time, timeGap);
-            }
+        let maxLayers = 1;
+
+        for (let layer = 0; layer < maxLayers; ++layer)
+            for (let y = startCell.cellY; y <= endCell.cellY; ++y)
+                for (let x = startCell.cellX; x <= endCell.cellX; ++x) {
+                    const cell = this.cell(x, y);
+                    cell.render(layer, time, timeGap);
+
+                    if (maxLayers < cell.objects.length) maxLayers = cell.objects.length;
+                }
     }
 
     cell(cellX, cellY) {

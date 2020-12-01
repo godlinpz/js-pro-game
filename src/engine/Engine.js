@@ -57,11 +57,13 @@ class Engine {
     loop(timestamp) {
         if (!this.startTime) {
             this.startTime = timestamp;
-            this.lastRenderTime = timestamp;
+            this.lastRenderTime = 0;
         }
 
-        this.onRender && this.onRender(timestamp - this.startTime, timestamp - this.lastRenderTime);
-        this.lastRenderTime = timestamp;
+        const oldTime = this.lastRenderTime;
+        this.lastRenderTime = timestamp - this.startTime;
+
+        this.onRender && this.onRender(this.lastRenderTime, timestamp - oldTime);
 
         window.requestAnimationFrame(this.thisLoop);
     }
