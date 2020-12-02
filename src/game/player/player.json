@@ -7,23 +7,23 @@
         "sprite": ["characters", "boy3"],
         "states": {
             "main": {
-                "duration": 3000,
+                "duration": 5000,
                 "frames": [1, 4, 1, 7]
             },
             "down": {
-                "duration": 300,
+                "duration": 200,
                 "frames": [0, 1, 2, 1]
             },
             "left": {
-                "duration": 300,
+                "duration": 200,
                 "frames": [3, 4, 5, 4]
             },
             "right": {
-                "duration": 300,
+                "duration": 200,
                 "frames": [6, 7, 8, 7]
             },
             "up": {
-                "duration": 300,
+                "duration": 200,
                 "frames": [9, 10, 11, 10]
             }
         }

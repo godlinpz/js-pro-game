@@ -1,9 +1,9 @@
-// This class is abstract
+import EventSource from '../engine/EventSource';
+import { animate, animateObject, clamp } from '../engine/util';
 
-import { animateObject, clamp } from '../engine/util';
-
-class GameObject {
+class GameObject extends EventSource {
     constructor(cfg, cell = null) {
+        super();
         Object.assign(this, cfg);
 
         this.cfg = cfg;
@@ -25,7 +25,10 @@ class GameObject {
 
         this.speed = 0;
 
+        this.motionStartTime = 0;
         this.animationStartTime = 0;
+
+        this.stateDelay = null;
     }
 
     /**
@@ -69,28 +72,33 @@ class GameObject {
         const pos = this.realPosition();
         const [x, y, w, h] = [pos.x, pos.y, map.cellWidth, map.cellHeight];
 
-        // if(Math.random() < 0.001)
-        // console.log('render', x, y, w, h);
+        const { type, size, spriteSize, sprite, states, frame } = this.cfg;
 
-        const color = {
-            grass: 'green',
-            wall: 'black',
-            player: 'red',
-        }[this.name];
-
-        ctx.fillStyle = color;
-
-        ctx.fillRect(x, y, w, h);
-
-        ctx.strokeStyle = '#6262624d';
-        ctx.beginPath();
-        ctx.moveTo(x, y + h);
-        ctx.lineTo(x + w, y + h);
-        ctx.lineTo(x + w, y);
-        ctx.stroke();
-
+        if (type === 'static') {
+            this.cell.map.engine.renderFrame({ sprite, frame, x, y, w, h });
+        } else {
+            const currentFrame = this.getCurrentFrame(time);
+            this.cell.map.engine.renderFrame({ sprite, frame: currentFrame, x, y, w, h });
+        }
         // inherit to render
         return [time, timeGap];
+    }
+
+    getCurrentFrame(time) {
+        const state = this.cfg.states[this.state];
+        const len = state.frames.length;
+        const frame = ((len + animate(len, this.animationStartTime, time, state.duration, true)) | 0) % len;
+        // console.log('Frame', frame);
+        return state.frames[frame];
+    }
+
+    setState(state, delay) {
+        clearTimeout(this.stateDelay);
+        if (delay) this.stateDelay = setTimeout(() => this.setState(state), delay);
+        else {
+            this.state = state;
+            this.animationStartTime = this.cell.map.engine.lastRenderTime;
+        }
     }
 
     setCell(cell) {

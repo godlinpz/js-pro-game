@@ -1,7 +1,9 @@
+import EventSource from '../engine/EventSource';
 import { animateObject, clamp } from '../engine/util';
 
-class GameMapWindow {
+class GameMapWindow extends EventSource {
     constructor(map, cfg) {
+        super();
         Object.assign(this, cfg);
         this.map = map;
         this.cfg = cfg;
@@ -18,7 +20,7 @@ class GameMapWindow {
 
         this.speed = 0;
 
-        this.animationStartTime = 0;
+        this.motionStartTime = 0;
 
         this.followedObject = null;
     }

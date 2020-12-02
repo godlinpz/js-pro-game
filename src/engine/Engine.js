@@ -8,6 +8,7 @@ class Engine {
 
         this.onRender = null;
         this.onKeyDown = null;
+        this.onKeyUp = null;
 
         this.startTime = 0;
         this.lastRenderTime = 0;
@@ -18,6 +19,7 @@ class Engine {
         this.thisLoop = this.loop.bind(this);
 
         canvas.addEventListener('keydown', (e) => this.onKeyDown && this.onKeyDown(e), false);
+        canvas.addEventListener('keyup', (e) => this.onKeyUp && this.onKeyUp(e), false);
     }
 
     loadSprites(spriteGroups) {
@@ -47,9 +49,10 @@ class Engine {
         });
     }
 
-    start(onRender, onKeyDown) {
+    start(onRender, onKeyDown, onKeyUp) {
         this.onRender = onRender;
         this.onKeyDown = onKeyDown;
+        this.onKeyUp = onKeyUp;
 
         this.loop();
     }
@@ -66,6 +69,17 @@ class Engine {
         this.onRender && this.onRender(this.lastRenderTime, timestamp - oldTime);
 
         window.requestAnimationFrame(this.thisLoop);
+    }
+
+    renderFrame({ sprite, frame, x, y, w, h }) {
+        const spriteCfg = this.sprites[sprite[0]][sprite[1]];
+        const [fx, fy, fw, fh] = spriteCfg.frames[frame];
+        const img = this.images[spriteCfg.img];
+
+        // console.log(spriteCfg, frame);
+        // console.log(img, fx, fy, fw, fh, x, y, w, h);
+
+        this.ctx.drawImage(img, fx, fy, fw, fh, x, y, w, h);
     }
 }
 

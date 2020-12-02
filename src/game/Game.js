@@ -25,6 +25,7 @@ class Game {
             ArrowUp: () => this.movePlayer(0, -1),
             ArrowDown: () => this.movePlayer(0, 1),
         };
+        this.keysPressed = new Set();
     }
 
     initEngine() {
@@ -39,7 +40,7 @@ class Game {
 
         this.map.init();
 
-        this.engine.start(this.onRender.bind(this), this.onKeyDown.bind(this));
+        this.engine.start(this.onRender.bind(this), this.onKeyDown.bind(this), this.onKeyUp.bind(this));
         return this;
     }
 
@@ -52,11 +53,22 @@ class Game {
     }
 
     onRender(time, timeGap) {
+        if (this.keysPressed.size) {
+            // console.log(this.keysPressed);
+            this.keys[Array.from(this.keysPressed)[0]]();
+        }
+
         this.map.render(time, timeGap);
     }
 
     onKeyDown({ key }) {
-        this.keys[key] && this.keys[key]();
+        console.log('KEY DOWN', key);
+        this.keys[key] && this.keysPressed.add(key);
+    }
+
+    onKeyUp({ key }) {
+        console.log('KEY UP', key);
+        this.keys[key] && this.keysPressed.delete(key);
     }
 
     movePlayer(dx, dy) {
@@ -69,6 +81,10 @@ class Game {
 
             if (newCell && newCell.filter((obj) => obj.cfg.name === 'grass').length) {
                 player.moveToCell(newCell);
+                const state =
+                    (dx > 0 && 'right') || (dx < 0 && 'left') || (dy > 0 && 'down') || (dy < 0 && 'up') || 'main';
+                player.setState(state);
+                player.once('animation-stopped', () => player.setState('main', 100));
                 this.map.window.focus(player);
             }
         }
