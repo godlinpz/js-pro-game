@@ -1,14 +1,13 @@
-class Engine {
+import EventSource from './EventSource';
+
+class Engine extends EventSource {
     constructor(canvas) {
+        super();
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
 
         this.canvas.tabIndex = 1000;
         this.canvas.style.outline = 'none';
-
-        this.onRender = null;
-        this.onKeyDown = null;
-        this.onKeyUp = null;
 
         this.startTime = 0;
         this.lastRenderTime = 0;
@@ -18,8 +17,23 @@ class Engine {
 
         this.thisLoop = this.loop.bind(this);
 
-        canvas.addEventListener('keydown', (e) => this.onKeyDown && this.onKeyDown(e), false);
-        canvas.addEventListener('keyup', (e) => this.onKeyUp && this.onKeyUp(e), false);
+        canvas.addEventListener('keydown', (e) => this.onKeyDown(e), false);
+        canvas.addEventListener('keyup', (e) => this.onKeyUp(e), false);
+        canvas.addEventListener('mousedown', (e) => this.onMouseDown(e), false);
+        canvas.addEventListener('mouseup', (e) => this.onMouseUp(e), false);
+    }
+
+    onKeyDown(e) {
+        this.trigger('keydown', e);
+    }
+    onKeyUp(e) {
+        this.trigger('keyup', e);
+    }
+    onMouseDown(e) {
+        this.trigger('mousedown', e);
+    }
+    onMouseUp(e) {
+        this.trigger('mouseup', e);
     }
 
     loadSprites(spriteGroups) {
@@ -49,11 +63,7 @@ class Engine {
         });
     }
 
-    start(onRender, onKeyDown, onKeyUp) {
-        this.onRender = onRender;
-        this.onKeyDown = onKeyDown;
-        this.onKeyUp = onKeyUp;
-
+    start() {
         this.loop();
     }
 
@@ -66,7 +76,7 @@ class Engine {
         const oldTime = this.lastRenderTime;
         this.lastRenderTime = timestamp - this.startTime;
 
-        this.onRender && this.onRender(this.lastRenderTime, timestamp - oldTime);
+        this.trigger('render', [this.lastRenderTime, timestamp - oldTime]);
 
         window.requestAnimationFrame(this.thisLoop);
     }
