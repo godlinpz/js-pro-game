@@ -17,7 +17,7 @@ module.exports = {
         filename: 'main.js',
         publicPath: ASSET_PATH,
     },
-    watch: true,
+    watch: NODE_ENV === 'development',
     watchOptions: {
         ignored: /node_modules/,
         poll: 1000,
