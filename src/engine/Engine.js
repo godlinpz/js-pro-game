@@ -11,11 +11,15 @@ class Engine extends EventSource {
 
         this.startTime = 0;
         this.lastRenderTime = 0;
+        this.lastTimestamp = 0;
+        this.pausedAt = 0; // not paused
 
         this.sprites = {};
         this.images = {};
 
         this.thisLoop = this.loop.bind(this);
+
+        this.keysPressed = new Set();
 
         canvas.addEventListener('keydown', (e) => this.onKeyDown(e), false);
         canvas.addEventListener('keyup', (e) => this.onKeyUp(e), false);
@@ -24,9 +28,11 @@ class Engine extends EventSource {
     }
 
     onKeyDown(e) {
+        this.keysPressed.add(e.code);
         this.trigger('keydown', e);
     }
     onKeyUp(e) {
+        this.keysPressed.delete(e.code);
         this.trigger('keyup', e);
     }
     onMouseDown(e) {
@@ -67,6 +73,21 @@ class Engine extends EventSource {
         this.loop();
     }
 
+    pause() {
+        if (!this.pausedAt) {
+            console.log('PAUSE');
+            this.pausedAt = this.lastTimestamp;
+        }
+    }
+
+    unpause() {
+        if (this.pausedAt) {
+            console.log('UNPAUSE');
+            this.startTime += this.lastTimestamp - this.pausedAt;
+            this.pausedAt = 0;
+        }
+    }
+
     loop(timestamp) {
         if (!this.startTime) {
             this.startTime = timestamp;
@@ -75,8 +96,11 @@ class Engine extends EventSource {
 
         const oldTime = this.lastRenderTime;
         this.lastRenderTime = timestamp - this.startTime;
+        this.lastTimestamp = timestamp;
 
-        this.trigger('render', [this.lastRenderTime, timestamp - oldTime]);
+        this.trigger('prerender', [this.lastRenderTime, timestamp - oldTime]);
+
+        if (!this.pausedAt) this.trigger('render', [this.lastRenderTime, timestamp - oldTime]);
 
         window.requestAnimationFrame(this.thisLoop);
     }

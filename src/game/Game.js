@@ -6,6 +6,12 @@ import sprites from './sprites.json';
 import playerCfg from './player/player.json';
 import terrainCfg from './terrain/terrain.json';
 
+const GameStates = {
+    start: Symbol('start'),
+    play: Symbol('play'),
+    pause: Symbol('pause'),
+};
+
 class Game {
     constructor(id = 'game') {
         this.gameObjects = {};
@@ -14,7 +20,7 @@ class Game {
         this.engine = new Engine(document.getElementById(id));
         this.map = new GameMap(this, this.engine, levelCfg);
 
-        this.state = 'start';
+        this.state = GameStates.start;
 
         this.initKeys();
         this.initEngine();
@@ -27,7 +33,9 @@ class Game {
             ArrowUp: () => this.movePlayer(0, -1),
             ArrowDown: () => this.movePlayer(0, 1),
         };
-        this.keysPressed = new Set();
+        this.keysOnce = {
+            Space: (pressed) => pressed && this.pauseGame(),
+        };
     }
 
     initEngine() {
@@ -48,6 +56,7 @@ class Game {
             ['mousedown', 'onMouseDown'],
             ['mouseup', 'onMouseUp'],
             ['render', 'onRender'],
+            ['prerender', 'onPreRender'],
         ].forEach(([e, handler]) => engine.on(e, (_, data) => this[handler].apply(this, [data])));
 
         this.engine.start();
@@ -63,10 +72,11 @@ class Game {
         this.gameObjects = { ...this.gameObjects, ...objects };
     }
 
+    onPreRender([time, timeGap]) {}
+
     onRender([time, timeGap]) {
-        if (this.keysPressed.size) {
-            // console.log(this.keysPressed);
-            this.keys[Array.from(this.keysPressed)[0]]();
+        if (this.engine.keysPressed.size) {
+            this.keys[Array.from(this.engine.keysPressed)[0]]();
         }
 
         try {
@@ -75,7 +85,7 @@ class Game {
             console.log('RENDER ERROR', e);
         }
 
-        if (this.state === 'start') {
+        if (this.state === GameStates.start) {
             const ctx = this.engine.ctx;
 
             ctx.fillStyle = 'black';
@@ -91,25 +101,29 @@ class Game {
         }
     }
 
-    onKeyDown({ key }) {
-        // console.log('KEY DOWN', key);
-        this.keys[key] && this.keysPressed.add(key);
+    // onKeyDown({ key }) {
+    onKeyDown({ code }) {
+        // console.log('KEY DOWN', code);
+        this.keysOnce[code] && this.keysOnce[code](true);
     }
 
-    onKeyUp({ key }) {
+    onKeyUp({ code }) {
         // console.log('KEY UP', key);
-        this.keys[key] && this.keysPressed.delete(key);
+        this.keysOnce[code] && this.keysOnce[code](false);
     }
 
     onMouseDown(e) {
         // console.log('MOUSE DOWN', e);
-        this.state = 'play';
-        // this.keys[key] && this.keysPressed.delete(key);
+        this.setState(GameStates.play);
     }
 
     onMouseUp(e) {
         // console.log('MOUSE UP', e);
-        // this.keys[key] && this.keysPressed.delete(key);
+    }
+
+    pauseGame() {
+        this.engine[(this.engine.pausedAt ? 'un' : '') + 'pause']();
+        this.setState(this.engine.pausedAt ? GameStates.pause : GameStates.play);
     }
 
     movePlayer(dx, dy) {
@@ -129,6 +143,10 @@ class Game {
                 this.map.window.focus(player);
             }
         }
+    }
+
+    setState(state) {
+        this.state = state;
     }
 
     static init(id = 'game') {
