@@ -76,7 +76,11 @@ class Game {
 
     onRender([time, timeGap]) {
         if (this.engine.keysPressed.size) {
-            this.keys[Array.from(this.engine.keysPressed)[0]]();
+            for (let key of Array.from(this.engine.keysPressed))
+                if (this.keys[key]) {
+                    this.keys[key]();
+                    break;
+                }
         }
 
         try {
