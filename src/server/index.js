@@ -7,7 +7,7 @@ import Hapi from '@hapi/hapi';
 import HapiInert from '@hapi/inert';
 // import { setPath } from 'hookrouter';
 
-import levelCfg from './map.json';
+// import levelCfg from './map.json';
 
 const init = async () => {
     // levelCfg
@@ -37,7 +37,7 @@ const init = async () => {
     });
 
     const io = socketio(rtServer.listener, {
-        path: '/io',
+        path: '/game',
         cors: {
             origin: 'http://localhost:3000',
             methods: ['GET', 'POST'],
@@ -51,7 +51,8 @@ const init = async () => {
 
         socket.join('game');
 
-        socket.send('Hello!');
+        io.to('game').emit('hello', 'new player!');
+
         console.log('New connection!');
 
         socket.on('disconnect', (reason) => {

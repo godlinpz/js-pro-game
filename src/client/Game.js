@@ -1,10 +1,11 @@
 import Engine from '../engine/Engine';
 import GameMap from './GameMap';
-import levelCfg from './map.json';
-import sprites from './sprites.json';
+import levelCfg from '../configs/maps/map.json';
+import sprites from '../configs/sprites/sprites.json';
 
-import playerCfg from './player/player.json';
-import terrainCfg from './terrain/terrain.json';
+import playerCfg from '../configs/objects/player.json';
+import terrainCfg from '../configs/objects/terrain.json';
+import Api from './Api';
 
 const GameStates = {
     start: Symbol('start'),
@@ -21,6 +22,9 @@ class Game {
         this.map = new GameMap(this, this.engine, levelCfg);
 
         this.state = GameStates.start;
+
+        this.api = new Api();
+        this.api.connect();
 
         this.initKeys();
         this.initEngine();
