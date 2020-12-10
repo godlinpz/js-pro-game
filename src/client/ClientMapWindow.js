@@ -1,7 +1,7 @@
 import EventSource from '../engine/EventSource';
 import { animateObject, clamp } from '../engine/util';
 
-class GameMapWindow extends EventSource {
+class ClientMapWindow extends EventSource {
     constructor(map, cfg) {
         super();
         Object.assign(this, cfg);
@@ -99,4 +99,4 @@ class GameMapWindow extends EventSource {
     }
 }
 
-export default GameMapWindow;
+export default ClientMapWindow;

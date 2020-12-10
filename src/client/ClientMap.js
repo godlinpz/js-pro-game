@@ -1,15 +1,15 @@
 import { clamp } from '../engine/util';
-import Cell from './Cell';
-import GameMapWindow from './GameMapWindow';
+import Cell from './ClientCell';
+import ClientMapWindow from './ClientMapWindow';
 
-class GameMap {
+class ClientMap {
     constructor(game, engine, levelCfg) {
         this.game = game;
         this.engine = engine;
         this.height = levelCfg.map.length;
         this.width = levelCfg.map[0].length;
         this.levelCfg = levelCfg;
-        this.window = new GameMapWindow(this, levelCfg.window);
+        this.window = new ClientMapWindow(this, levelCfg.window);
         this.level = [];
         this.cellWidth = 0;
         this.cellHeight = 0;
@@ -78,4 +78,4 @@ class GameMap {
     }
 }
 
-export default GameMap;
+export default ClientMap;

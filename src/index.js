@@ -1,5 +1,5 @@
 import style from './style.scss';
-import Game from './client/Game';
+import Game from './client/GameClient';
 import $ from 'jquery';
 import socketio from 'socket.io-client';
 

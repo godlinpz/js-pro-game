@@ -1,5 +1,5 @@
 import Engine from '../engine/Engine';
-import GameMap from './GameMap';
+import ClientMap from './ClientMap';
 import levelCfg from '../configs/maps/map.json';
 import sprites from '../configs/sprites/sprites.json';
 
@@ -13,13 +13,13 @@ const GameStates = {
     pause: Symbol('pause'),
 };
 
-class Game {
+class GameClient {
     constructor(id = 'game') {
         this.gameObjects = {};
         this.player = null;
 
         this.engine = new Engine(document.getElementById(id));
-        this.map = new GameMap(this, this.engine, levelCfg);
+        this.map = new ClientMap(this, this.engine, levelCfg);
 
         this.state = GameStates.start;
 
@@ -158,9 +158,9 @@ class Game {
     }
 
     static init(id = 'game') {
-        Game.game = new Game(id);
+        GameClient.game = new GameClient(id);
         console.log('INIT');
     }
 }
 
-export default Game;
+export default GameClient;

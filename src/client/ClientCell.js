@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import GameObject from './GameObject';
+import GameObject from './ClientGameObject';
 
-class Cell {
+class ClientCell {
     constructor(cfg, map, cellX, cellY) {
         this.map = map;
         this.cellX = cellX;
@@ -93,4 +93,4 @@ class Cell {
     }
 }
 
-export default Cell;
+export default ClientCell;

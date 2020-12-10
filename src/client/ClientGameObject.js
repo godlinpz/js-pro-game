@@ -1,7 +1,7 @@
 import EventSource from '../engine/EventSource';
 import { animate, animateObject, clamp } from '../engine/util';
 
-class GameObject extends EventSource {
+class ClientGameObject extends EventSource {
     constructor(cfg, cell = null) {
         super();
         Object.assign(this, cfg);
@@ -128,4 +128,4 @@ class GameObject extends EventSource {
     }
 }
 
-export default GameObject;
+export default ClientGameObject;
