@@ -1,9 +1,8 @@
-import EventSource from '../engine/EventSource';
 import { animateObject, clamp } from '../engine/util';
 
-class ClientMapWindow extends EventSource {
+class ClientMapWindow {
     constructor(map, cfg) {
-        super();
+        // super();
         Object.assign(this, cfg);
         this.map = map;
         this.cfg = cfg;

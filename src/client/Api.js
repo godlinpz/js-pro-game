@@ -1,10 +1,9 @@
 import socketio from 'socket.io-client';
 import _ from 'lodash';
-import EventSource from '../engine/EventSource';
+import EventSourceMixin from '../engine/EventSourceMixin';
 
-class Api extends EventSource {
+class Api {
     constructor(options = {}) {
-        super();
         this.options = _.assign({ url: '', port: 3001, path: '/game' }, options || {});
         this.io = null;
     }
@@ -21,5 +20,7 @@ class Api extends EventSource {
         console.log(`API: ${msg}`);
     }
 }
+
+Object.assign(Api.prototype, EventSourceMixin);
 
 export default Api;

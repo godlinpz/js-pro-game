@@ -1,8 +1,7 @@
-import EventSource from './EventSource';
+import EventSourceMixin from './EventSourceMixin';
 
-class Engine extends EventSource {
+class Engine {
     constructor(canvas) {
-        super();
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
 
@@ -116,5 +115,7 @@ class Engine extends EventSource {
         this.ctx.drawImage(img, fx, fy, fw, fh, x, y, w, h);
     }
 }
+
+Object.assign(Engine.prototype, EventSourceMixin);
 
 export default Engine;

@@ -1,9 +1,9 @@
-import EventSource from '../engine/EventSource';
+import GameObject from '../models/GameObject';
 import { animate, animateObject, clamp } from '../engine/util';
 
-class ClientGameObject extends EventSource {
+class ClientGameObject extends GameObject {
     constructor(cfg, cell = null) {
-        super();
+        super(cfg, cell);
         Object.assign(this, cfg);
 
         this.cfg = cfg;
