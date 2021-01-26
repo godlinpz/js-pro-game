@@ -46,14 +46,12 @@ class GameClient {
         this.engine
             .loadSprites(sprites)
             .then(() => this.onEngineReady())
-            .catch((e) => console.log('Init engine error!', e));
+            .catch((e) => console.error('Init engine error!', e));
     }
 
-    onEngineReady() {
-        [playerCfg, terrainCfg].forEach((cfg) => this.loadGameObjects(cfg));
-
-        this.map.init();
+    initHandlers() {
         const engine = this.engine;
+
         [
             ['keydown', 'onKeyDown'],
             ['keyup', 'onKeyUp'],
@@ -62,7 +60,13 @@ class GameClient {
             ['render', 'onRender'],
             ['prerender', 'onPreRender'],
         ].forEach(([e, handler]) => engine.on(e, (_, data) => this[handler].apply(this, [data])));
+    }
 
+    onEngineReady() {
+        [playerCfg, terrainCfg].forEach((cfg) => this.loadGameObjects(cfg));
+
+        this.map.init();
+        this.initHandlers();
         this.engine.start();
 
         return this;

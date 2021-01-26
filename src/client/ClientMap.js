@@ -1,25 +1,28 @@
 import { clamp } from '../engine/util';
-import Cell from './ClientCell';
+import ClientCell from './ClientCell';
 import ClientMapWindow from './ClientMapWindow';
 
 class ClientMap {
     constructor(game, engine, levelCfg) {
-        this.game = game;
-        this.engine = engine;
-        this.height = levelCfg.map.length;
-        this.width = levelCfg.map[0].length;
-        this.levelCfg = levelCfg;
-        this.window = new ClientMapWindow(this, levelCfg.window);
-        this.level = [];
-        this.cellWidth = 0;
-        this.cellHeight = 0;
-        this.worldWidth = 0;
-        this.worldHeight = 0;
-        this.maxLayer = 0;
+        Object.assign(this, {
+            game,
+            engine,
+            levelCfg,
+            height: levelCfg.map.length,
+            width: levelCfg.map[0].length,
+            window: new ClientMapWindow(Object.assign({ map: this }, levelCfg.window)),
+            level: [],
+            cellWidth: 0,
+            cellHeight: 0,
+            worldWidth: 0,
+            worldHeight: 0,
+            maxLayer: 0,
+        });
     }
 
     init() {
         const win = this.window.cfg;
+
         this.cellWidth = (this.engine.canvas.width / win.width) | 0;
         this.cellHeight = (this.engine.canvas.height / win.height) | 0;
         this.worldWidth = this.cellWidth * this.width;
@@ -36,9 +39,9 @@ class ClientMap {
         const gameObjs = this.game.gameObjects;
 
         levelCfg.map.forEach((cfgRow, y) =>
-            cfgRow.forEach((cfgCell, x) => {
+            cfgRow.forEach((cellCfg, x) => {
                 this.level[y] || (this.level[y] = []);
-                this.level[y][x] = new Cell(cfgCell, this, x, y);
+                this.level[y][x] = new ClientCell({ map: this, cellX: x, cellY: y, cellCfg });
             }),
         );
     }

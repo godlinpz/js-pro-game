@@ -3,8 +3,8 @@ import ClientGameObject from './ClientGameObject';
 import Cell from '../models/Cell';
 
 class ClientCell extends Cell {
-    constructor(cfg, map, cellX, cellY) {
-        super(cfg, map, cellX, cellY);
+    constructor(cfg) {
+        super(cfg);
     }
 
     createGameObject(objCfg) {
@@ -15,10 +15,10 @@ class ClientCell extends Cell {
         const obj = this.initCellObject(name, level);
         super.initPlayer(name, level);
 
-        const { map } = this;
+        const { game, window } = this.map;
 
-        map.game.setPlayer(obj);
-        map.window.follow(obj);
+        game.setPlayer(obj);
+        window.follow(obj);
     }
 
     /**
@@ -32,12 +32,6 @@ class ClientCell extends Cell {
             x: this.x - map.window.x + (map.cellWidth * offset_percent_x) / 100,
             y: this.y - map.window.y + (map.cellHeight * offset_percent_y) / 100,
         };
-    }
-
-    render(layer, time, timeGap) {
-        const objs = this.objects;
-        if (objs[layer] && objs[layer].length)
-            objs.forEach((layer) => layer.forEach((o) => o && o.render(time, timeGap)));
     }
 }
 

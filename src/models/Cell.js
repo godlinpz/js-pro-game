@@ -1,18 +1,21 @@
 import _ from 'lodash';
 import GameObject from './GameObject';
+import MovableObject from '../engine/MovableObject';
 
-class Cell {
-    constructor(cfg, map, cellX, cellY) {
+class Cell extends MovableObject {
+    constructor(cfg) {
+        super(cfg);
+        const [width, height] = [cfg.map.cellWidth, cfg.map.cellHeight];
+
         Object.assign(this, {
-            map: map,
-            cellX: cellX,
-            cellY: cellY,
-            x: cellX * map.cellWidth,
-            y: cellY * map.cellHeight,
-            cfg: cfg,
+            width,
+            height,
+            x: cfg.cellX * width,
+            y: cfg.cellY * height,
             objects: [], // GameObjects stack
             spawnPoints: [],
         });
+
         this.initCell();
     }
 
@@ -21,9 +24,9 @@ class Cell {
     }
 
     initCell() {
-        const { cfg, map } = this;
+        const { cellCfg } = this;
 
-        cfg.forEach((layer, level) =>
+        cellCfg.forEach((layer, level) =>
             layer.forEach((name) => {
                 if (name === 'player') this.initPlayer(name, level);
                 else this.initCellObject(name, level);
@@ -36,7 +39,14 @@ class Cell {
         const gameObjs = map.game.gameObjects;
 
         const objCfg = _.cloneDeep(gameObjs[name]);
-        objCfg.layer = level;
+        _.assign(objCfg, {
+            map,
+            layer: level,
+            cell: this,
+            width: map.cellWidth,
+            height: map.cellHeight,
+        });
+
         const obj = this.createGameObject(objCfg);
 
         obj.moveToCell(this, false);
@@ -48,16 +58,10 @@ class Cell {
         this.spawnPoints.push([this.cellX, this.cellY]);
     }
 
-    /**
-     * Координаты объекта в мире
-     * @param {int} offset_percent_x Сдвиг относительно верхнего левого угла в процентах от размера объекта
-     * @param {int} offset_percent_y Сдвиг относительно верхнего левого угла в процентах от размера объекта
-     */
-    worldPosition(offset_percent_x = 0, offset_percent_y = 0) {
-        return {
-            x: this.x + (this.map.cellWidth * offset_percent_x) / 100,
-            y: this.y + (this.map.cellHeight * offset_percent_y) / 100,
-        };
+    render(layer, time, timeGap) {
+        const objs = this.objects;
+        if (objs[layer] && objs[layer].length)
+            objs.forEach((layer) => layer.forEach((o) => o && o.render(time, timeGap)));
     }
 
     push(obj) {
@@ -73,7 +77,8 @@ class Cell {
 
     remove(obj) {
         const objs = this.objects;
-        objs[obj.layer] = objs[obj.layer].filter((o) => o !== obj);
+
+        objs[obj.layer] && (objs[obj.layer] = objs[obj.layer].filter((o) => o !== obj));
 
         obj.setCell(null);
         return obj;

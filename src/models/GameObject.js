@@ -1,29 +1,26 @@
-import EventSourceMixin from '../engine/EventSourceMixin';
-import { animate, animateObject, clamp } from '../engine/util';
+import { animate } from '../engine/util';
+import MovableObject from '../engine/MovableObject';
 
-class GameObject {
-    constructor(cfg, cell = null) {
-        Object.assign(this, cell ? cell.worldPosition() : { x: 0, y: 0 });
-        Object.assign(this, cfg);
+class GameObject extends MovableObject {
+    constructor(cfg) {
+        super(cfg);
 
-        Object.assign(this, {
-            cfg: cfg,
+        const { x, y } = cfg.cell ? cfg.cell.worldPosition() : { x: 0, y: 0 };
 
-            state: this.state || 'main',
-            size: cfg.size || 100,
-            layer: cfg.layer || 0,
-
-            cell: cell,
-        });
-    }
-
-    /**
-     * Координаты объекта в мире
-     * @param {int} offset_percent_x Сдвиг относительно верхнего левого угла в процентах от размера объекта
-     * @param {int} offset_percent_y Сдвиг относительно верхнего левого угла в процентах от размера объекта
-     */
-    worldPosition(offset_percent_x = 0, offset_percent_y = 0) {
-        return { x: this.x, y: this.y };
+        Object.assign(
+            this,
+            {
+                x,
+                y,
+                state: 'main',
+                size: 100,
+                layer: 0,
+                spriteSize: 80,
+                animationStartTime: 0,
+                stateDelay: null,
+            },
+            cfg,
+        );
     }
 
     setCell(cell) {
@@ -39,19 +36,12 @@ class GameObject {
         }
     }
 
-    moveTo(x, y, smooth = true, speed = 200) {
-        const map = this.cell.map;
-        const [newX, newY] = [
-            clamp(x, 0, map.worldWidth - map.cellWidth - 1),
-            clamp(y, 0, map.worldHeight - map.cellHeight - 1),
-        ];
-
-        if (smooth) {
-            animateObject(this, { newX, newY, map, speed });
-        } else {
-            this.x = newX;
-            this.y = newY;
-        }
+    getCurrentFrame(time) {
+        const state = this.cfg.states[this.state];
+        const len = state.frames.length;
+        const frame = ((len + animate(len, this.animationStartTime, time, state.duration, true)) | 0) % len;
+        // console.log('Frame', frame);
+        return state.frames[frame];
     }
 
     moveToCell(cell, smooth = true, speed = 200) {
@@ -61,7 +51,5 @@ class GameObject {
         this.moveTo(cell.x, cell.y, smooth, speed);
     }
 }
-
-Object.assign(GameObject.prototype, EventSourceMixin);
 
 export default GameObject;

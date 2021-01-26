@@ -1,49 +1,25 @@
-import { animateObject, clamp } from '../engine/util';
+import { clamp } from '../engine/util';
+import MovableObject from '../engine/MovableObject';
 
-class ClientMapWindow {
-    constructor(map, cfg) {
-        // super();
-        Object.assign(this, cfg);
-        this.map = map;
-        this.cfg = cfg;
+class ClientMapWindow extends MovableObject {
+    constructor(cfg) {
+        super(cfg);
 
-        this.x = 0;
-        this.y = 0;
-        this.width = 0;
-        this.height = 0;
-
-        this.toX = 0;
-        this.toY = 0;
-        this.deltaX = 0;
-        this.deltaY = 0;
-
-        this.speed = 0;
-
-        this.motionStartTime = 0;
-
-        this.followedObject = null;
+        Object.assign(this, cfg, {
+            followedObject: null,
+        });
     }
 
     init() {
         const map = this.map;
         const cfg = this.cfg;
 
-        this.x = map.cellWidth * cfg.x;
-        this.y = map.cellHeight * cfg.y;
-        this.width = map.cellWidth * cfg.width;
-        this.height = map.cellHeight * cfg.height;
-    }
-
-    /**
-     * Координаты объекта в мире
-     * @param {int} offset_percent_x Сдвиг относительно верхнего левого угла в процентах от размера объекта
-     * @param {int} offset_percent_y Сдвиг относительно верхнего левого угла в процентах от размера объекта
-     */
-    worldPosition(offset_percent_x = 0, offset_percent_y = 0) {
-        return {
-            x: this.x + (this.width * offset_percent_x) / 100,
-            y: this.y + (this.height * offset_percent_y) / 100,
-        };
+        Object.assign(this, {
+            x: map.cellWidth * cfg.x,
+            y: map.cellHeight * cfg.y,
+            width: map.cellWidth * cfg.width,
+            height: map.cellHeight * cfg.height,
+        });
     }
 
     startCell() {
@@ -58,21 +34,6 @@ class ClientMapWindow {
             clamp(winBottomRight.x, 0, map.worldWidth - 1),
             clamp(winBottomRight.y, 0, map.worldHeight - 1),
         );
-    }
-
-    moveTo(x, y, smooth = true, speed = 200) {
-        const map = this.map;
-        const [newX, newY] = [
-            clamp(x, 0, map.worldWidth - this.width - 1),
-            clamp(y, 0, map.worldHeight - this.height - 1),
-        ];
-
-        if (smooth) {
-            animateObject(this, { newX, newY, map, speed });
-        } else {
-            this.x = newX;
-            this.y = newY;
-        }
     }
 
     focus(obj, smooth = true, speed = 200) {
@@ -92,9 +53,7 @@ class ClientMapWindow {
     render(time, timeGap) {
         if (this.followedObject) {
             this.focus(this.followedObject, false);
-        } else if (this.speed) {
-            animateObject(this, { time });
-        }
+        } else super.render(time, timeGap);
     }
 }
 
