@@ -56,6 +56,8 @@ class Cell extends MovableObject {
 
     initPlayer(name, level) {
         this.spawnPoints.push([this.cellX, this.cellY]);
+
+        return this.initCellObject(name, level);
     }
 
     render(layer, time, timeGap) {

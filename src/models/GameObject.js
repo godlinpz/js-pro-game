@@ -50,6 +50,15 @@ class GameObject extends MovableObject {
         cell.push(this);
         this.moveTo(cell.x, cell.y, smooth, speed);
     }
+
+    render(time, timeGap) {
+        if (this.speed) {
+            this.animateMotion(time);
+        }
+
+        // inherit to render
+        return [time, timeGap];
+    }
 }
 
 export default GameObject;
