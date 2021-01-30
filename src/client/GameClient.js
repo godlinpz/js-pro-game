@@ -1,33 +1,37 @@
-import Engine from '../engine/Engine';
+import ClientEngine from './ClientEngine';
 import ClientMap from './ClientMap';
-import levelCfg from '../configs/maps/map.json';
 import sprites from '../configs/sprites/sprites.json';
 
 import playerCfg from '../configs/objects/player.json';
 import terrainCfg from '../configs/objects/terrain.json';
 import Api from './Api';
 
-const GameStates = {
-    start: Symbol('start'),
-    play: Symbol('play'),
-    pause: Symbol('pause'),
-};
+import Game from '../engine/Game';
+import GameStates from '../engine/GameStates';
 
-class GameClient {
-    constructor(id = 'game') {
-        this.gameObjects = {};
+class GameClient extends Game {
+    constructor(cfg) {
+        super(cfg);
+
         this.player = null;
-
-        this.engine = new Engine(document.getElementById(id));
-        this.map = new ClientMap(this, this.engine, levelCfg);
-
-        this.state = GameStates.start;
-
         this.api = new Api();
         this.api.connect();
+    }
 
+    onCreate() {
         this.initKeys();
-        this.initEngine();
+    }
+
+    createEngine() {
+        return new ClientEngine(document.getElementById(this.cfg.tagId));
+    }
+
+    createMap(levelCfg) {
+        return new ClientMap(this, this.engine, levelCfg);
+    }
+
+    getLastRenderTime() {
+        return this.engine.lastRenderTime;
     }
 
     initKeys() {
@@ -76,13 +80,15 @@ class GameClient {
         this.player = player;
     }
 
-    loadGameObjects(objects) {
-        this.gameObjects = { ...this.gameObjects, ...objects };
+    onRender([time, timeGap]) {
+        this.checkInput();
+
+        super.onRender([time, timeGap]);
+
+        if (this.state === GameStates.start) this.renderStartBar();
     }
 
-    onPreRender([time, timeGap]) {}
-
-    onRender([time, timeGap]) {
+    checkInput() {
         if (this.engine.keysPressed.size) {
             for (let key of Array.from(this.engine.keysPressed))
                 if (this.keys[key]) {
@@ -90,27 +96,21 @@ class GameClient {
                     break;
                 }
         }
+    }
 
-        try {
-            this.map.render(time, timeGap);
-        } catch (e) {
-            console.log('RENDER ERROR', e);
-        }
+    renderStartBar() {
+        const ctx = this.engine.ctx;
 
-        if (this.state === GameStates.start) {
-            const ctx = this.engine.ctx;
+        ctx.fillStyle = 'black';
+        ctx.fillRect(200, 200, 200, 200);
 
-            ctx.fillStyle = 'black';
-            ctx.fillRect(200, 200, 200, 200);
+        ctx.fillStyle = 'orange';
+        ctx.fillRect(210, 210, 180, 180);
 
-            ctx.fillStyle = 'orange';
-            ctx.fillRect(210, 210, 180, 180);
+        ctx.fillStyle = 'black';
 
-            ctx.fillStyle = 'black';
-
-            ctx.font = '48px sans-serif';
-            ctx.fillText('START', 225, 315);
-        }
+        ctx.font = '48px sans-serif';
+        ctx.fillText('START', 225, 315);
     }
 
     // onKeyDown({ key }) {
@@ -157,12 +157,8 @@ class GameClient {
         }
     }
 
-    setState(state) {
-        this.state = state;
-    }
-
-    static init(id = 'game') {
-        GameClient.game = new GameClient(id);
+    static init(tagId = 'game') {
+        GameClient.game = new GameClient({ tagId });
         console.log('INIT');
     }
 }

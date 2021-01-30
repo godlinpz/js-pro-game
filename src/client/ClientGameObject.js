@@ -17,10 +17,10 @@ class ClientGameObject extends GameObject {
         const { type, size, spriteSize, sprite, states, frame } = this.cfg;
 
         if (type === 'static') {
-            this.cell.map.engine.renderFrame({ sprite, frame, x, y, w, h });
+            this.cell.map.engine.renderSpriteFrame({ sprite, frame, x, y, w, h });
         } else {
             const currentFrame = this.getCurrentFrame(time);
-            this.cell.map.engine.renderFrame({ sprite, frame: currentFrame, x, y, w, h });
+            this.cell.map.engine.renderSpriteFrame({ sprite, frame: currentFrame, x, y, w, h });
         }
         // inherit to render
         return [time, timeGap];
