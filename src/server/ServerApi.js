@@ -2,7 +2,7 @@ import socketio from 'socket.io-client';
 import _ from 'lodash';
 import EventSourceMixin from '../engine/EventSourceMixin';
 
-class Api {
+class ServerApi {
     constructor(options = {}) {
         this.options = _.assign({ url: '', port: 3001, path: '/game' }, options || {});
         this.io = null;
@@ -21,6 +21,6 @@ class Api {
     }
 }
 
-Object.assign(Api.prototype, EventSourceMixin);
+Object.assign(ServerApi.prototype, EventSourceMixin);
 
-export default Api;
+export default ServerApi;

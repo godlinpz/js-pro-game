@@ -1,19 +1,19 @@
-import ClientEngine from './ClientEngine';
-import ClientMap from './ClientMap';
+import ServerEngine from './ServerEngine';
+import ServerMap from './ServerMap';
 import sprites from '../configs/sprites/sprites.json';
 
 import playerCfg from '../configs/objects/player.json';
 import terrainCfg from '../configs/objects/terrain.json';
-import ClientApi from './ClientApi';
+import ServerApi from './ServerApi';
 
 import Game from '../engine/Game';
 import GameStates from '../engine/GameStates';
 
-class GameClient extends Game {
+class GameServer extends Game {
     constructor(cfg) {
         super(cfg);
 
-        this.player = null;
+        this.players = null;
     }
 
     onCreate() {
@@ -21,15 +21,15 @@ class GameClient extends Game {
     }
 
     createApi() {
-        return new ClientApi();
+        return new ServerApi();
     }
 
     createEngine() {
-        return new ClientEngine(document.getElementById(this.cfg.tagId));
+        return new ServerEngine(document.getElementById(this.cfg.tagId));
     }
 
     createMap(levelCfg) {
-        return new ClientMap(this, this.engine, levelCfg);
+        return new ServerMap(this, this.engine, levelCfg);
     }
 
     getLastRenderTime() {
@@ -160,9 +160,9 @@ class GameClient extends Game {
     }
 
     static init(tagId = 'game') {
-        GameClient.game = new GameClient({ tagId });
+        GameServer.game = new GameServer({ tagId });
         console.log('INIT');
     }
 }
 
-export default GameClient;
+export default GameServer;

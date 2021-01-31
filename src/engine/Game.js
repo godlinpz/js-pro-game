@@ -11,10 +11,18 @@ class Game {
         this.gameObjects = {};
         this.state = GameStates.start;
 
+        this.api = this.createApi();
+        this.api.connect();
+
         this.engine = this.createEngine();
         this.map = this.createMap(levelCfg);
         this.onCreate();
         this.initEngine();
+    }
+
+    createApi() {
+        // return new Api();
+        return {};
     }
 
     onCreate() {}
