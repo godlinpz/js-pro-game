@@ -9,9 +9,12 @@ class Game {
 
         this.cfg = cfg;
         this.gameObjects = {};
+        this.spawnPoints = [];
+        this.players = [];
+
         this.state = GameStates.start;
 
-        this.api = this.createApi();
+        this.api = this.createApi(cfg);
         this.api.connect();
 
         this.engine = this.createEngine();
@@ -20,9 +23,9 @@ class Game {
         this.initEngine();
     }
 
-    createApi() {
+    createApi(cfg) {
         // return new Api();
-        return {};
+        return { connect: () => {} };
     }
 
     onCreate() {}
@@ -41,6 +44,10 @@ class Game {
 
     setState(state) {
         this.state = state;
+    }
+
+    addSpawnPoint(spawnPoint) {
+        this.spawnPoints.push(spawnPoint);
     }
 
     onPreRender([time, timeGap]) {}

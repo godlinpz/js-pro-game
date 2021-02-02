@@ -28,8 +28,8 @@ class Cell extends MovableObject {
 
         cellCfg.forEach((layer, level) =>
             layer.forEach((name) => {
-                if (name === 'player') this.initPlayer(name, level);
-                else this.initCellObject(name, level);
+                const obj = this.initCellObject(name, level);
+                if (name === 'spawn') this.addSpawnPoint(obj);
             }),
         );
     }
@@ -54,10 +54,10 @@ class Cell extends MovableObject {
         return obj;
     }
 
-    initPlayer(name, level) {
-        this.spawnPoints.push([this.cellX, this.cellY]);
+    addSpawnPoint(obj) {
+        this.map.game.addSpawnPoint(obj);
 
-        return this.initCellObject(name, level);
+        return obj;
     }
 
     render(layer, time, timeGap) {

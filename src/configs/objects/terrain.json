@@ -16,5 +16,11 @@
         "type": "static",
         "sprite": ["terrain", "wall"],
         "frame": 0
+    },
+    "spawn": {
+        "name": "spawn",
+        "type": "static",
+        "sprite": ["terrain", "spawn"],
+        "frame": 0
     }
 }

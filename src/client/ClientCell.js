@@ -11,13 +11,17 @@ class ClientCell extends Cell {
         return new ClientGameObject(objCfg);
     }
 
-    initPlayer(name, level) {
-        const obj = super.initPlayer(name, level);
+    addSpawnPoint(spawnPoint) {
+        super.addSpawnPoint(spawnPoint);
 
         const { game, window } = this.map;
+        if (game.spawnPoints.length === 1) {
+            const player = this.initCellObject('player', spawnPoint.layer + 1);
+            game.setPlayer(player);
+            window.follow(player);
+        }
 
-        game.setPlayer(obj);
-        window.follow(obj);
+        return spawnPoint;
     }
 }
 

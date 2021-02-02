@@ -23,12 +23,9 @@ class GameMap {
     }
 
     init() {
-        const win = this.window.cfg;
-
         this.worldWidth = this.cellWidth * this.width;
         this.worldHeight = this.cellHeight * this.height;
 
-        this.window.init();
         this.initMap(this.levelCfg);
     }
 

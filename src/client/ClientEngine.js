@@ -9,6 +9,7 @@ class ClientEngine extends Engine {
 
         this.canvas.tabIndex = 1000;
         this.canvas.style.outline = 'none';
+        this.imageLoaders = [];
 
         this.sprites = {};
         this.images = {};
@@ -37,21 +38,18 @@ class ClientEngine extends Engine {
     }
 
     loadSprites(spriteGroups) {
-        const imageLoaders = [];
+        this.imageLoaders = [];
 
-        for (let groupName in spriteGroups) {
-            const group = spriteGroups[groupName];
-            this.sprites[groupName] = group;
+        super.loadSprites(spriteGroups);
 
-            for (let spriteName in group) {
-                const sprite = group[spriteName];
+        return Promise.all(this.imageLoaders);
+    }
 
-                const img = sprite.img;
-                if (!this.images[img]) imageLoaders.push(this.loadImage(img));
-            }
-        }
+    loadSprite(sprite) {
+        super.loadSprite(sprite);
 
-        return Promise.all(imageLoaders);
+        const img = sprite.img;
+        if (!this.images[img]) this.imageLoaders.push(this.loadImage(img));
     }
 
     loadImage(url) {
@@ -61,6 +59,14 @@ class ClientEngine extends Engine {
             i.onload = () => resolve(i);
             i.src = url;
         });
+    }
+
+    loop(timestamp) {
+        const { ctx, canvas } = this;
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        super.loop(timestamp);
     }
 
     initNextFrame() {

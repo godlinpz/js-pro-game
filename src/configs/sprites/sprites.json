@@ -106,6 +106,7 @@
     "terrain": {
         "grass": { "img": "/assets/sprites/terrain.png", "frames": [[896, 256, 64, 64]] },
         "water": { "img": "/assets/sprites/terrain.png", "frames": [[0, 576, 64, 64]] },
-        "wall": { "img": "/assets/sprites/terrain.png", "frames": [[448, 64, 64, 64]] }
+        "wall": { "img": "/assets/sprites/terrain.png", "frames": [[448, 64, 64, 64]] },
+        "spawn": { "img": "/assets/sprites/terrain.png", "frames": [[384, 640, 64, 64]] }
     }
 }

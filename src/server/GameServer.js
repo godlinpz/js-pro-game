@@ -12,20 +12,16 @@ import GameStates from '../engine/GameStates';
 class GameServer extends Game {
     constructor(cfg) {
         super(cfg);
-
-        this.players = null;
     }
 
-    onCreate() {
-        this.initKeys();
-    }
+    onCreate() {}
 
-    createApi() {
-        return new ServerApi();
+    createApi(cfg) {
+        return new ServerApi(cfg.apiServer);
     }
 
     createEngine() {
-        return new ServerEngine(document.getElementById(this.cfg.tagId));
+        return new ServerEngine();
     }
 
     createMap(levelCfg) {
@@ -34,18 +30,6 @@ class GameServer extends Game {
 
     getLastRenderTime() {
         return this.engine.lastRenderTime;
-    }
-
-    initKeys() {
-        this.keys = {
-            ArrowLeft: () => this.movePlayer(-1, 0),
-            ArrowRight: () => this.movePlayer(1, 0),
-            ArrowUp: () => this.movePlayer(0, -1),
-            ArrowDown: () => this.movePlayer(0, 1),
-        };
-        this.keysOnce = {
-            Space: (pressed) => pressed && this.pauseGame(),
-        };
     }
 
     initEngine() {
@@ -59,10 +43,6 @@ class GameServer extends Game {
         const engine = this.engine;
 
         [
-            ['keydown', 'onKeyDown'],
-            ['keyup', 'onKeyUp'],
-            ['mousedown', 'onMouseDown'],
-            ['mouseup', 'onMouseUp'],
             ['render', 'onRender'],
             ['prerender', 'onPreRender'],
         ].forEach(([e, handler]) => engine.on(e, (_, data) => this[handler].apply(this, [data])));
@@ -78,19 +58,14 @@ class GameServer extends Game {
         return this;
     }
 
-    setPlayer(player) {
-        this.player = player;
-    }
-
     onRender([time, timeGap]) {
         this.checkInput();
 
         super.onRender([time, timeGap]);
-
-        if (this.state === GameStates.start) this.renderStartBar();
     }
 
     checkInput() {
+        /*
         if (this.engine.keysPressed.size) {
             for (let key of Array.from(this.engine.keysPressed))
                 if (this.keys[key]) {
@@ -98,41 +73,7 @@ class GameServer extends Game {
                     break;
                 }
         }
-    }
-
-    renderStartBar() {
-        const ctx = this.engine.ctx;
-
-        ctx.fillStyle = 'black';
-        ctx.fillRect(200, 200, 200, 200);
-
-        ctx.fillStyle = 'orange';
-        ctx.fillRect(210, 210, 180, 180);
-
-        ctx.fillStyle = 'black';
-
-        ctx.font = '48px sans-serif';
-        ctx.fillText('START', 225, 315);
-    }
-
-    // onKeyDown({ key }) {
-    onKeyDown({ code }) {
-        // console.log('KEY DOWN', code);
-        this.keysOnce[code] && this.keysOnce[code](true);
-    }
-
-    onKeyUp({ code }) {
-        // console.log('KEY UP', key);
-        this.keysOnce[code] && this.keysOnce[code](false);
-    }
-
-    onMouseDown(e) {
-        // console.log('MOUSE DOWN', e);
-        this.setState(GameStates.play);
-    }
-
-    onMouseUp(e) {
-        // console.log('MOUSE UP', e);
+        */
     }
 
     pauseGame() {
@@ -159,8 +100,8 @@ class GameServer extends Game {
         }
     }
 
-    static init(tagId = 'game') {
-        GameServer.game = new GameServer({ tagId });
+    static init() {
+        GameServer.game = new GameServer({});
         console.log('INIT');
     }
 }

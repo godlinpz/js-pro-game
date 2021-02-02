@@ -10,6 +10,24 @@ class Engine {
         this.thisLoop = this.loop.bind(this);
     }
 
+    loadSprites(spriteGroups) {
+        const imageLoaders = [];
+
+        for (let groupName in spriteGroups) {
+            const group = spriteGroups[groupName];
+            this.sprites[groupName] = group;
+
+            for (let spriteName in group) {
+                const sprite = group[spriteName];
+                this.loadSprite(sprite);
+            }
+        }
+
+        return Promise.all(imageLoaders);
+    }
+
+    loadSprite(sprite) {}
+
     start() {
         this.loop();
     }

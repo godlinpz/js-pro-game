@@ -22,6 +22,7 @@ class ClientMap extends GameMap {
         this.cellWidth = (this.engine.canvas.width / win.width) | 0;
         this.cellHeight = (this.engine.canvas.height / win.height) | 0;
 
+        this.window.init();
         super.init();
     }
 

@@ -10,15 +10,6 @@ class ServerCell extends Cell {
     createGameObject(objCfg) {
         return new ServerGameObject(objCfg);
     }
-
-    initPlayer(name, level) {
-        const obj = super.initPlayer(name, level);
-
-        const { game, window } = this.map;
-
-        game.setPlayer(obj);
-        window.follow(obj);
-    }
 }
 
 export default ServerCell;
