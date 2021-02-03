@@ -1,19 +1,37 @@
-import socketio from 'socket.io-client';
-import _ from 'lodash';
 import EventSourceMixin from '../engine/EventSourceMixin';
+import { useApiMessageTypes } from '../engine/ApiMessageTypes';
 
 class ServerApi {
-    constructor(options = {}) {
-        // this.options = _.assign({ url: '', port: 3001, path: '/game' }, options || {});
-        // this.io = null;
+    constructor(cfg) {
+        Object.assign(this, cfg);
     }
 
     connect() {
-        console.log(this.options);
+        this.io.on('connection', (socket) => this.initSocket(socket));
     }
 
-    onHello(msg) {
-        console.log(`API: ${msg}`);
+    initSocket(socket) {
+        useApiMessageTypes(this, socket);
+
+        console.log('New connection!');
+
+        const welcomeMessage = { state: 'unpaused' };
+        socket.emit('welcome', welcomeMessage);
+    }
+
+    broadcast(msgType, message, room = 'game') {
+        this.io.to(room).emit(msgType, message);
+    }
+
+    onJoin(socket) {
+        const player = { player: { x: 6, y: 6 } };
+        socket.join('game');
+        socket.emit('join', player);
+        this.broadcast('new player', player);
+    }
+
+    onDisconnect(socket, reason) {
+        console.log('Disconnection: ' + reason);
     }
 }
 

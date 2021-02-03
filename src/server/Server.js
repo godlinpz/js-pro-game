@@ -19,15 +19,15 @@ class Server {
 
     async run() {
         console.log('Starting servers...');
-        const apiServer = await this.startApi();
-        this.gameServer = new GameServer({ apiServer });
+        const io = await this.startApi();
+        this.gameServer = new GameServer({ io });
         // this.startSite();
     }
 
     async startSite() {
         const server = (this.siteServer = Hapi.server({
-            port: this.sitePort,
-            host: this.host,
+            port: this.site.port,
+            host: this.site.host,
         }));
 
         await server.register(HapiInert);
@@ -50,38 +50,24 @@ class Server {
 
     async startApi() {
         const apiServer = (this.apiServer = Hapi.server({
-            port: this.apiPort,
-            host: this.host,
+            port: this.api.port,
+            host: this.api.host,
         }));
 
         const io = socketio(apiServer.listener, {
-            path: '/game',
+            path: this.api.path,
             cors: {
-                origin: `http://${this.host}:${this.sitePort}`,
+                origin: `http://${this.site.host}:${this.site.port}`,
                 methods: ['GET', 'POST'],
                 // allowedHeaders: ["my-custom-header"],
                 credentials: true,
             },
         });
 
-        io.on('connection', (socket) => {
-            // either with send()
-
-            socket.join('game');
-
-            io.to('game').emit('hello', 'new player!');
-
-            console.log('New connection!');
-
-            socket.on('disconnect', (reason) => {
-                console.log('Disconnection: ' + reason);
-            });
-        });
-
         await apiServer.start();
         console.log('Real Time Server running on %s', apiServer.info.uri);
 
-        return apiServer;
+        return io;
     }
 }
 

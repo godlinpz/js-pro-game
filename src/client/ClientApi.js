@@ -1,23 +1,28 @@
 import socketio from 'socket.io-client';
 import _ from 'lodash';
 import EventSourceMixin from '../engine/EventSourceMixin';
+import { useApiMessageTypes } from '../engine/ApiMessageTypes';
 
 class ClientApi {
-    constructor(options = {}) {
-        this.options = _.assign({ url: '', port: 3001, path: '/game' }, options || {});
+    constructor(cfg) {
+        this.cfg = _.assign(cfg, cfg.apiCfg);
         this.io = null;
     }
 
     connect() {
-        console.log(this.options);
-        const { port, url } = this.options;
-        const io = (this.io = socketio(`${url}:${port}`, this.options));
+        // console.log(this.cfg);
+        const { port, url } = this.cfg;
+        const io = (this.io = socketio(`${url}:${port}`, this.cfg));
 
-        io.on('hello', this.onHello.bind(this));
+        useApiMessageTypes(this, io);
     }
 
-    onHello(msg) {
-        console.log(`API: ${msg}`);
+    onJoin(socket, player) {
+        console.log('JOINED A GAME!', player);
+    }
+
+    onWelcome(socket, serverStatus) {
+        console.log('Server is online', serverStatus);
     }
 }
 

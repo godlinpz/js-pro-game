@@ -20,8 +20,8 @@ class GameClient extends Game {
         this.initKeys();
     }
 
-    createApi() {
-        return new ClientApi();
+    createApi(cfg) {
+        return new ClientApi(cfg);
     }
 
     createEngine() {
@@ -159,8 +159,8 @@ class GameClient extends Game {
         }
     }
 
-    static init(tagId = 'game') {
-        GameClient.game = new GameClient({ tagId });
+    static init(cfg) {
+        GameClient.game = new GameClient(cfg);
         console.log('INIT');
     }
 }

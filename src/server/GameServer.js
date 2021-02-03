@@ -17,7 +17,7 @@ class GameServer extends Game {
     onCreate() {}
 
     createApi(cfg) {
-        return new ServerApi(cfg.apiServer);
+        return new ServerApi(cfg);
     }
 
     createEngine() {

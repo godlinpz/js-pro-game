@@ -1,6 +1,7 @@
+import netConfig from '../configs/net.json';
 import Server from './Server';
 
-const server = new Server({ host: 'localhost', sitePort: 3000, apiPort: 3001 });
+const server = new Server(netConfig.servers);
 
 server.run();
 

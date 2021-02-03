@@ -1,0 +1,15 @@
+{
+    "servers": {
+        "api": {
+            "host": "localhost",
+            "port": 3001,
+            "path": "/game",
+            "url": ""
+        },
+        "site": {
+            "host": "localhost",
+            "port": 3000,
+            "url": ""
+        }
+    }
+}
