@@ -14,6 +14,7 @@ class GameClient extends Game {
         super(cfg);
 
         this.player = null;
+        this.playerLayer = 2;
     }
 
     onCreate() {
@@ -21,7 +22,7 @@ class GameClient extends Game {
     }
 
     createApi(cfg) {
-        return new ClientApi(cfg);
+        return new ClientApi({ game: this, ...cfg });
     }
 
     createEngine() {
@@ -82,6 +83,18 @@ class GameClient extends Game {
         this.player = player;
     }
 
+    createCurrentPlayer({ id, cellX, cellY, layer }) {
+        if (!this.player) {
+            const playerObj = this.createPlayer({ id, cellX, cellY, layer }, 'player');
+
+            const { window } = this.map;
+
+            window.follow(playerObj);
+            this.setPlayer(playerObj);
+            this.setState(GameStates.play);
+        }
+    }
+
     onRender([time, timeGap]) {
         this.checkInput();
 
@@ -128,7 +141,8 @@ class GameClient extends Game {
 
     onMouseDown(e) {
         // console.log('MOUSE DOWN', e);
-        this.setState(GameStates.play);
+        if (this.state === GameStates.start) this.api.join();
+        // this.setState(GameStates.play);
     }
 
     onMouseUp(e) {
@@ -140,21 +154,17 @@ class GameClient extends Game {
         this.setState(this.engine.pausedAt ? GameStates.pause : GameStates.play);
     }
 
-    movePlayer(dx, dy) {
-        const player = this.player;
+    movePlayer(dx, dy, player = null) {
+        player = player || this.player;
 
-        if (player && !player.speed) {
-            const cell = player.cell;
-            const [newX, newY] = [cell.cellX + dx, cell.cellY + dy];
-            const newCell = this.map.cell(newX, newY);
+        if (player && (player !== this.player || !player.speed) && super.movePlayer(dx, dy, player)) {
+            const state = (dx > 0 && 'right') || (dx < 0 && 'left') || (dy > 0 && 'down') || (dy < 0 && 'up') || 'main';
+            player.setState(state);
+            player.once('animation-stopped', () => player.setState('main', 100));
 
-            if (newCell && newCell.filter((obj) => obj.cfg.name === 'grass').length) {
-                player.moveToCell(newCell);
-                const state =
-                    (dx > 0 && 'right') || (dx < 0 && 'left') || (dy > 0 && 'down') || (dy < 0 && 'up') || 'main';
-                player.setState(state);
-                player.once('animation-stopped', () => player.setState('main', 100));
+            if (player === this.player) {
                 this.map.window.focus(player);
+                this.api.movePlayer({ dx, dy });
             }
         }
     }

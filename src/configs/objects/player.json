@@ -27,5 +27,34 @@
                 "frames": [9, 10, 11, 10]
             }
         }
+    },
+    "boy": {
+        "name": "boy",
+        "type": "animated",
+        "size": 100,
+        "spriteSize": 80,
+        "sprite": ["characters", "boy1"],
+        "states": {
+            "main": {
+                "duration": 5000,
+                "frames": [1, 4, 1, 7]
+            },
+            "down": {
+                "duration": 200,
+                "frames": [0, 1, 2, 1]
+            },
+            "left": {
+                "duration": 200,
+                "frames": [3, 4, 5, 4]
+            },
+            "right": {
+                "duration": 200,
+                "frames": [6, 7, 8, 7]
+            },
+            "up": {
+                "duration": 200,
+                "frames": [9, 10, 11, 10]
+            }
+        }
     }
 }

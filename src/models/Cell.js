@@ -12,8 +12,9 @@ class Cell extends MovableObject {
             height,
             x: cfg.cellX * width,
             y: cfg.cellY * height,
+            cellX: cfg.cellX,
+            cellY: cfg.cellY,
             objects: [], // GameObjects stack
-            spawnPoints: [],
         });
 
         this.initCell();

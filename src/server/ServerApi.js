@@ -15,7 +15,7 @@ class ServerApi {
 
         console.log('New connection!');
 
-        const welcomeMessage = { state: 'unpaused' };
+        const welcomeMessage = { player_id: socket.id };
         socket.emit('welcome', welcomeMessage);
     }
 
@@ -24,10 +24,22 @@ class ServerApi {
     }
 
     onJoin(socket) {
-        const player = { player: { x: 6, y: 6 } };
+        const { game } = this;
+        const playerCfg = game.getRandomSpawnPoint();
+        const player = { id: socket.id, ...playerCfg };
+        game.createPlayer(player);
+        const response = { player, playersList: game.getPlayersList() };
         socket.join('game');
-        socket.emit('join', player);
-        this.broadcast('new player', player);
+        socket.emit('join', response);
+        this.broadcast('newPlayer', player);
+    }
+
+    onMove(socket, moveCfg) {
+        const { game } = this;
+        const id = socket.id;
+        const { dx, dy } = moveCfg;
+        const player = game.getPlayerById(socket.id);
+        if (game.movePlayer(dx, dy, player)) socket.broadcast.emit('playerMove', { dx, dy, id });
     }
 
     onDisconnect(socket, reason) {

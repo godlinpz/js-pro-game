@@ -2,6 +2,7 @@ import GameStates from './GameStates';
 import levelCfg from '../configs/maps/map.json';
 import GameMap from './GameMap';
 import Engine from '../engine/Engine';
+import _ from 'lodash';
 
 class Game {
     constructor(cfg) {
@@ -10,7 +11,7 @@ class Game {
         this.cfg = cfg;
         this.gameObjects = {};
         this.spawnPoints = [];
-        this.players = [];
+        this.players = {};
 
         this.state = GameStates.start;
 
@@ -50,6 +51,33 @@ class Game {
         this.spawnPoints.push(spawnPoint);
     }
 
+    setPlayers(playersList) {
+        _.forOwn(playersList, (player) => this.createPlayer(player));
+    }
+
+    createPlayer({ id, cellX, cellY, layer }, playerType = 'boy') {
+        if (!this.players[id]) {
+            const cell = this.map.cell(cellX, cellY);
+            const playerObj = cell.initCellObject(playerType, layer);
+            playerObj.playerId = id;
+
+            this.players[id] = playerObj;
+        }
+
+        return this.players[id];
+    }
+
+    getPlayersList() {
+        const list = [];
+        _.forOwn(this.players, (player, id) => {
+            const { layer } = player;
+            const { cellX, cellY } = player.cell;
+            list.push({ id, layer, cellX, cellY });
+        });
+        console.log('getPlayersList', list);
+        return list;
+    }
+
     onPreRender([time, timeGap]) {}
 
     onRender([time, timeGap]) {
@@ -62,6 +90,23 @@ class Game {
 
     getLastRenderTime() {
         return 0;
+    }
+
+    getPlayerById(id) {
+        return this.players[id];
+    }
+
+    movePlayer(dx, dy, player) {
+        if (player) {
+            const cell = player.cell;
+            const [newX, newY] = [cell.cellX + dx, cell.cellY + dy];
+            const newCell = this.map.cell(newX, newY);
+
+            if (newCell && newCell.filter((obj) => obj.cfg.name === 'grass').length) {
+                player.moveToCell(newCell);
+                return true;
+            }
+        }
     }
 }
 

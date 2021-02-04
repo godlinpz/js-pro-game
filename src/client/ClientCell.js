@@ -14,13 +14,6 @@ class ClientCell extends Cell {
     addSpawnPoint(spawnPoint) {
         super.addSpawnPoint(spawnPoint);
 
-        const { game, window } = this.map;
-        if (game.spawnPoints.length === 1) {
-            const player = this.initCellObject('player', spawnPoint.layer + 1);
-            game.setPlayer(player);
-            window.follow(player);
-        }
-
         return spawnPoint;
     }
 }

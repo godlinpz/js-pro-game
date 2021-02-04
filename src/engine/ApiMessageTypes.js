@@ -1,4 +1,4 @@
-const ApiMessageTypes = ['join', 'disconnect', 'welcome'].map((msgType) => [
+const ApiMessageTypes = ['join', 'disconnect', 'welcome', 'newPlayer', 'move', 'playerMove'].map((msgType) => [
     msgType,
     'on' + msgType[0].toUpperCase() + msgType.substr(1),
 ]);

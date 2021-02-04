@@ -9,6 +9,8 @@ import ServerApi from './ServerApi';
 import Game from '../engine/Game';
 import GameStates from '../engine/GameStates';
 
+import _ from 'lodash';
+
 class GameServer extends Game {
     constructor(cfg) {
         super(cfg);
@@ -17,7 +19,7 @@ class GameServer extends Game {
     onCreate() {}
 
     createApi(cfg) {
-        return new ServerApi(cfg);
+        return new ServerApi({ game: this, ...cfg });
     }
 
     createEngine() {
@@ -26,6 +28,13 @@ class GameServer extends Game {
 
     createMap(levelCfg) {
         return new ServerMap(this, this.engine, levelCfg);
+    }
+
+    getRandomSpawnPoint() {
+        const spawn = _.sample(this.spawnPoints);
+        const { cellX, cellY } = spawn.cell;
+        const layer = spawn.layer + 1;
+        return { cellX, cellY, layer };
     }
 
     getLastRenderTime() {
@@ -79,25 +88,6 @@ class GameServer extends Game {
     pauseGame() {
         this.engine[(this.engine.pausedAt ? 'un' : '') + 'pause']();
         this.setState(this.engine.pausedAt ? GameStates.pause : GameStates.play);
-    }
-
-    movePlayer(dx, dy) {
-        const player = this.player;
-
-        if (player && !player.speed) {
-            const cell = player.cell;
-            const [newX, newY] = [cell.cellX + dx, cell.cellY + dy];
-            const newCell = this.map.cell(newX, newY);
-
-            if (newCell && newCell.filter((obj) => obj.cfg.name === 'grass').length) {
-                player.moveToCell(newCell);
-                const state =
-                    (dx > 0 && 'right') || (dx < 0 && 'left') || (dy > 0 && 'down') || (dy < 0 && 'up') || 'main';
-                player.setState(state);
-                player.once('animation-stopped', () => player.setState('main', 100));
-                this.map.window.focus(player);
-            }
-        }
     }
 
     static init() {

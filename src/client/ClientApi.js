@@ -17,12 +17,38 @@ class ClientApi {
         useApiMessageTypes(this, io);
     }
 
+    onWelcome(socket, serverStatus) {
+        console.log('Server is online', serverStatus);
+    }
+
     onJoin(socket, player) {
+        const { game } = this.cfg;
+        game.createCurrentPlayer(player.player);
+        game.setPlayers(player.playersList);
         console.log('JOINED A GAME!', player);
     }
 
-    onWelcome(socket, serverStatus) {
-        console.log('Server is online', serverStatus);
+    onNewPlayer(socket, player) {
+        this.cfg.game.createPlayer(player);
+    }
+
+    onPlayerMove(socket, moveCfg) {
+        const { game } = this.cfg;
+        const { dx, dy, id } = moveCfg;
+        const player = game.getPlayerById(id);
+        game.movePlayer(dx, dy, player);
+    }
+
+    emit(msgType, data = null) {
+        this.io.emit(msgType, data);
+    }
+
+    join() {
+        this.emit('join');
+    }
+
+    movePlayer(direction) {
+        this.emit('move', direction);
     }
 }
 
