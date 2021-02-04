@@ -39,6 +39,11 @@ class ClientApi {
         game.movePlayer(dx, dy, player);
     }
 
+    onPlayerDisconnect(socket, id) {
+        const { game } = this.cfg;
+        game.removePlayer(id);
+    }
+
     emit(msgType, data = null) {
         this.io.emit(msgType, data);
     }

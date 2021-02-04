@@ -28,12 +28,128 @@
             }
         }
     },
-    "boy": {
-        "name": "boy",
+    "boy2": {
+        "name": "boy2",
         "type": "animated",
         "size": 100,
         "spriteSize": 80,
-        "sprite": ["characters", "boy1"],
+        "sprite": ["characters", "boy2"],
+        "states": {
+            "main": {
+                "duration": 5000,
+                "frames": [1, 4, 1, 7]
+            },
+            "down": {
+                "duration": 200,
+                "frames": [0, 1, 2, 1]
+            },
+            "left": {
+                "duration": 200,
+                "frames": [3, 4, 5, 4]
+            },
+            "right": {
+                "duration": 200,
+                "frames": [6, 7, 8, 7]
+            },
+            "up": {
+                "duration": 200,
+                "frames": [9, 10, 11, 10]
+            }
+        }
+    },
+    "boy3": {
+        "name": "boy3",
+        "type": "animated",
+        "size": 100,
+        "spriteSize": 80,
+        "sprite": ["characters", "boy3"],
+        "states": {
+            "main": {
+                "duration": 5000,
+                "frames": [1, 4, 1, 7]
+            },
+            "down": {
+                "duration": 200,
+                "frames": [0, 1, 2, 1]
+            },
+            "left": {
+                "duration": 200,
+                "frames": [3, 4, 5, 4]
+            },
+            "right": {
+                "duration": 200,
+                "frames": [6, 7, 8, 7]
+            },
+            "up": {
+                "duration": 200,
+                "frames": [9, 10, 11, 10]
+            }
+        }
+    },
+    "girl1": {
+        "name": "girl1",
+        "type": "animated",
+        "size": 100,
+        "spriteSize": 80,
+        "sprite": ["characters", "girl1"],
+        "states": {
+            "main": {
+                "duration": 5000,
+                "frames": [1, 4, 1, 7]
+            },
+            "down": {
+                "duration": 200,
+                "frames": [0, 1, 2, 1]
+            },
+            "left": {
+                "duration": 200,
+                "frames": [3, 4, 5, 4]
+            },
+            "right": {
+                "duration": 200,
+                "frames": [6, 7, 8, 7]
+            },
+            "up": {
+                "duration": 200,
+                "frames": [9, 10, 11, 10]
+            }
+        }
+    },
+    "girl2": {
+        "name": "girl2",
+        "type": "animated",
+        "size": 100,
+        "spriteSize": 80,
+        "sprite": ["characters", "girl2"],
+        "states": {
+            "main": {
+                "duration": 5000,
+                "frames": [1, 4, 1, 7]
+            },
+            "down": {
+                "duration": 200,
+                "frames": [0, 1, 2, 1]
+            },
+            "left": {
+                "duration": 200,
+                "frames": [3, 4, 5, 4]
+            },
+            "right": {
+                "duration": 200,
+                "frames": [6, 7, 8, 7]
+            },
+            "up": {
+                "duration": 200,
+                "frames": [9, 10, 11, 10]
+            }
+        }
+    },
+    "girl3": {
+        "name": "girl3",
+        "type": "animated",
+        "size": 100,
+        "spriteSize": 80,
+        "sprite": ["characters", "girl3"],
         "states": {
             "main": {
                 "duration": 5000,

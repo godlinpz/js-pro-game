@@ -45,10 +45,14 @@ class GameObject extends MovableObject {
     }
 
     moveToCell(cell, smooth = true, speed = 200) {
-        if (this.cell) this.cell.remove(this);
+        this.detouch();
 
         cell.push(this);
         this.moveTo(cell.x, cell.y, smooth, speed);
+    }
+
+    detouch() {
+        if (this.cell) this.cell.remove(this);
     }
 
     render(time, timeGap) {

@@ -41,13 +41,6 @@ class GameServer extends Game {
         return this.engine.lastRenderTime;
     }
 
-    initEngine() {
-        this.engine
-            .loadSprites(sprites)
-            .then(() => this.onEngineReady())
-            .catch((e) => console.error('Init engine error!', e));
-    }
-
     initHandlers() {
         const engine = this.engine;
 

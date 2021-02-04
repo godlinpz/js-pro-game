@@ -1,5 +1,6 @@
 import EventSourceMixin from '../engine/EventSourceMixin';
 import { useApiMessageTypes } from '../engine/ApiMessageTypes';
+import _ from 'lodash';
 
 class ServerApi {
     constructor(cfg) {
@@ -26,7 +27,7 @@ class ServerApi {
     onJoin(socket) {
         const { game } = this;
         const playerCfg = game.getRandomSpawnPoint();
-        const player = { id: socket.id, ...playerCfg };
+        const player = { id: socket.id, skin: game.getRandomSkin(), ...playerCfg };
         game.createPlayer(player);
         const response = { player, playersList: game.getPlayersList() };
         socket.join('game');
@@ -43,7 +44,10 @@ class ServerApi {
     }
 
     onDisconnect(socket, reason) {
+        const { game } = this;
         console.log('Disconnection: ' + reason);
+        game.removePlayer(socket.id);
+        socket.broadcast.emit('playerDisconnect', socket.id);
     }
 }
 

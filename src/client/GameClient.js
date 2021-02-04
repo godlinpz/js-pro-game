@@ -1,6 +1,5 @@
 import ClientEngine from './ClientEngine';
 import ClientMap from './ClientMap';
-import sprites from '../configs/sprites/sprites.json';
 
 import playerCfg from '../configs/objects/player.json';
 import terrainCfg from '../configs/objects/terrain.json';
@@ -45,15 +44,8 @@ class GameClient extends Game {
             ArrowDown: () => this.movePlayer(0, 1),
         };
         this.keysOnce = {
-            Space: (pressed) => pressed && this.pauseGame(),
+            // Space: (pressed) => pressed && this.pauseGame(),
         };
-    }
-
-    initEngine() {
-        this.engine
-            .loadSprites(sprites)
-            .then(() => this.onEngineReady())
-            .catch((e) => console.error('Init engine error!', e));
     }
 
     initHandlers() {
@@ -83,9 +75,9 @@ class GameClient extends Game {
         this.player = player;
     }
 
-    createCurrentPlayer({ id, cellX, cellY, layer }) {
+    createCurrentPlayer(playerCfg) {
         if (!this.player) {
-            const playerObj = this.createPlayer({ id, cellX, cellY, layer }, 'player');
+            const playerObj = this.createPlayer(playerCfg);
 
             const { window } = this.map;
 
