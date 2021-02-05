@@ -49,7 +49,7 @@ class ClientApi {
     }
 
     join() {
-        this.emit('join');
+        this.emit('join', this.cfg.game.playerName);
     }
 
     movePlayer(direction) {

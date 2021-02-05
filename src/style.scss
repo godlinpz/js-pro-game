@@ -15,7 +15,8 @@
     border: 9px solid #626262;
 }
 
-.preloader {
+.preloader,
+.username {
     display: flex;
     position: absolute;
     align-items: center;
@@ -28,4 +29,35 @@
     color: white;
     text-transform: uppercase;
     background-color: #b67909;
+}
+
+.username {
+    z-index: 10;
+    background-color: orange;
+    color: black;
+    flex-direction: column;
+
+    input,
+    button {
+        display: block;
+        border: none;
+        border-radius: 20px;
+        box-sizing: border-box;
+        font-size: 32px;
+        width: 80%;
+        outline: none;
+        padding: 5px 20px;
+        text-align: center;
+    }
+
+    button {
+        margin-top: 5%;
+        background: black;
+        color: white;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #333;
+        }
+    }
 }

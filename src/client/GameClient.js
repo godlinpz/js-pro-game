@@ -8,16 +8,31 @@ import ClientApi from './ClientApi';
 import Game from '../engine/Game';
 import GameStates from '../engine/GameStates';
 
+import $ from 'jquery';
+
 class GameClient extends Game {
     constructor(cfg) {
         super(cfg);
 
         this.player = null;
         this.playerLayer = 2;
+        this.playerName = '';
     }
 
     onCreate() {
         this.initKeys();
+        const $form = $('form.username');
+        $form.on('submit', (e) => {
+            e.preventDefault();
+
+            let error = false;
+            const username = $form[0].username.value;
+            username.length < 3 && (error = 'Minimum 3 letters');
+            username.length > 12 && (error = 'Maximum 12 letters');
+
+            error && alert(error);
+            error || ((this.playerName = username) && $form.hide());
+        });
     }
 
     createApi(cfg) {

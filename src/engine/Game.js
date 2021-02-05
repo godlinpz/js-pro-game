@@ -63,13 +63,14 @@ class Game {
         _.forOwn(playersList, (player) => this.createPlayer(player));
     }
 
-    createPlayer({ id, cellX, cellY, layer, skin }) {
+    createPlayer({ id, cellX, cellY, layer, skin, name }) {
         if (!this.players[id]) {
             // console.log({ id, cellX, cellY, layer, skin });
             const cell = this.map.cell(cellX, cellY);
             const playerObj = cell.initCellObject(skin, layer);
             playerObj.playerId = id;
             playerObj.skin = skin;
+            playerObj.playerName = name;
 
             this.players[id] = playerObj;
         }
@@ -80,9 +81,9 @@ class Game {
     getPlayersList() {
         const list = [];
         _.forOwn(this.players, (player, id) => {
-            const { layer, skin } = player;
+            const { layer, skin, playerName } = player;
             const { cellX, cellY } = player.cell;
-            list.push({ id, layer, cellX, cellY, skin });
+            list.push({ id, layer, cellX, cellY, skin, name: playerName });
         });
         // console.log('getPlayersList', list);
         return list;

@@ -24,10 +24,10 @@ class ServerApi {
         this.io.to(room).emit(msgType, message);
     }
 
-    onJoin(socket) {
+    onJoin(socket, name) {
         const { game } = this;
         const playerCfg = game.getRandomSpawnPoint();
-        const player = { id: socket.id, skin: game.getRandomSkin(), ...playerCfg };
+        const player = { id: socket.id, name, skin: game.getRandomSkin(), ...playerCfg };
         game.createPlayer(player);
         const response = { player, playersList: game.getPlayersList() };
         socket.join('game');
