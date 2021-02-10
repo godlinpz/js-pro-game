@@ -161,22 +161,35 @@ class GameClient extends Game {
         this.setState(this.engine.pausedAt ? GameStates.pause : GameStates.play);
     }
 
+    onMeetPlayers(player, player2) {
+        if (this.player === player || this.player === player2) {
+            $('.meetMsg span').text((this.player === player ? player2 : player).playerName);
+            const $meetMsg = $('.meetMsg');
+            const meetMsg = $meetMsg[0];
+            $meetMsg.show();
+
+            if (meetMsg.timeout) clearTimeout(meetMsg.timeout);
+            meetMsg.timeout = setTimeout(() => $meetMsg.hide(), 3000);
+        }
+    }
+
     movePlayerTo(newX, newY, player = null) {
         player = player || this.player;
 
+        const isCurrent = player === this.player;
+
         if (player) {
             const [dx, dy] = [newX - player.cell.cellX, newY - player.cell.cellY];
-            console.log(dx, dy);
-
-            if ((player !== this.player || !player.speed) && super.movePlayerTo(newX, newY, player)) {
+            if (!isCurrent || !player.speed) {
                 const direction = this.offsetToDirection(dx, dy);
-                const state = direction || 'main';
-                player.setState(state);
-                player.once('motion-stopped', () => player.setState('main', 100));
+                isCurrent && this.api.movePlayer(direction);
 
-                if (player === this.player && state !== 'main') {
-                    this.map.window.focus(player);
-                    this.api.movePlayer(direction);
+                if (super.movePlayerTo(newX, newY, player)) {
+                    const state = direction || 'main';
+                    player.setState(state);
+                    player.once('motion-stopped', () => player.setState('main', 100));
+
+                    isCurrent && this.map.window.focus(player);
                 }
             }
         }

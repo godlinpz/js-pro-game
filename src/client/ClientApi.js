@@ -44,6 +44,13 @@ class ClientApi {
         game.removePlayer(id);
     }
 
+    onMeetPlayers(socket, { id, id2 }) {
+        const { game } = this.cfg;
+        const player = game.getPlayerById(id);
+        const player2 = game.getPlayerById(id2);
+        game.onMeetPlayers(player, player2);
+    }
+
     emit(msgType, data = null) {
         this.io.emit(msgType, data);
     }

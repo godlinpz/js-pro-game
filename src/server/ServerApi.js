@@ -36,12 +36,17 @@ class ServerApi {
     }
 
     onMove(socket, moveCfg) {
-        const { game } = this;
-        const id = socket.id;
-        const [dx, dy] = game.directionToOffset(moveCfg);
-        const player = game.getPlayerById(socket.id);
-        const target = game.movePlayerBy(dx, dy, player);
-        if (target) socket.broadcast.emit('playerMove', { id, ...target });
+        if (!socket.isMoving) {
+            const { game } = this;
+            const id = socket.id;
+            const [dx, dy] = game.directionToOffset(moveCfg);
+            const player = game.getPlayerById(socket.id);
+            const target = game.movePlayerBy(dx, dy, player);
+            if (target) socket.broadcast.emit('playerMove', { id, ...target });
+
+            socket.isMoving = true;
+            setTimeout(() => (socket.isMoving = false), 200);
+        }
     }
 
     onDisconnect(socket, reason) {
@@ -49,6 +54,10 @@ class ServerApi {
         console.log('Disconnection: ' + reason);
         game.removePlayer(socket.id);
         socket.broadcast.emit('playerDisconnect', socket.id);
+    }
+
+    meetPlayers(player, player2) {
+        this.broadcast('meetPlayers', { id: player.playerId, id2: player2.playerId });
     }
 }
 

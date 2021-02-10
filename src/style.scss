@@ -13,6 +13,26 @@
     position: relative;
     margin: auto;
     border: 9px solid #626262;
+
+    .meetMsg {
+        display: none;
+        position: absolute;
+        top: -40px;
+        width: 100%;
+        text-align: center;
+        background-color: green;
+        color: white;
+        font-size: 16px;
+        font-family: sans-serif;
+        padding: 10px 20px;
+        z-index: 10;
+        box-sizing: border-box;
+
+        span {
+            color: yellow;
+            font-weight: bold;
+        }
+    }
 }
 
 .preloader,

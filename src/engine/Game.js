@@ -137,16 +137,17 @@ class Game {
         }[direction];
     }
 
+    meetPlayers(player, player2) {}
+
     movePlayerTo(newX, newY, player = null) {
         player = player || this.player;
         if (player) {
             const newCell = this.map.cell(newX, newY);
-
-            if (
-                newCell &&
-                newCell.filter(({ cfg: { name } }) => name === 'grass').length &&
-                !newCell.filter(({ playerName }) => playerName).length
-            ) {
+            const [player2] = newCell.filter(({ playerName }) => playerName);
+            // console.log('MEET', player, player2);
+            if (player2) {
+                this.meetPlayers(player, player2);
+            } else if (newCell && newCell.filter(({ cfg: { name } }) => name === 'grass').length) {
                 player.moveToCell(newCell);
                 return { x: newCell.cellX, y: newCell.cellY };
             }

@@ -6,6 +6,7 @@ const ApiMessageTypes = [
     'move',
     'playerMove',
     'playerDisconnect',
+    'meetPlayers',
 ].map((msgType) => [msgType, 'on' + msgType[0].toUpperCase() + msgType.substr(1)]);
 
 const useApiMessageTypes = (api, socket) => {

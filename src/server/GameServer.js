@@ -83,6 +83,10 @@ class GameServer extends Game {
         this.setState(this.engine.pausedAt ? GameStates.pause : GameStates.play);
     }
 
+    meetPlayers(player, player2) {
+        this.api.meetPlayers(player, player2);
+    }
+
     static init() {
         GameServer.game = new GameServer({});
         console.log('INIT');
