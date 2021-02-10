@@ -1,6 +1,6 @@
 {
-    "player": {
-        "name": "player",
+    "boy1": {
+        "name": "boy1",
         "type": "animated",
         "size": 100,
         "spriteSize": 80,

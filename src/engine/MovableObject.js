@@ -60,7 +60,7 @@ class MovableObject extends PositionedObject {
             if (newX === me.toX && newY === me.toY) {
                 me.speed = 0;
                 me.motionStartTime = 0;
-                me.trigger('animation-stopped');
+                me.trigger('motion-stopped');
             }
 
             me.x = newX;

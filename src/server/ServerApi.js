@@ -38,9 +38,10 @@ class ServerApi {
     onMove(socket, moveCfg) {
         const { game } = this;
         const id = socket.id;
-        const { dx, dy } = moveCfg;
+        const [dx, dy] = game.directionToOffset(moveCfg);
         const player = game.getPlayerById(socket.id);
-        if (game.movePlayer(dx, dy, player)) socket.broadcast.emit('playerMove', { dx, dy, id });
+        const target = game.movePlayerBy(dx, dy, player);
+        if (target) socket.broadcast.emit('playerMove', { id, ...target });
     }
 
     onDisconnect(socket, reason) {

@@ -34,9 +34,9 @@ class ClientApi {
 
     onPlayerMove(socket, moveCfg) {
         const { game } = this.cfg;
-        const { dx, dy, id } = moveCfg;
+        const { x, y, id } = moveCfg;
         const player = game.getPlayerById(id);
-        game.movePlayer(dx, dy, player);
+        game.movePlayerTo(x, y, player);
     }
 
     onPlayerDisconnect(socket, id) {

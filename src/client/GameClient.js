@@ -53,10 +53,10 @@ class GameClient extends Game {
 
     initKeys() {
         this.keys = {
-            ArrowLeft: () => this.movePlayer(-1, 0),
-            ArrowRight: () => this.movePlayer(1, 0),
-            ArrowUp: () => this.movePlayer(0, -1),
-            ArrowDown: () => this.movePlayer(0, 1),
+            ArrowLeft: () => this.movePlayerBy(-1, 0),
+            ArrowRight: () => this.movePlayerBy(1, 0),
+            ArrowUp: () => this.movePlayerBy(0, -1),
+            ArrowDown: () => this.movePlayerBy(0, 1),
         };
         this.keysOnce = {
             // Space: (pressed) => pressed && this.pauseGame(),
@@ -161,17 +161,23 @@ class GameClient extends Game {
         this.setState(this.engine.pausedAt ? GameStates.pause : GameStates.play);
     }
 
-    movePlayer(dx, dy, player = null) {
+    movePlayerTo(newX, newY, player = null) {
         player = player || this.player;
 
-        if (player && (player !== this.player || !player.speed) && super.movePlayer(dx, dy, player)) {
-            const state = (dx > 0 && 'right') || (dx < 0 && 'left') || (dy > 0 && 'down') || (dy < 0 && 'up') || 'main';
-            player.setState(state);
-            player.once('animation-stopped', () => player.setState('main', 100));
+        if (player) {
+            const [dx, dy] = [newX - player.cell.cellX, newY - player.cell.cellY];
+            console.log(dx, dy);
 
-            if (player === this.player) {
-                this.map.window.focus(player);
-                this.api.movePlayer({ dx, dy });
+            if ((player !== this.player || !player.speed) && super.movePlayerTo(newX, newY, player)) {
+                const direction = this.offsetToDirection(dx, dy);
+                const state = direction || 'main';
+                player.setState(state);
+                player.once('motion-stopped', () => player.setState('main', 100));
+
+                if (player === this.player && state !== 'main') {
+                    this.map.window.focus(player);
+                    this.api.movePlayer(direction);
+                }
             }
         }
     }
