@@ -139,8 +139,7 @@ class Game {
 
     meetPlayers(player, player2) {}
 
-    movePlayerTo(newX, newY, player = null) {
-        player = player || this.player;
+    movePlayerTo(newX, newY, player) {
         if (player) {
             const newCell = this.map.cell(newX, newY);
             const [player2] = newCell.filter(({ playerName }) => playerName);

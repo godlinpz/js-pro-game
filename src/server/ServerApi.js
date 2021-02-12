@@ -42,7 +42,7 @@ class ServerApi {
             const [dx, dy] = game.directionToOffset(moveCfg);
             const player = game.getPlayerById(socket.id);
             const target = game.movePlayerBy(dx, dy, player);
-            if (target) socket.broadcast.emit('playerMove', { id, ...target });
+            if (target) this.broadcast('playerMove', { id, ...target });
 
             socket.isMoving = true;
             setTimeout(() => (socket.isMoving = false), 200);

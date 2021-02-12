@@ -53,10 +53,10 @@ class GameClient extends Game {
 
     initKeys() {
         this.keys = {
-            ArrowLeft: () => this.movePlayerBy(-1, 0),
-            ArrowRight: () => this.movePlayerBy(1, 0),
-            ArrowUp: () => this.movePlayerBy(0, -1),
-            ArrowDown: () => this.movePlayerBy(0, 1),
+            ArrowLeft: () => this.movePlayerToDir('left'),
+            ArrowRight: () => this.movePlayerToDir('right'),
+            ArrowUp: () => this.movePlayerToDir('up'),
+            ArrowDown: () => this.movePlayerToDir('down'),
         };
         this.keysOnce = {
             // Space: (pressed) => pressed && this.pauseGame(),
@@ -173,26 +173,24 @@ class GameClient extends Game {
         }
     }
 
-    movePlayerTo(newX, newY, player = null) {
-        player = player || this.player;
-
-        const isCurrent = player === this.player;
-
+    movePlayerTo(newX, newY, player) {
         if (player) {
             const [dx, dy] = [newX - player.cell.cellX, newY - player.cell.cellY];
-            if (!isCurrent || !player.speed) {
-                const direction = this.offsetToDirection(dx, dy);
-                isCurrent && this.api.movePlayer(direction);
+            const direction = this.offsetToDirection(dx, dy);
+            // isCurrent && this.api.movePlayer(direction);
 
-                if (super.movePlayerTo(newX, newY, player)) {
-                    const state = direction || 'main';
-                    player.setState(state);
-                    player.once('motion-stopped', () => player.setState('main', 100));
+            if (super.movePlayerTo(newX, newY, player)) {
+                const state = direction || 'main';
+                player.setState(state);
+                player.once('motion-stopped', () => player.setState('main', 100));
 
-                    isCurrent && this.map.window.focus(player);
-                }
+                this.player === player && this.map.window.focus(player);
             }
         }
+    }
+
+    movePlayerToDir(direction) {
+        if (!this.player.speed) this.api.movePlayer(direction);
     }
 
     static init(cfg) {
