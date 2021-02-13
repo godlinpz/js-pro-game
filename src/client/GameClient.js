@@ -190,7 +190,7 @@ class GameClient extends Game {
     }
 
     movePlayerToDir(direction) {
-        if (!this.player.speed) this.api.movePlayer(direction);
+        if (this.player.motionProgress > 0.9) this.api.movePlayer(direction);
     }
 
     static init(cfg) {

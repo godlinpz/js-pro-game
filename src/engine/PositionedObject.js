@@ -26,6 +26,11 @@ class PositionedObject {
         };
     }
 
+    worldBounds() {
+        const { x, y, width, height } = this;
+        return { x, y, width, height };
+    }
+
     /**
      * Координаты объекта относительно окна отображения (канваса)
      * @param {int} offset_percent_x Сдвиг относительно верхнего левого угла в процентах от размера объекта

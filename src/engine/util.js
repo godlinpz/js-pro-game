@@ -5,13 +5,18 @@ export function clamp(x, from_x, to_x) {
     return x;
 }
 
-export function animate(dx, startTime, currentTime, speed, looped = false) {
-    let t = (speed && (currentTime - startTime) / speed) || 0;
+export function animateEx(dx, startTime, currentTime, speed, looped = false) {
+    const diff = currentTime - startTime;
+    let t = (speed && diff / speed) || 0;
 
     if (looped) t = t % 1;
     else if (t > 1) t = 1;
 
     // console.log(dx, startTime, currentTime, speed, t, dx*t);
 
-    return dx * t;
+    return { offset: dx * t, progress: t };
+}
+
+export function animate(...args) {
+    return animateEx(...args).offset;
 }

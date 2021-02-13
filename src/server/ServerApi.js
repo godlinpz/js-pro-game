@@ -45,7 +45,7 @@ class ServerApi {
             if (target) this.broadcast('playerMove', { id, ...target });
 
             socket.isMoving = true;
-            setTimeout(() => (socket.isMoving = false), 200);
+            setTimeout(() => (socket.isMoving = false), player.speed * 0.9);
         }
     }
 

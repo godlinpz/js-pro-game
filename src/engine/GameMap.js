@@ -1,5 +1,6 @@
 import { clamp } from '../engine/util';
 import Cell from '../models/Cell';
+import _ from 'lodash';
 
 class GameMap {
     constructor(game, engine, levelCfg) {
@@ -14,6 +15,7 @@ class GameMap {
             cellHeight: 100,
             worldWidth: 0,
             worldHeight: 0,
+            layers: [],
             maxLayer: 0,
         });
     }
@@ -32,6 +34,8 @@ class GameMap {
     initMap(levelCfg) {
         const gameObjs = this.game.gameObjects;
 
+        this.layers = _.cloneDeep(levelCfg.layers);
+
         levelCfg.map.forEach((cfgRow, y) =>
             cfgRow.forEach((cellCfg, x) => {
                 this.level[y] || (this.level[y] = []);
@@ -45,18 +49,17 @@ class GameMap {
     }
 
     render(time, timeGap) {
-        const { startCell, endCell } = this.getRenderRange();
+        const range = this.getRenderRange();
 
-        let maxLayers = 1;
+        for (let layerId = 0; layerId < this.layers.length; ++layerId) this.renderLayer(time, timeGap, layerId, range);
+    }
 
-        for (let layer = 0; layer < maxLayers; ++layer)
-            for (let y = startCell.cellY; y <= endCell.cellY; ++y)
-                for (let x = startCell.cellX; x <= endCell.cellX; ++x) {
-                    const cell = this.cell(x, y);
-                    cell.render(layer, time, timeGap);
-
-                    if (maxLayers < cell.objects.length) maxLayers = cell.objects.length;
-                }
+    renderLayer(time, timeGap, layerId, { startCell, endCell }) {
+        for (let y = startCell.cellY; y <= endCell.cellY; ++y)
+            for (let x = startCell.cellX; x <= endCell.cellX; ++x) {
+                const cell = this.cell(x, y);
+                cell.render(layerId, time, timeGap);
+            }
     }
 
     cell(cellX, cellY) {

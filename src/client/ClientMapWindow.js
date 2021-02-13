@@ -24,15 +24,18 @@ class ClientMapWindow extends MovableObject {
 
     startCell() {
         const map = this.map;
-        return map.cellAt(clamp(this.x, 0, map.worldWidth - 1), clamp(this.y, 0, map.worldHeight - 1));
+        return map.cellAt(
+            clamp(this.x - map.cellWidth, 0, map.worldWidth - 1),
+            clamp(this.y - map.cellHeight, 0, map.worldHeight - 1),
+        );
     }
 
     endCell() {
         const map = this.map;
         const winBottomRight = this.worldPosition(100, 100);
         return map.cellAt(
-            clamp(winBottomRight.x, 0, map.worldWidth - 1),
-            clamp(winBottomRight.y, 0, map.worldHeight - 1),
+            clamp(winBottomRight.x + map.cellWidth, 0, map.worldWidth - 1),
+            clamp(winBottomRight.y + map.cellHeight, 0, map.worldHeight - 1),
         );
     }
 

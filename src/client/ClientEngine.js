@@ -4,17 +4,26 @@ class ClientEngine extends Engine {
     constructor(canvas) {
         super();
 
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
+        Object.assign(this, {
+            canvas,
 
-        this.canvas.tabIndex = 1000;
-        this.canvas.style.outline = 'none';
-        this.imageLoaders = [];
+            canvases: {
+                main: canvas,
+            },
+            ctx: null,
 
-        this.sprites = {};
-        this.images = {};
+            imageLoaders: [],
 
-        this.keysPressed = new Set();
+            sprites: {},
+            images: {},
+
+            keysPressed: new Set(),
+        });
+
+        this.switchCanvas('main');
+
+        canvas.tabIndex = 1000;
+        canvas.style.outline = 'none';
 
         canvas.addEventListener('keydown', (e) => this.onKeyDown(e), false);
         canvas.addEventListener('keyup', (e) => this.onKeyUp(e), false);
@@ -64,7 +73,7 @@ class ClientEngine extends Engine {
     loop(timestamp) {
         const { ctx, canvas } = this;
         ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         super.loop(timestamp);
     }
@@ -81,7 +90,48 @@ class ClientEngine extends Engine {
         // console.log(spriteCfg, frame);
         // console.log(img, fx, fy, fw, fh, x, y, w, h);
 
-        this.ctx.drawImage(img, fx, fy, fw, fh, x, y, w, h);
+        this.ctx.drawImage(img, fx, fy, fw, fh, x | 0, y | 0, w | 0, h | 0);
+    }
+
+    addCanvas(name, width, height) {
+        let canvas = this.canvases[name];
+
+        if (!canvas) {
+            canvas = window.document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            this.canvases[name] = canvas;
+        }
+
+        return canvas;
+    }
+
+    switchCanvas(name) {
+        const canvas = this.canvases[name];
+        if (canvas) {
+            this.canvas = canvas;
+            this.ctx = canvas.getContext('2d');
+        }
+
+        return canvas;
+    }
+
+    renderCanvas(name, fromPos, toPos) {
+        const canvas = this.canvases[name];
+
+        if (canvas) {
+            this.ctx.drawImage(
+                canvas,
+                fromPos.x,
+                fromPos.y,
+                fromPos.width,
+                fromPos.height,
+                toPos.x,
+                toPos.y,
+                toPos.width,
+                toPos.height,
+            );
+        }
     }
 }
 

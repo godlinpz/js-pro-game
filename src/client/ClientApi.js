@@ -34,9 +34,21 @@ class ClientApi {
 
     onPlayerMove(socket, moveCfg) {
         const { game } = this.cfg;
-        const { x, y, id } = moveCfg;
+        const { x, y, oldX, oldY, id } = moveCfg;
         const player = game.getPlayerById(id);
+        const { cellX, cellY } = player.cell;
+
+        // console.log('onPlayerMove', cellX, cellY, oldX, oldY);
+
         game.movePlayerTo(x, y, player);
+        /*
+        if( player.isInsideWindow() )
+        else
+        {
+            const {x: newX, y: newY} = game.map.cell(x, y).worldPosition();
+            player.moveTo(newX, newY, false);
+        }
+        */
     }
 
     onPlayerDisconnect(socket, id) {

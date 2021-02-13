@@ -38,6 +38,33 @@ class ClientMap extends GameMap {
 
         super.render(time, timeGap);
     }
+
+    renderLayer(time, timeGap, layerId, range) {
+        const layer = this.layers[layerId];
+        if (layer.isStatic) {
+            const { engine, window } = this;
+            const layerName = 'static_layer_' + layerId;
+            const windowPos = window.worldBounds();
+
+            if (!layer.isRendered) {
+                const range = super.getRenderRange();
+
+                engine.addCanvas(layerName, this.worldWidth, this.worldHeight);
+                engine.switchCanvas(layerName);
+                window.moveTo(0, 0, false);
+
+                super.renderLayer(time, timeGap, layerId, range);
+
+                window.moveTo(windowPos.x, windowPos.y, false);
+
+                engine.switchCanvas('main');
+
+                layer.isRendered = true;
+            }
+
+            engine.renderCanvas(layerName, windowPos, { x: 0, y: 0, width: windowPos.width, height: windowPos.height });
+        } else super.renderLayer(time, timeGap, layerId, range);
+    }
 }
 
 export default ClientMap;

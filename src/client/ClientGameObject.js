@@ -44,6 +44,21 @@ class ClientGameObject extends GameObject {
         // inherit to render
         return [time, timeGap];
     }
+
+    isInsideWindow() {
+        const window = this.cell.map.window;
+        const wTopLeft = window.worldPosition(),
+            wBottomRight = window.worldPosition(100, 100),
+            topLeft = this.worldPosition(),
+            bottomRight = this.worldPosition(100, 100);
+
+        return (
+            topLeft.x <= wBottomRight.x &&
+            topLeft.y <= wBottomRight.y &&
+            bottomRight.x >= wTopLeft.x &&
+            bottomRight.y >= wTopLeft.y
+        );
+    }
 }
 
 export default ClientGameObject;

@@ -147,8 +147,9 @@ class Game {
             if (player2) {
                 this.meetPlayers(player, player2);
             } else if (newCell && newCell.filter(({ cfg: { name } }) => name === 'grass').length) {
+                const { cellX: oldX, cellY: oldY } = player.cell;
                 player.moveToCell(newCell);
-                return { x: newCell.cellX, y: newCell.cellY };
+                return { x: newCell.cellX, y: newCell.cellY, oldX, oldY };
             }
         }
         return false;

@@ -29,8 +29,10 @@ class Cell extends MovableObject {
 
         cellCfg.forEach((layer, level) =>
             layer.forEach((name) => {
-                const obj = this.initCellObject(name, level);
-                if (name === 'spawn') this.addSpawnPoint(obj);
+                if (name) {
+                    const obj = this.initCellObject(name, level);
+                    if (name === 'spawn') this.addSpawnPoint(obj);
+                }
             }),
         );
     }
@@ -63,8 +65,9 @@ class Cell extends MovableObject {
 
     render(layer, time, timeGap) {
         const objs = this.objects;
-        if (objs[layer] && objs[layer].length)
-            objs.forEach((layer) => layer.forEach((o) => o && o.render(time, timeGap)));
+        if (objs[layer] && objs[layer].length) {
+            objs[layer].forEach((o) => o && o.render(time, timeGap));
+        }
     }
 
     push(obj) {

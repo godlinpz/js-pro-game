@@ -1,4 +1,4 @@
-import { clamp, animate } from '../engine/util';
+import { clamp, animateEx } from '../engine/util';
 import PositionedObject from './PositionedObject';
 
 class MovableObject extends PositionedObject {
@@ -16,6 +16,7 @@ class MovableObject extends PositionedObject {
                 speed: 0,
 
                 motionStartTime: 0,
+                motionProgress: 1,
             },
             cfg,
         );
@@ -52,14 +53,18 @@ class MovableObject extends PositionedObject {
     animateMotion(time) {
         if (this.speed) {
             const me = this;
-            const [newX, newY] = [
-                me.toX + animate(me.deltaX, me.motionStartTime, time, me.speed) - me.deltaX,
-                me.toY + animate(me.deltaY, me.motionStartTime, time, me.speed) - me.deltaY,
+            const [dx, dy] = [
+                animateEx(me.deltaX, me.motionStartTime, time, me.speed),
+                animateEx(me.deltaY, me.motionStartTime, time, me.speed),
             ];
+            const [newX, newY] = [me.toX + dx.offset - me.deltaX, me.toY + dy.offset - me.deltaY];
+
+            me.motionProgress = dx.progress;
 
             if (newX === me.toX && newY === me.toY) {
                 me.speed = 0;
                 me.motionStartTime = 0;
+                me.motionProgress = 1;
                 me.trigger('motion-stopped');
             }
 
@@ -69,7 +74,7 @@ class MovableObject extends PositionedObject {
     }
 
     render(time, timeGap) {
-        this.animateMotion(time);
+        this.speed && this.animateMotion(time);
     }
 }
 

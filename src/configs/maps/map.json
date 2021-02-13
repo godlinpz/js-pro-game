@@ -1,10 +1,11 @@
 {
     "window": {
-        "height": 11,
-        "width": 11,
+        "height": 15,
+        "width": 15,
         "x": 2,
         "y": 4
     },
+    "layers": [{ "isStatic": true }, { "isStatic": false }, { "isStatic": false }],
     "map": [
         [
             [["wall"]],
