@@ -1,4 +1,5 @@
 import Engine from '../engine/Engine';
+import ClientInput from './ClientInput';
 
 class ClientEngine extends Engine {
     constructor(canvas) {
@@ -17,33 +18,13 @@ class ClientEngine extends Engine {
             sprites: {},
             images: {},
 
-            keysPressed: new Set(),
+            input: new ClientInput(canvas),
         });
 
         this.switchCanvas('main');
 
         canvas.tabIndex = 1000;
         canvas.style.outline = 'none';
-
-        canvas.addEventListener('keydown', (e) => this.onKeyDown(e), false);
-        canvas.addEventListener('keyup', (e) => this.onKeyUp(e), false);
-        canvas.addEventListener('mousedown', (e) => this.onMouseDown(e), false);
-        canvas.addEventListener('mouseup', (e) => this.onMouseUp(e), false);
-    }
-
-    onKeyDown(e) {
-        this.keysPressed.add(e.code);
-        this.trigger('keydown', e);
-    }
-    onKeyUp(e) {
-        this.keysPressed.delete(e.code);
-        this.trigger('keyup', e);
-    }
-    onMouseDown(e) {
-        this.trigger('mousedown', e);
-    }
-    onMouseUp(e) {
-        this.trigger('mouseup', e);
     }
 
     loadSprites(spriteGroups) {

@@ -52,25 +52,25 @@ class GameClient extends Game {
     }
 
     initKeys() {
-        this.keys = {
+        const input = this.engine.input;
+        input.onKeyState({
             ArrowLeft: () => this.movePlayerToDir('left'),
             ArrowRight: () => this.movePlayerToDir('right'),
             ArrowUp: () => this.movePlayerToDir('up'),
             ArrowDown: () => this.movePlayerToDir('down'),
-        };
-        this.keysOnce = {
+        });
+        input.onKey({
             // Space: (pressed) => pressed && this.pauseGame(),
-        };
+        });
+        input.onMouse({
+            left: (pressed) => !pressed && this.state === GameStates.start && this.api.join(),
+        });
     }
 
     initHandlers() {
         const engine = this.engine;
 
         [
-            ['keydown', 'onKeyDown'],
-            ['keyup', 'onKeyUp'],
-            ['mousedown', 'onMouseDown'],
-            ['mouseup', 'onMouseUp'],
             ['render', 'onRender'],
             ['prerender', 'onPreRender'],
         ].forEach(([e, handler]) => engine.on(e, (_, data) => this[handler].apply(this, [data])));
@@ -103,21 +103,11 @@ class GameClient extends Game {
     }
 
     onRender([time, timeGap]) {
-        this.checkInput();
+        this.engine.input.checkKeys();
 
         super.onRender([time, timeGap]);
 
         if (this.state === GameStates.start) this.renderStartBar();
-    }
-
-    checkInput() {
-        if (this.engine.keysPressed.size) {
-            for (let key of Array.from(this.engine.keysPressed))
-                if (this.keys[key]) {
-                    this.keys[key]();
-                    break;
-                }
-        }
     }
 
     renderStartBar() {
@@ -133,27 +123,6 @@ class GameClient extends Game {
 
         ctx.font = '48px sans-serif';
         ctx.fillText('START', 225, 315);
-    }
-
-    // onKeyDown({ key }) {
-    onKeyDown({ code }) {
-        // console.log('KEY DOWN', code);
-        this.keysOnce[code] && this.keysOnce[code](true);
-    }
-
-    onKeyUp({ code }) {
-        // console.log('KEY UP', key);
-        this.keysOnce[code] && this.keysOnce[code](false);
-    }
-
-    onMouseDown(e) {
-        // console.log('MOUSE DOWN', e);
-        if (this.state === GameStates.start) this.api.join();
-        // this.setState(GameStates.play);
-    }
-
-    onMouseUp(e) {
-        // console.log('MOUSE UP', e);
     }
 
     pauseGame() {
