@@ -1,9 +1,16 @@
 const path = require('path');
+const { DefinePlugin } = require('webpack');
 
 const nodeExternals = require('webpack-node-externals');
 
 const NODE_ENV = process.env.NODE_ENV;
-// const ASSET_PATH = process.env.ASSET_PATH || '/';
+const isDevMode = NODE_ENV === 'development';
+
+const dotenv = require('dotenv').config({
+    path: path.join(__dirname, '.env' + (isDevMode ? '.development' : '')),
+});
+
+const env = dotenv.parsed;
 
 module.exports = {
     resolve: {
@@ -61,6 +68,11 @@ module.exports = {
             },
         ],
     },
+    plugins: [
+        new DefinePlugin({
+            'process.env': env,
+        }),
+    ],
 
     devtool: 'source-map',
 };

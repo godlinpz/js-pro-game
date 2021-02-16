@@ -47,7 +47,7 @@ class ClientEngine extends Engine {
             let i = new Image();
             this.images[url] = i;
             i.onload = () => resolve(i);
-            i.src = url;
+            i.src = (process.env.PUBLIC_PATH ? process.env.PUBLIC_PATH + '/' : '') + url;
         });
     }
 

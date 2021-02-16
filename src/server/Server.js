@@ -54,10 +54,12 @@ class Server {
             host: this.api.host,
         }));
 
+        const port = this.site.port === 80 ? '' : ':' + this.site.port;
+
         const io = socketio(apiServer.listener, {
             path: this.api.path,
             cors: {
-                origin: `http://${this.site.host}:${this.site.port}`,
+                origin: `http://${this.site.host}${port}`,
                 methods: ['GET', 'POST'],
                 // allowedHeaders: ["my-custom-header"],
                 credentials: true,

@@ -1,10 +1,21 @@
 const path = require('path');
+const { DefinePlugin } = require('webpack');
 
 const HTMLWebpackPlagin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV;
-const ASSET_PATH = process.env.ASSET_PATH || '/';
+const isDevMode = NODE_ENV === 'development';
+
+const dotenv = require('dotenv').config({
+    path: path.join(__dirname, '.env' + (isDevMode ? '.development' : '')),
+});
+
+const env = dotenv.parsed;
+
+console.log(env);
+
+const PUBLIC_PATH = env.PUBLIC_PATH || '';
 
 module.exports = {
     resolve: {
@@ -15,9 +26,9 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js',
-        publicPath: ASSET_PATH,
+        publicPath: PUBLIC_PATH,
     },
-    watch: NODE_ENV === 'development',
+    watch: isDevMode,
     watchOptions: {
         ignored: /node_modules/,
         poll: 1000,
@@ -27,7 +38,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 use: 'babel-loader',
-                /* exclude: [/node_modules/], */
+                exclude: isDevMode ? [/node_modules/] : [],
             },
             {
                 test: /\.(c|sa|sc)ss?$/,
@@ -72,6 +83,12 @@ module.exports = {
         }),
         new CopyWebpackPlugin({
             patterns: [{ from: 'assets', to: 'assets' }],
+        }),
+        new DefinePlugin({
+            'process.env': {
+                PUBLIC_PATH: `'${env.PUBLIC_PATH}'`,
+                CONFIG: `'${env.CONFIG}'`,
+            },
         }),
     ],
     devServer: {

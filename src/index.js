@@ -2,7 +2,7 @@ import style from './style.scss';
 import GameClient from './client/GameClient';
 import $ from 'jquery';
 import socketio from 'socket.io-client';
-import netConfig from './configs/net.json';
+import netConfig from './configs/net';
 
 $(() => {
     window.sio = socketio;

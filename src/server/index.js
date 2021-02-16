@@ -1,4 +1,4 @@
-import netConfig from '../configs/net.json';
+import netConfig from '../configs/net';
 import Server from './Server';
 
 const server = new Server(netConfig.servers);
