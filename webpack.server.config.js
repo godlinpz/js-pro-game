@@ -70,7 +70,10 @@ module.exports = {
     },
     plugins: [
         new DefinePlugin({
-            'process.env': env,
+            'process.env': {
+                PUBLIC_PATH: `'${env.PUBLIC_PATH}'`,
+                CONFIG: `'${env.CONFIG}'`,
+            },
         }),
     ],
 
