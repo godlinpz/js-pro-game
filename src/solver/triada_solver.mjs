@@ -1,4 +1,4 @@
-import TripleTriadSolver from './TripleTriadSolver.js';
+import TripleTriadSolver from './TripleTriadSolver.mjs';
 console.time('play');
 
 /*
@@ -22,7 +22,8 @@ const {rate, game} = solver.solve(
     // поле
     [ 
         // [[1, 1], [2, 1], [2, 0]],
-        [[1, 2], [2, 2], 0     ],
+        // [[1, 2], [2, 2], 0     ],
+        [0,      0,      0     ],
         [0,      0,      0     ],
         [0,      0,      0     ],
     ],
@@ -31,7 +32,7 @@ const {rate, game} = solver.solve(
     // все карты противника
     [[4,4,4,4], [5,6,6,6], [6,8,9,9], [7,7,7,7], [1,1,1,1]],
     // глубина просчёта (может быть автоматически ограничена до 5 на больших просчётах!)
-    9
+    5
 );
 
 console.log(rate, game);

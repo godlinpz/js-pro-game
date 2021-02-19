@@ -1,5 +1,19 @@
 function randomInt(from, to) {
-    return (Math.random() * (to - from)) | (0 + from);
+    return ((Math.random() * (to - from)) | 0) + from;
+}
+
+function shuffle([...arr])
+{
+    const len = arr.length;
+    for (let i = 0; i < len; i++)
+    {
+        const e = arr[i];
+        const n = randomInt(i, len);
+        arr[i] = arr[n];
+        arr[n] = e;
+    }
+
+    return arr;
 }
 
 // const hitSymbols = '123456789A';
@@ -63,9 +77,13 @@ class TripleTriadSolver
 
     play(board, player, enemy, maxDepth = 5) {
         this.count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        const empty = this.epmtyCells(board);
+        let empty = this.epmtyCells(board);
+        
+        if(empty.length >= 7)
+            empty = shuffle(empty);
         
         if(empty.length > 6 && maxDepth > 5 ) maxDepth = 5;
+        if(empty.length === 9 && maxDepth > 4 ) maxDepth = 4;
         if(empty.length <= 6 ) maxDepth = Math.min(empty.length, maxDepth);
 
         return this.turn(board, empty, player.unused, enemy.unused, maxDepth);
@@ -80,16 +98,23 @@ class TripleTriadSolver
 
         // console.log('DEPTH: '+depth, 'RATE: '+rate);
         // console.log(board);
+        // const step = (depth >= 4 && emptyCells.length >= 6) ? 2 : 1;
+        // const step = (depth > 6) ? 2 : 1;
 
         if (depth < maxDepth)
-            for (let n = 0; n < emptyCells.length; ++n) // emptyCells.forEach(([i, j]) =>
+            for (let n = 0; n < emptyCells.length; n += 1) // emptyCells.forEach(([i, j]) =>
             {
                 const [i, j] = emptyCells[n];
 
                 const newEmptyCells = emptyCells.filter(([i1, j1]) => i1 !== i || j1 !== j);
 
                 if(newEmptyCells.length)
-                    hand.forEach((poke) => {
+                {
+                    // const step1 = (depth > 6) ? 2 : 1;
+
+                    for (let n1 = 0; n1 < hand.length; n1 += 1) // emptyCells.forEach(([i, j]) =>
+                    {
+                        const poke = hand[n1];
                         const newHand = hand.filter((poke1) => poke !== poke1);
 
                         // console.log('newHand', newHand);
@@ -112,7 +137,8 @@ class TripleTriadSolver
                             rate = newRate;
                             game = [{ i, j, poke }].concat(newGame);
                         }
-                    });
+                    }
+                }
             }
         // );
 
@@ -120,20 +146,24 @@ class TripleTriadSolver
     }
 
     putPokeOnBoard([...board], { ...poke }, i, j) {
-        board[i * 3 + j] = poke;
+        const i3 = i*3;
+        
+        board[i3 + j] = poke;
+        
         let rate = poke.rate;
 
         // обрабатываем бой покемонов:
 
-        for (let [dy, dx, hitOwn, hitEnemy] of [
-            [-1, 0, 0, 2],
-            [0, 1, 1, 3],
-            [1, 0, 2, 0],
-            [0, -1, 3, 1],
-        ]) {
-            const [y, x] = [i + dy, j + dx];
-            const pos = y * 3 + x;
-            if (x >= 0 && x < 3 && y >= 0 && y < 3 && board[pos]) {
+        const hits = 
+        [
+            [i > 0, 0, 2, (i-1)*3 + j  ],
+            [j < 2, 1, 3, i3 + j + 1   ],
+            [i < 2, 2, 0, (i+1)*3 + j  ],
+            [j > 0, 3, 1, i3 + j - 1   ],
+        ];
+
+        for (let [isOk, hitOwn, hitEnemy, pos] of hits) {
+            if (isOk && board[pos]) {
                 const { ...pokeEnemy } = board[pos];
 
                 if (pokeEnemy.hits[hitEnemy] < poke.hits[hitOwn]) {
