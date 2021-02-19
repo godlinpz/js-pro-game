@@ -63,7 +63,12 @@ class TripleTriadSolver
 
     play(board, player, enemy, maxDepth = 5) {
         this.count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        return this.turn(board, this.epmtyCells(board), player.unused, enemy.unused, maxDepth);
+        const empty = this.epmtyCells(board);
+        
+        if(empty.length > 6 && maxDepth > 5 ) maxDepth = 5;
+        if(empty.length <= 6 ) maxDepth = Math.min(empty.length, maxDepth);
+
+        return this.turn(board, empty, player.unused, enemy.unused, maxDepth);
     }
 
     turn(board, emptyCells, playerHand, enemyHand, maxDepth = 5, depth = 0, enemyMove = false) {
@@ -89,7 +94,6 @@ class TripleTriadSolver
 
                         // console.log('newHand', newHand);
 
-                        // let rate = poke.rate + depth*100;
                         const { board: newBoard, rate: hitRate } = this.putPokeOnBoard(board, poke, i, j);
 
                         const { rate: deepRate, game: newGame } = this.turn(
