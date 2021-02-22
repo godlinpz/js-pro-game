@@ -12,8 +12,42 @@ console.time('play');
 let p1 = [ [1,2,3,4], [2,2,3,4], [3,2,3,4], [4,2,3,4], [5,2,3,4] ];
 let p2 = [ [5,3,2,1], [5,3,2,2], [5,3,2,3], [5,3,2,4], [5,5,5,5] ];
 
-const player = new TripleTriadPlayer();
+const playerNames = ['p1', 'p2'];
 
+const player = new TripleTriadPlayer();
+// let empty = false;
+
+let turns = [];
+let board = false;
+
+for(let i = 0; p1.length + p2.length > 1 && i<9; ++i)
+{
+
+    let turn = player.play({
+        ai: true,
+        currentPlayer: playerNames[i % playerNames.length],
+        hands: {p1, p2}, 
+        // move: {hits: [1,2,3,4], position: 4},
+        board, 
+    });
+
+    board = turn.board;
+
+    turns.push(turn);    
+    
+    p1 = turn.hands.p1.pokes.map(p => p.hits);
+    p2 = turn.hands.p2.pokes.map(p => p.hits);
+
+    console.log('TURN', i,  turn);
+    console.log('HAND P1', i,  p1);
+    console.log('HAND P2', i,  p2);
+
+    console.timeLog('play');
+    console.log('----------------------');    
+
+    
+}
+/*
 
 let turn1 = player.play({
     ai: true,
@@ -32,7 +66,7 @@ p2 = turn1.hands.p2.pokes.map(p => p.hits);
 // console.log(turn1);
 console.timeLog('play');
 console.log('----------------------');
-
+*/
 /*
 let turn2 = player.play({
     currentPlayer: 'p2',
@@ -44,7 +78,7 @@ let turn2 = player.play({
     board: turn1.board, 
 });
 */
-
+/*
 let turn2 = player.play({
     ai: true,
     currentPlayer: 'p2',

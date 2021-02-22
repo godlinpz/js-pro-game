@@ -18,7 +18,7 @@ function shuffle([...arr])
 
 const boardSize = 3;
 // const hitSymbols = '123456789A';
-const minRate = -10000;
+const minRate = -1000000;
 
 class TripleTriadSolver
 {
@@ -56,7 +56,7 @@ class TripleTriadSolver
         
         if(empty.length > 6 && maxDepth > 5 ) maxDepth = 5;
         if(empty.length >= 8 && maxDepth > 4 ) maxDepth = 4;
-        if(empty.length <= 6 ) maxDepth = Math.min(empty.length, maxDepth);
+        // if(empty.length <= 6 ) maxDepth = Math.min(empty.length, maxDepth);
 
         const enemyId = Object.keys(hands).filter( key => key !== currentPlayer)[0];
 
@@ -106,7 +106,7 @@ class TripleTriadSolver
 
                     newPoke.position = position;
 
-                    const { board: newBoard, rate: hitRate } = this.putCard(board, newPoke);
+                    const { board: newBoard, rate: hitRate } = this.putCard(board, newPoke, enemyMove);
 
                     let result = {rate: minRate, game: []};
 
@@ -125,7 +125,7 @@ class TripleTriadSolver
 
                     const { rate: deepRate, game: newGame } = result;
 
-                    const newRate = deepRate + (enemyMove ? -hitRate : hitRate);
+                    const newRate = (newGame.length ? deepRate : 0) + hitRate;
 
                     if (newRate > rate) {
                         rate = newRate;
@@ -137,7 +137,7 @@ class TripleTriadSolver
         return { rate, game };
     }
 
-    putCard([...board], { ...card }) {
+    putCard([...board], { ...card }, enemyMove = false) {
 
         const cardPos  = card.position;
         const i = cardPos/boardSize |0;
@@ -149,7 +149,7 @@ class TripleTriadSolver
         board[cardPos] = card;
         
         // let rate = card.rate;
-        let rate = minRate;
+        let rate = 0;
         const beaten = [];
 
         // обрабатываем бой покемонов:
@@ -179,6 +179,8 @@ class TripleTriadSolver
                 }
             }
         }
+
+        if(enemyMove) rate = -rate;
 
         return { board, rate, beaten };
     }
