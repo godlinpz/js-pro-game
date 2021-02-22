@@ -9,20 +9,30 @@ console.time('play');
 // карты второго игрока 
 // const hand2 = [[4,4,4,4], [5,6,6,6], [6,8,9,9], [7,7,7,7], [1,1,1,1]];
 
-let p1 = [ [1,2,3,4], [2,2,3,4], [3,2,3,4], [4,2,3,4], ];
-let p2 = [ [5,3,2,1], [5,3,2,2], [5,3,2,3], [5,3,2,4], [5,5,5,5], ];
+let p1 = [ [1,2,3,4], [2,2,3,4], [3,2,3,4], [4,2,3,4], [5,2,3,4] ];
+let p2 = [ [5,3,2,1], [5,3,2,2], [5,3,2,3], [5,3,2,4], [5,5,5,5] ];
 
 const player = new TripleTriadPlayer();
 
+
 let turn1 = player.play({
-    ai: false,
+    ai: true,
     currentPlayer: 'p1',
     hands: {p1, p2}, 
-    move: {hits: [1,2,3,4], position: 4},
-    board: [0, 0, 0,  0, 0, 0,  0, 0, 0], 
+    // move: {hits: [1,2,3,4], position: 4},
+    board: false, 
 });
 
+p1 = turn1.hands.p1.pokes.map(p => p.hits);
+p2 = turn1.hands.p2.pokes.map(p => p.hits);
+
+// console.log('1 HANDS 1', p1);
+// console.log('1 HANDS 2', p2);
+
 // console.log(turn1);
+console.timeLog('play');
+console.log('----------------------');
+
 /*
 let turn2 = player.play({
     currentPlayer: 'p2',
@@ -35,7 +45,6 @@ let turn2 = player.play({
 });
 */
 
-
 let turn2 = player.play({
     ai: true,
     currentPlayer: 'p2',
@@ -44,9 +53,34 @@ let turn2 = player.play({
     board: turn1.board, 
 });
 
+p1 = turn2.hands.p1.pokes.map(p => p.hits);
+p2 = turn2.hands.p2.pokes.map(p => p.hits);
+
 
 console.log(turn2);
+console.log('2 HANDS 1', p2);
+console.log('2 HANDS 2', p2);
 
+console.timeLog('play');
+console.log('----------------------');
+
+let turn3 = player.play({
+    ai: true,
+    currentPlayer: 'p1',
+    hands: {p1, p2},      
+    // move: {hits: [1,1,1,1], position: 5},
+    board: turn2.board, 
+});
+
+p1 = turn3.hands.p1.pokes.map(p => p.hits);
+p2 = turn3.hands.p2.pokes.map(p => p.hits);
+
+
+console.log(turn3);
+console.log('3 HANDS 1', p2);
+console.log('3 HANDS 2', p2);
+
+/**/
 
 /*
     Структура поля.

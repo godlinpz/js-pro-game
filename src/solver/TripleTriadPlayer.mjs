@@ -28,7 +28,27 @@ class TripleTriadPlayer
             ? this.aiMove({currentPlayer, hands, board}) 
             : this.playerMove({currentPlayer, move, board});
 
-        return { move, ...result }
+        if(ai && result.move)
+        {
+            hands = {...hands};
+            const hits = result.move.hits;
+            let found = false;
+
+            // console.log('FILTER', result.move.hits, hands[currentPlayer].pokes);
+            hands[currentPlayer] = {...hands[currentPlayer]};
+
+            hands[currentPlayer].pokes = hands[currentPlayer].pokes.filter(p => {
+                let filter = true;
+                if(!found && (found = p.hits[0]===hits[0] && p.hits[1]===hits[1] && p.hits[2]===hits[2] && p.hits[3]===hits[3]) )   
+                    filter = false;
+
+                return filter;
+            });
+            // console.log('FILTERED', hands[currentPlayer].pokes);            
+        }
+        
+
+        return { move, ...result, hands }
 
     }
     
@@ -46,7 +66,7 @@ class TripleTriadPlayer
     {
         let result = {board};
 
-        if( move.position === undefined || board[move.position] || !move.owner && !currentPlayer)  
+        if( !move || move.position === undefined || board[move.position] || !move.owner && !currentPlayer)  
         {
             move = null;
         }
@@ -62,7 +82,7 @@ class TripleTriadPlayer
             result = solver.putCard(board, move);
         }
 
-        return { move, ...result }
+        return { move, ...result, empty: solver.epmtyCells(board) }
 
     }
 

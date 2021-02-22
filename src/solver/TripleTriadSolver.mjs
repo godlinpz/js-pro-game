@@ -18,7 +18,7 @@ function shuffle([...arr])
 
 const boardSize = 3;
 // const hitSymbols = '123456789A';
-
+const minRate = -10000;
 
 class TripleTriadSolver
 {
@@ -55,7 +55,7 @@ class TripleTriadSolver
         //     empty = shuffle(empty);
         
         if(empty.length > 6 && maxDepth > 5 ) maxDepth = 5;
-        if(empty.length === 9 && maxDepth > 4 ) maxDepth = 4;
+        if(empty.length >= 8 && maxDepth > 4 ) maxDepth = 4;
         if(empty.length <= 6 ) maxDepth = Math.min(empty.length, maxDepth);
 
         const enemyId = Object.keys(hands).filter( key => key !== currentPlayer)[0];
@@ -74,7 +74,7 @@ class TripleTriadSolver
 
     turn(board, emptyCells, playerHand, enemyHand, maxDepth = 5, depth = 0, enemyMove = false) {
         ++this.count[depth];
-        let rate = 0;
+        let rate = minRate;
         let game = [];
 
         // if(depth <= 1)
@@ -108,7 +108,7 @@ class TripleTriadSolver
 
                     const { board: newBoard, rate: hitRate } = this.putCard(board, newPoke);
 
-                    let result = {rate: 0, game: []};
+                    let result = {rate: minRate, game: []};
 
                     if(newEmptyCells.length && depth < maxDepth-1)
                     {
@@ -149,29 +149,33 @@ class TripleTriadSolver
         board[cardPos] = card;
         
         // let rate = card.rate;
-        let rate = 0;
+        let rate = minRate;
         const beaten = [];
 
         // обрабатываем бой покемонов:
 
         const hits = 
         [
-            [i > 0,           0, 2, cardPos - boardSize  ],
-            [j < boardSize-1, 1, 3, cardPos + 1   ],
-            [i < boardSize-1, 2, 0, cardPos + boardSize  ],
-            [j > 0,           3, 1, cardPos - 1   ],
+            {isOk: i > 0,           hitOwn: 0, hitEnemy: 2, pos: cardPos - boardSize },
+            {isOk: j < boardSize-1, hitOwn: 1, hitEnemy: 3, pos: cardPos + 1         },
+            {isOk: i < boardSize-1, hitOwn: 2, hitEnemy: 0, pos: cardPos + boardSize },
+            {isOk: j > 0,           hitOwn: 3, hitEnemy: 1, pos: cardPos - 1         },
         ];
 
-        for (let [isOk, hitOwn, hitEnemy, pos] of hits) {
-            if (isOk && board[pos]) {
-                const cardEnemy = board[pos];
-
-                if (cardEnemy.holder !== card.owner &&  cardEnemy.hits[hitEnemy] < card.hits[hitOwn]) {
+        for (let i=0; i< hits.length; ++i) {
+            const hit = hits[i];
+            
+            // for (let [isOk, hitOwn, hitEnemy, pos] of hits) {
+            if (hit.isOk && board[hit.pos]) {
+                const cardEnemy = board[hit.pos];
+                    
+                if (cardEnemy.holder !== card.owner &&  cardEnemy.hits[hit.hitEnemy] < card.hits[hit.hitOwn]) {
+                    if(this.count) ++this.count[10];
                     rate += cardEnemy.rate;
                     const cardEnemyNew = { ...cardEnemy };
                     cardEnemyNew.holder = card.owner;
-                    board[pos] = cardEnemyNew;
-                    beaten.push(pos);
+                    board[hit.pos] = cardEnemyNew;
+                    beaten.push(hit.pos);
                 }
             }
         }
