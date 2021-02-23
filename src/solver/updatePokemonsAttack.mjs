@@ -56,7 +56,7 @@ wlist.map(([w, pokePositions], pos) => {
     const rate = -(1/(x - 4.5) - 0.222)*20.7 - 4.4 | 0;
     const att = randomAttacks(rate);
     // console.log(att, rate);
-    allAttacks.push(att);
+    allAttacks.push([rate, att]);
     pokePositions.map(p => pokes[p].attacks = [rate, att]);        
 });
 
