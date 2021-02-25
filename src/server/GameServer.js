@@ -1,6 +1,6 @@
 import ServerEngine from './ServerEngine';
 import ServerMap from './ServerMap';
-import sprites from '../configs/sprites/sprites.json';
+// import sprites from '../configs/sprites/sprites.json';
 
 import playerCfg from '../configs/objects/player.json';
 import terrainCfg from '../configs/objects/terrain.json';

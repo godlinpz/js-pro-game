@@ -14,7 +14,7 @@ const env = dotenv.parsed;
 
 module.exports = {
     resolve: {
-        extensions: ['.js', '.json'],
+        extensions: ['.js', '.json', '.mjs'],
     },
     mode: NODE_ENV || 'development',
     entry: path.resolve(__dirname, 'src/server/index.js'),
@@ -27,7 +27,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.m?js$/,
                 use: 'babel-loader',
                 // exclude: [/node_modules/],
             },

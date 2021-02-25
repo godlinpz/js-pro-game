@@ -252,7 +252,7 @@
         [
             [["wall"]],
             [["grass"]],
-            [["grass"]],
+            [["grass"], ["npcSpawn"]],
             [["grass"]],
             [["grass"]],
             [["grass"]],
@@ -301,7 +301,7 @@
             [["grass"]],
             [["grass"]],
             [["grass"]],
-            [["grass"]],
+            [["grass"], ["npcSpawn"]],
             [["grass"]],
             [["grass"]],
             [["grass"]],

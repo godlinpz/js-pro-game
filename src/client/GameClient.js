@@ -132,7 +132,9 @@ class GameClient extends Game {
 
     onMeetPlayers(player, player2) {
         if (this.player === player || this.player === player2) {
-            $('.meetMsg span').text((this.player === player ? player2 : player).playerName);
+            const enemy = this.player === player ? player2 : player;
+
+            $('.meetMsg span').text((enemy.isNpc ? '[NPC] ' : '') + enemy.playerName);
             const $meetMsg = $('.meetMsg');
             const meetMsg = $meetMsg[0];
             $meetMsg.show();

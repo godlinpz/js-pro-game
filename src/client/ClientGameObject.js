@@ -25,20 +25,21 @@ class ClientGameObject extends GameObject {
 
             if (this.playerName) {
                 const ctx = engine.ctx;
+                const playerName = this.playerName;
 
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'center';
-                const measure = ctx.measureText(this.playerName);
+                const measure = ctx.measureText(playerName);
                 ctx.font = '16px sans-serif';
 
                 const barWidth = clamp(measure.width, map.cellWidth, map.cellWidth * 1.4);
                 const barX = x - (barWidth - map.cellWidth) / 2;
 
-                ctx.fillStyle = '#ffffff4f';
+                ctx.fillStyle = this.isNpc ? '#ffff0099' : '#ffffff4f';
                 ctx.fillRect(barX, y - 30, barWidth, 20);
 
                 ctx.fillStyle = 'black';
-                ctx.fillText(this.playerName, barX + barWidth / 2, y - 15, barWidth);
+                ctx.fillText(playerName, barX + barWidth / 2, y - 15, barWidth);
             }
         }
         // inherit to render

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { isString } from 'lodash';
 import GameObject from './GameObject';
 import MovableObject from '../engine/MovableObject';
 
@@ -28,21 +28,27 @@ class Cell extends MovableObject {
         const { cellCfg } = this;
 
         cellCfg.forEach((layer, level) =>
-            layer.forEach((name) => {
-                if (name) {
-                    const obj = this.initCellObject(name, level);
-                    if (name === 'spawn') this.addSpawnPoint(obj);
+            layer.forEach((objInit) => {
+                if (objInit) {
+                    const obj = this.initCellObject(objInit, level);
+                    if (obj.name === 'spawn') this.addSpawnPoint(obj);
+                    else if (obj.name === 'npcSpawn') this.map.once('init', () => this.addNpc(obj));
                 }
             }),
         );
     }
 
-    initCellObject(name, level) {
+    initCellObject(objInit, level) {
         const { map } = this;
         const gameObjs = map.game.gameObjects;
 
-        const objCfg = _.cloneDeep(gameObjs[name]);
-        _.assign(objCfg, {
+        if (isString(objInit)) objInit = { type: objInit };
+
+        const type = objInit.type;
+
+        const spritesCfg = _.cloneDeep(gameObjs[type]);
+
+        _.assign(spritesCfg, {
             map,
             layer: level,
             cell: this,
@@ -50,7 +56,7 @@ class Cell extends MovableObject {
             height: map.cellHeight,
         });
 
-        const obj = this.createGameObject(objCfg);
+        const obj = this.createGameObject(spritesCfg);
 
         obj.moveToCell(this, false);
 
@@ -60,6 +66,10 @@ class Cell extends MovableObject {
     addSpawnPoint(obj) {
         this.map.game.addSpawnPoint(obj);
 
+        return obj;
+    }
+
+    addNpc(obj) {
         return obj;
     }
 

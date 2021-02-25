@@ -22,5 +22,11 @@
         "type": "static",
         "sprite": ["terrain", "spawn"],
         "frame": 0
+    },
+    "npcSpawn": {
+        "name": "npcSpawn",
+        "type": "static",
+        "sprite": ["terrain", "spawn"],
+        "frame": 0
     }
 }

@@ -27,7 +27,7 @@ class ServerApi {
     onJoin(socket, name) {
         const { game } = this;
         const playerCfg = game.getRandomSpawnPoint();
-        const player = { id: socket.id, name, skin: game.getRandomSkin(), ...playerCfg };
+        const player = { id: socket.id, name, skin: game.getRandomSkin(), isNpc: false, ...playerCfg };
         game.createPlayer(player);
         const response = { player, playersList: game.getPlayersList() };
         socket.join('game');

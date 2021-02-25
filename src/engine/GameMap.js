@@ -1,6 +1,7 @@
 import { clamp } from '../engine/util';
 import Cell from '../models/Cell';
 import _ from 'lodash';
+import EventSourceMixin from '../engine/EventSourceMixin';
 
 class GameMap {
     constructor(game, engine, levelCfg) {
@@ -42,6 +43,8 @@ class GameMap {
                 this.level[y][x] = this.createCell({ map: this, cellX: x, cellY: y, cellCfg });
             }),
         );
+
+        this.trigger('init');
     }
 
     getRenderRange() {
@@ -73,5 +76,7 @@ class GameMap {
         );
     }
 }
+
+Object.assign(GameMap.prototype, EventSourceMixin);
 
 export default GameMap;

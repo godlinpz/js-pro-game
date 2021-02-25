@@ -63,7 +63,7 @@ class Game {
         _.forOwn(playersList, (player) => this.createPlayer(player));
     }
 
-    createPlayer({ id, cellX, cellY, layer, skin, name }) {
+    createPlayer({ id, cellX, cellY, layer, skin, name, isNpc }) {
         if (!this.players[id]) {
             // console.log({ id, cellX, cellY, layer, skin });
             try {
@@ -72,6 +72,7 @@ class Game {
                 playerObj.playerId = id;
                 playerObj.skin = skin;
                 playerObj.playerName = name;
+                playerObj.isNpc = isNpc;
 
                 this.players[id] = playerObj;
             } catch (e) {
@@ -86,9 +87,9 @@ class Game {
     getPlayersList() {
         const list = [];
         _.forOwn(this.players, (player, id) => {
-            const { layer, skin, playerName } = player;
+            const { layer, skin, playerName, isNpc } = player;
             const { cellX, cellY } = player.cell;
-            list.push({ id, layer, cellX, cellY, skin, name: playerName });
+            list.push({ id, layer, cellX, cellY, skin, isNpc, name: playerName });
         });
         // console.log('getPlayersList', list);
         return list;
