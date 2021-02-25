@@ -9,8 +9,8 @@ console.time('play');
 // карты второго игрока 
 // const hand2 = [[4,4,4,4], [5,6,6,6], [6,8,9,9], [7,7,7,7], [1,1,1,1]];
 
-let p1 = [ [1,2,3,4], [2,2,3,4], [3,2,3,4], [4,2,3,4], [5,2,3,4] ];
-let p2 = [ [5,3,2,1], [5,3,2,2], [5,3,2,3], [5,3,2,4], [5,5,5,5] ];
+let p1 = [ { id: 1, hits: [1,2,3,4]}, { id: 2, hits: [2,2,3,4]}, { id: 3, hits: [3,2,3,4]}, { id: 4, hits: [4,2,3,4]}, { id: 5, hits: [5,2,3,4]} ];
+let p2 = [ { id: 6, hits: [5,3,2,1]}, { id: 7, hits: [5,3,2,2]}, { id: 8, hits: [5,3,2,3]}, { id: 9, hits: [5,3,2,4]}, { id: 10, hits: [5,5,5,5]} ];
 
 const playerNames = ['p1', 'p2'];
 
@@ -34,9 +34,9 @@ for(let i = 0; p1.length + p2.length > 1 && i<9; ++i)
     board = turn.board;
 
     turns.push(turn);    
-    
-    p1 = turn.hands.p1.pokes.map(p => p.hits);
-    p2 = turn.hands.p2.pokes.map(p => p.hits);
+
+    p1 = turn.hands.p1.pokes.map(({id, hits}) => ({id, hits}));
+    p2 = turn.hands.p2.pokes.map(({id, hits}) => ({id, hits}));
 
     console.log('TURN', i,  turn);
     console.log('HAND P1', i,  p1);

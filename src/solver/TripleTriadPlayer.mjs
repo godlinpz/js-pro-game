@@ -89,7 +89,8 @@ class TripleTriadPlayer
 
     normaliseHand(hand, owner)
     {
-        const pokes  = hand.map(poke => ({owner, holder: owner, hits: poke, rate: solver.pokeRate(poke)}));
+        console.log(hand);
+        const pokes  = hand.map(({id, hits}) => ({id, hits, owner, holder: owner, rate: solver.pokeRate(hits)}));
         
         return {owner, pokes};
     }
