@@ -15,7 +15,9 @@ class ServerCell extends Cell {
         const { cellX, cellY } = this;
 
         const game = this.map.game;
-        const name = _.sample(ServerCell.npcNames);
+        const names = ServerCell.npcNames;
+        const name = names.length ? 'Anonymous' : _.sample(names);
+        ServerCell.npcNames = ServerCell.npcNames.filter((n) => n !== name);
 
         const layer = obj.layer + 1;
 
