@@ -20,6 +20,10 @@ class ServerApi {
         socket.emit('welcome', welcomeMessage);
     }
 
+    emitTo(msgType, message, to) {
+        this.io.to(to).emit(msgType, message);
+    }
+
     broadcast(msgType, message, room = 'game') {
         this.io.to(room).emit(msgType, message);
     }
@@ -56,8 +60,41 @@ class ServerApi {
         socket.broadcast.emit('playerDisconnect', socket.id);
     }
 
+    onAgreeFight(socket, enemyId) {
+        const { game } = this;
+        const player = game.getPlayerById(socket.id);
+        const enemy = game.getPlayerById(enemyId);
+        game.agreeFight(player, enemy);
+    }
+
+    onDeclineFight(socket, enemyId) {
+        const { game } = this;
+        const player = game.getPlayerById(socket.id);
+        const enemy = game.getPlayerById(enemyId);
+
+        game.declineFight(player, enemy);
+    }
+
     meetPlayers(player, player2) {
-        this.broadcast('meetPlayers', { id: player.playerId, id2: player2.playerId });
+        this.broadcast('meetPlayers', {
+            meet: [
+                { id: player.playerId, state: player.state },
+                { id: player2.playerId, state: player2.state },
+            ],
+        });
+    }
+
+    startFight(player, enemy) {
+        this.broadcast('startFight', {
+            pair: [
+                { id: player.playerId, state: player.state },
+                { id: enemy.playerId, state: enemy.state },
+            ],
+        });
+    }
+
+    rejectFight(player, enemy) {
+        this.emitTo('rejectFight', { id: player.playerId, state: player.state }, enemy.playerId);
     }
 }
 

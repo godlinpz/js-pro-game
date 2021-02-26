@@ -130,18 +130,92 @@ class GameClient extends Game {
         this.setState(this.engine.pausedAt ? GameStates.pause : GameStates.play);
     }
 
-    onMeetPlayers(player, player2) {
+    onStartFight(player, player2) {
         if (this.player === player || this.player === player2) {
+            // const current = this.player === player ? player  : player2;
             const enemy = this.player === player ? player2 : player;
 
-            $('.meetMsg span').text((enemy.isNpc ? '[NPC] ' : '') + enemy.playerName);
-            const $meetMsg = $('.meetMsg');
-            const meetMsg = $meetMsg[0];
-            $meetMsg.show();
-
-            if (meetMsg.timeout) clearTimeout(meetMsg.timeout);
-            meetMsg.timeout = setTimeout(() => $meetMsg.hide(), 3000);
+            this.showInfoMessage(['', enemy.playerName, ' AGREED the fight!']);
+            setTimeout(() => this.player.setState('main'), 1000);
         }
+    }
+
+    onRejectFight(enemy) {
+        this.player.setState('main');
+        this.showInfoMessage(['', enemy.playerName, ' rejected the fight :(']);
+        this.hideStartFightDialog();
+        // alert(enemy.playerName + ' rejected the fight :(');
+    }
+
+    onMeetPlayers(player, player2) {
+        if (this.player === player || this.player === player2) {
+            const current = this.player === player ? player : player2;
+            const enemy = this.player === player ? player2 : player;
+
+            if (current.state !== 'fight') {
+                let message = '';
+                const enemyName = (enemy.isNpc ? '[NPC] ' : '') + enemy.playerName;
+
+                if (enemy.state === 'fight') {
+                    message = ['', enemyName, ' is already fighting!'];
+                } else {
+                    // message = ['You met', enemyName];
+                    this.askToFight(enemy, enemyName);
+                }
+
+                if (message) this.showInfoMessage(message);
+            }
+        }
+    }
+
+    hideStartFightDialog() {
+        const $dialog = $('.startFightDialog');
+        const dialog = $dialog[0];
+        if (dialog.timeout) clearTimeout(dialog.timeout);
+        $dialog.hide();
+        this.engine.focus();
+    }
+
+    askToFight(enemy, enemyName) {
+        const $dialog = $('.startFightDialog');
+        const dialog = $dialog[0];
+
+        const decline = () => {
+            this.hideStartFightDialog();
+            this.api.declineFight(enemy);
+        };
+
+        $dialog.find('.no').on('click', (e) => {
+            e.preventDefault();
+            decline();
+        });
+
+        $dialog.find('.yes').on('click', (e) => {
+            e.preventDefault();
+            console.log('Starting fight...');
+            this.player.setState('fight');
+            this.api.agreeFight(enemy);
+            this.hideStartFightDialog();
+        });
+
+        $dialog.find('span').text(enemyName);
+        $dialog.show();
+
+        if (dialog.timeout) clearTimeout(dialog.timeout);
+        dialog.timeout = setTimeout(decline, 5000);
+    }
+
+    showInfoMessage([msg1, msg2, msg3]) {
+        $('.meetMsg span.msg1').text(msg1);
+        $('.meetMsg span.msg2').text(msg2);
+        $('.meetMsg span.msg3').text(msg3);
+
+        const $meetMsg = $('.meetMsg');
+        const meetMsg = $meetMsg[0];
+        $meetMsg.show();
+
+        if (meetMsg.timeout) clearTimeout(meetMsg.timeout);
+        meetMsg.timeout = setTimeout(() => $meetMsg.hide(), 3000);
     }
 
     movePlayerTo(newX, newY, player) {

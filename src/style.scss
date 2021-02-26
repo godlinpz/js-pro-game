@@ -14,7 +14,8 @@
     margin: auto;
     border: 9px solid #626262;
 
-    .meetMsg {
+    .meetMsg,
+    .startFightDialog {
         display: none;
         position: absolute;
         top: -40px;
@@ -28,9 +29,40 @@
         z-index: 10;
         box-sizing: border-box;
 
-        span {
+        span.msg1 {
+            // color: yellow;
+            // font-weight: bold;
+        }
+
+        span.msg2 {
             color: yellow;
             font-weight: bold;
+        }
+
+        span.msg3 {
+            // color: yellow;
+            font-weight: bold;
+        }
+    }
+
+    .startFightDialog {
+        bottom: 0;
+        top: auto;
+        padding-bottom: 30px;
+        border: 10px solid #ffe300;
+
+        button {
+            background-color: #ff9411;
+            border: none;
+            width: 100px;
+            height: 35px;
+            font-size: 17px;
+            cursor: pointer;
+            border-radius: 5px;
+
+            &.no {
+                background-color: #ff6767;
+            }
         }
     }
 }

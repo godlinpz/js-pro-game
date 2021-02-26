@@ -14,6 +14,8 @@ import _ from 'lodash';
 class GameServer extends Game {
     constructor(cfg) {
         super(cfg);
+
+        this.fightPairings = {};
     }
 
     onCreate() {}
@@ -85,6 +87,57 @@ class GameServer extends Game {
 
     meetPlayers(player, player2) {
         this.api.meetPlayers(player, player2);
+    }
+
+    getPair(player, enemy) {
+        let pairId = [player.playerId, enemy.playerId].sort().join('--');
+        let pairInfo = this.fightPairings[pairId];
+
+        if (pairInfo && pairInfo.time + 7 * 60 * 1000 < Date.now()) {
+            delete this.fightPairings[pairId];
+            pairId = false;
+            pairInfo = false;
+        }
+
+        return { info: pairInfo, id: pairId };
+    }
+
+    agreeFight(player, enemy) {
+        const pair = this.getPair(player, enemy);
+
+        if (pair.info) {
+            pair.info.agree[player.playerId] = true;
+
+            if (pair.info.agree[enemy.playerId]) this.startFight(player, enemy);
+        } else this.fightPairings[pair.id] = { time: Date.now(), agree: { [player.playerId]: true } };
+    }
+
+    declineFight(player, enemy) {
+        const pair = this.getPair(player, enemy);
+
+        if (pair.info) {
+            pair.info.agree[player.playerId] = false;
+
+            // if(pair.info.agree[enemy.playerId] !== false)
+        } else this.fightPairings[pair.id] = { time: Date.now(), agree: { [player.playerId]: false } };
+
+        this.rejectFight(player, enemy);
+    }
+
+    startFight(player, enemy) {
+        player.state = 'fight';
+        enemy.state = 'fight';
+
+        /* TODO: УБРАТЬ КОСТЫЛЬ!!! */
+        setTimeout(() => player.setState('main') + enemy.setState('main'), 2000);
+
+        this.api.startFight(player, enemy);
+    }
+
+    rejectFight(player, enemy) {
+        player.state = 'main';
+        enemy.state = 'main';
+        this.api.rejectFight(player, enemy);
     }
 
     static init() {

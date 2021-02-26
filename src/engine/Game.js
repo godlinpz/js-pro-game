@@ -4,19 +4,22 @@ import GameMap from './GameMap';
 import Engine from '../engine/Engine';
 import sprites from '../configs/sprites/sprites.json';
 import _ from 'lodash';
+import TripleTriadPlayer from '../solver/TripleTriadPlayer.mjs';
 
 class Game {
     constructor(cfg) {
         Object.assign(this, cfg);
 
-        this.cfg = cfg;
-        this.gameObjects = {};
-        this.spawnPoints = [];
-        this.players = {};
+        Object.assign(this, {
+            cfg,
+            gameObjects: {},
+            spawnPoints: [],
+            players: {},
+            tripleTriad: new TripleTriadPlayer(),
+            state: GameStates.start,
+            api: this.createApi(cfg),
+        });
 
-        this.state = GameStates.start;
-
-        this.api = this.createApi(cfg);
         this.api.connect();
 
         this.engine = this.createEngine();

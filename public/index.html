@@ -10,13 +10,22 @@
         <div id="root">
             <h3>Тыркай мышкой в карту, затем двигай стрелочками</h3>
             <div class="game-container">
-                <div class="meetMsg">You met <span></span></div>
+                <div class="meetMsg">
+                    <span class="msg1"></span>
+                    <span class="msg2"></span>
+                    <span class="msg3"></span>
+                </div>
                 <div class="preloader"><span>Loading...</span></div>
                 <form class="username">
                     <h2>What's your name?</h2>
                     <input type="text" name="username" />
                     <button>Enter</button>
                 </form>
+                <div class="startFightDialog">
+                    <h2>Begin fight <span class="msg2"></span>?</h2>
+                    <button class="yes">Yes</button>
+                    <button class="no">No</button>
+                </div>
                 <canvas id="game" width="600px" height="600px"></canvas>
             </div>
         </div>

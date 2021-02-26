@@ -97,6 +97,10 @@ class ClientEngine extends Engine {
         return canvas;
     }
 
+    focus() {
+        this.canvases.main.focus();
+    }
+
     renderCanvas(name, fromPos, toPos) {
         const canvas = this.canvases[name];
 

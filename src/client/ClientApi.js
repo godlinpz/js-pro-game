@@ -56,11 +56,34 @@ class ClientApi {
         game.removePlayer(id);
     }
 
-    onMeetPlayers(socket, { id, id2 }) {
+    onMeetPlayers(socket, { meet: [meetPlayer1, meetPlayer2] }) {
         const { game } = this.cfg;
-        const player = game.getPlayerById(id);
-        const player2 = game.getPlayerById(id2);
+        const player = game.getPlayerById(meetPlayer1.id);
+        const player2 = game.getPlayerById(meetPlayer2.id);
+        player.setState(meetPlayer1.state);
+        player2.setState(meetPlayer2.state);
+
         game.onMeetPlayers(player, player2);
+    }
+
+    onStartFight(socket, { pair: [pair1, pair2] }) {
+        const { game } = this.cfg;
+
+        const player = game.getPlayerById(pair1.id);
+        const player2 = game.getPlayerById(pair2.id);
+
+        player.setState(pair1.state);
+        player2.setState(pair2.state);
+
+        game.onStartFight(player, player2);
+    }
+
+    onRejectFight(socket, { id: enemyId, state }) {
+        const { game } = this.cfg;
+        const enemy = game.getPlayerById(enemyId);
+        enemy.setState(state);
+
+        game.onRejectFight(enemy);
     }
 
     emit(msgType, data = null) {
@@ -73,6 +96,14 @@ class ClientApi {
 
     movePlayer(direction) {
         this.emit('move', direction);
+    }
+
+    agreeFight(enemy) {
+        this.emit('agreeFight', enemy.playerId);
+    }
+
+    declineFight(enemy) {
+        this.emit('declineFight', enemy.playerId);
     }
 }
 
