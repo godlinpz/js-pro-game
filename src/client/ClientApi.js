@@ -7,6 +7,7 @@ class ClientApi {
     constructor(cfg) {
         this.cfg = _.assign(cfg, cfg.apiCfg);
         this.io = null;
+        this.spamTimer = null;
     }
 
     connect() {
@@ -87,7 +88,11 @@ class ClientApi {
     }
 
     emit(msgType, data = null) {
-        this.io.emit(msgType, data);
+        if (!this.spamTimer) {
+            this.spamTimer = true;
+            this.io.emit(msgType, data);
+            setTimeout(() => (this.spamTimer = false), 100);
+        }
     }
 
     join() {

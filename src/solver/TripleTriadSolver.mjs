@@ -1,30 +1,11 @@
-function randomInt(from, to) {
-    return ((Math.random() * (to - from)) | 0) + from;
-}
-
-function shuffle([...arr])
-{
-    const len = arr.length;
-    for (let i = 0; i < len; i++)
-    {
-        const e = arr[i];
-        const n = randomInt(i, len);
-        arr[i] = arr[n];
-        arr[n] = e;
-    }
-
-    return arr;
-}
+import { randomInt } from './solverUtil.mjs';
 
 const boardSize = 3;
 // const hitSymbols = '123456789A';
 const minRate = -1000000;
 
-class TripleTriadSolver
-{
-    constructor()
-    {
-    }
+class TripleTriadSolver {
+    constructor() {}
 
     randomHand(owner) {
         const pokes = [];
@@ -39,7 +20,7 @@ class TripleTriadSolver
 
         return { owner, hits, rate: this.pokeRate(hits), position };
     }
-/*
+    /*
     solve(board, hands, currentPlayer, maxDepth = 5)
     {
         const hand1 = this.normaliseHand(player, 1);
@@ -50,15 +31,15 @@ class TripleTriadSolver
     solve(board, hands, currentPlayer, maxDepth = 5) {
         this.count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         let empty = this.epmtyCells(board);
-        
+
         // if(empty.length >= 7)
         //     empty = shuffle(empty);
-        
-        if(empty.length > 6 && maxDepth > 5 ) maxDepth = 5;
-        if(empty.length >= 8 && maxDepth > 4 ) maxDepth = 4;
+
+        if (empty.length > 6 && maxDepth > 5) maxDepth = 5;
+        if (empty.length >= 8 && maxDepth > 4) maxDepth = 4;
         // if(empty.length <= 6 ) maxDepth = Math.min(empty.length, maxDepth);
 
-        const enemyId = Object.keys(hands).filter( key => key !== currentPlayer)[0];
+        const enemyId = Object.keys(hands).filter((key) => key !== currentPlayer)[0];
 
         // console.log('TURN', board, empty, hands[currentPlayer], hands[enemyId], maxDepth);
 
@@ -67,7 +48,6 @@ class TripleTriadSolver
         const result = this.turn(board, empty, hands[currentPlayer].pokes, hands[enemyId].pokes, maxDepth);
 
         console.log('iterations', this.count);
-        
 
         return result;
     }
@@ -88,16 +68,22 @@ class TripleTriadSolver
         // const step = (depth > 6) ? 2 : 1;
 
         if (depth < maxDepth)
-            for (let n = 0; n < emptyCells.length; n++) // emptyCells.forEach(([i, j]) =>
-            {
+            for (
+                let n = 0;
+                n < emptyCells.length;
+                n++ // emptyCells.forEach(([i, j]) =>
+            ) {
                 const position = emptyCells[n];
 
-                const newEmptyCells = emptyCells.filter(pos => pos !== position);
+                const newEmptyCells = emptyCells.filter((pos) => pos !== position);
 
-                    // const step1 = (depth > 6) ? 2 : 1;
+                // const step1 = (depth > 6) ? 2 : 1;
 
-                for (let n1 = 0; n1 < hand.length; n1++) // emptyCells.forEach(([i, j]) =>
-                {
+                for (
+                    let n1 = 0;
+                    n1 < hand.length;
+                    n1++ // emptyCells.forEach(([i, j]) =>
+                ) {
                     const oldPoke = hand[n1];
                     const newPoke = { ...oldPoke };
                     const newHand = hand.filter((poke) => oldPoke !== poke);
@@ -108,10 +94,9 @@ class TripleTriadSolver
 
                     const { board: newBoard, rate: hitRate } = this.putCard(board, newPoke, enemyMove);
 
-                    let result = {rate: minRate, game: []};
+                    let result = { rate: minRate, game: [] };
 
-                    if(newEmptyCells.length && depth < maxDepth-1)
-                    {
+                    if (newEmptyCells.length && depth < maxDepth - 1) {
                         result = this.turn(
                             newBoard,
                             newEmptyCells,
@@ -129,7 +114,7 @@ class TripleTriadSolver
 
                     if (newRate > rate) {
                         rate = newRate;
-                        game = [{ ... newPoke }].concat(newGame);
+                        game = [{ ...newPoke }].concat(newGame);
                     }
                 }
             }
@@ -138,39 +123,36 @@ class TripleTriadSolver
     }
 
     putCard([...board], { ...card }, enemyMove = false) {
-
-        const cardPos  = card.position;
-        const i = cardPos/boardSize |0;
-        const i3 = i*boardSize;
+        const cardPos = card.position;
+        const i = (cardPos / boardSize) | 0;
+        const i3 = i * boardSize;
 
         const j = cardPos - i3;
 
-        
         board[cardPos] = card;
-        
+
         // let rate = card.rate;
         let rate = 0;
         const beaten = [];
 
         // обрабатываем бой покемонов:
 
-        const hits = 
-        [
-            {isOk: i > 0,           hitOwn: 0, hitEnemy: 2, pos: cardPos - boardSize },
-            {isOk: j < boardSize-1, hitOwn: 1, hitEnemy: 3, pos: cardPos + 1         },
-            {isOk: i < boardSize-1, hitOwn: 2, hitEnemy: 0, pos: cardPos + boardSize },
-            {isOk: j > 0,           hitOwn: 3, hitEnemy: 1, pos: cardPos - 1         },
+        const hits = [
+            { isOk: i > 0, hitOwn: 0, hitEnemy: 2, pos: cardPos - boardSize },
+            { isOk: j < boardSize - 1, hitOwn: 1, hitEnemy: 3, pos: cardPos + 1 },
+            { isOk: i < boardSize - 1, hitOwn: 2, hitEnemy: 0, pos: cardPos + boardSize },
+            { isOk: j > 0, hitOwn: 3, hitEnemy: 1, pos: cardPos - 1 },
         ];
 
-        for (let i=0; i< hits.length; ++i) {
+        for (let i = 0; i < hits.length; ++i) {
             const hit = hits[i];
-            
+
             // for (let [isOk, hitOwn, hitEnemy, pos] of hits) {
             if (hit.isOk && board[hit.pos]) {
                 const cardEnemy = board[hit.pos];
-                    
-                if (cardEnemy.holder !== card.owner &&  cardEnemy.hits[hit.hitEnemy] < card.hits[hit.hitOwn]) {
-                    if(this.count) ++this.count[10];
+
+                if (cardEnemy.holder !== card.owner && cardEnemy.hits[hit.hitEnemy] < card.hits[hit.hitOwn]) {
+                    if (this.count) ++this.count[10];
                     rate += cardEnemy.rate;
                     const cardEnemyNew = { ...cardEnemy };
                     cardEnemyNew.holder = card.owner;
@@ -180,21 +162,18 @@ class TripleTriadSolver
             }
         }
 
-        if(enemyMove) rate = -rate;
+        if (enemyMove) rate = -rate;
 
         return { board, rate, beaten };
     }
 
-
     epmtyCells(board) {
-
         return board.reduce((empty, cell, idx) => (cell || empty.push(idx)) && empty, []);
     }
 
     pokeRate(hits) {
         return hits[0] + hits[1] + hits[2] + hits[3] + 1000;
     }
-
 }
 
 export default TripleTriadSolver;
