@@ -4,15 +4,18 @@ import TripleTriadSolver from './TripleTriadSolver.mjs';
 const solver = new TripleTriadSolver();
 
 class TripleTriadPlayer {
+    constructor() {
+        this.globalHandIdSuffix = 1;
+    }
     /*
     {
         ai: true,
         currentPlayer: 'p1',
         hands: {
-            p1: [ [1,2,3,4], [1,2,3,4], [1,2,3,4], [1,2,3,4], ], 
-            p2: [ [5,3,2,1], [5,3,2,1], [5,3,2,1], [5,3,2,1], [5,3,2,1], ]
+            p1: [ [1,[1,2,3,4]], [2,[1,2,3,4], [3,[1,2,3,4]], [4,[1,2,3,4]], ], 
+            p2: [ [5,[5,3,2,1]], [6,[5,3,2,1], [7,[5,3,2,1]], [8,[5,3,2,1]], [9,[5,3,2,1]], ]
         }, 
-        move: {hits: [1,2,3,4], position: 5},
+        move: {id: 10, hits: [1,2,3,4], position: 5},
         board: [0, 0, 0,  0, 0, 0,  0, 0, 0], 
     }
     */
@@ -115,9 +118,18 @@ class TripleTriadPlayer {
         const range = 5;
         const from = rate - range,
             to = rate + range;
+
         const candidates = allPokes.filter((p) => p.attacks[0] >= from && p.attacks[0] <= to);
+
         const hand = [];
         for (let i = 0; i < 5; ++i) hand.push(candidates[randomInt(0, candidates.length)]);
+    }
+
+    pokesToHandCfg(hand) {
+        const suff = ++this.globalHandIdSuffix * 10;
+        // шоб максимально уникальные айдишники давало
+        const idHead = '' + Date.now() + randomInt(1000, 10000) + hand[0].attacks[0] + randomInt(suff, suff * 10);
+        return hand.map((p, idx) => [idHead + '_' + idx, p.attacks[1]]);
     }
 }
 

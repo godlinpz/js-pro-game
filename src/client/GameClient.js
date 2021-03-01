@@ -1,3 +1,5 @@
+import EventSourceMixin from '../engine/EventSourceMixin';
+
 import ClientEngine from './ClientEngine';
 import ClientMap from './ClientMap';
 
@@ -8,6 +10,8 @@ import ClientApi from './ClientApi';
 import Game from '../engine/Game';
 import GameStates from '../engine/GameStates';
 
+import TripleTriadGame from '../client/TripleTriadGameClient';
+
 import $ from 'jquery';
 
 class GameClient extends Game {
@@ -17,6 +21,7 @@ class GameClient extends Game {
         this.player = null;
         this.playerLayer = 2;
         this.playerName = '';
+        this.gameMaster = new TripleTriadGame(this);
     }
 
     onCreate() {
@@ -45,6 +50,10 @@ class GameClient extends Game {
 
     createMap(levelCfg) {
         return new ClientMap(this, this.engine, levelCfg);
+    }
+
+    createMaster() {
+        return new TripleTriadPlayer(this);
     }
 
     getLastRenderTime() {
@@ -132,13 +141,18 @@ class GameClient extends Game {
 
     onStartFight(player, player2) {
         if (this.player === player || this.player === player2) {
-            // const current = this.player === player ? player  : player2;
+            const current = this.player === player ? player : player2;
             const enemy = this.player === player ? player2 : player;
 
             this.showInfoMessage(['', enemy.playerName, ' AGREED the fight!']);
             setTimeout(() => this.player.setState('main'), 1000);
+
+            this.gameMaster.fight([current, enemy]);
+            this.trigger('fight', { master: this.gameMaster });
         }
     }
+
+    onFinishFight() {}
 
     onRejectFight(enemy) {
         this.player.setState('main');
@@ -243,5 +257,7 @@ class GameClient extends Game {
         console.log('INIT');
     }
 }
+
+Object.assign(GameClient.prototype, EventSourceMixin);
 
 export default GameClient;
