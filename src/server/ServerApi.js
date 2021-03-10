@@ -75,6 +75,11 @@ class ServerApi {
         game.declineFight(player, enemy);
     }
 
+    onSetDeck(socket, deck) {
+        const player = game.getPlayerById(socket.id);
+        game.setDeck(player, deck);
+    }
+
     meetPlayers(player, player2) {
         this.broadcast('meetPlayers', {
             meet: [

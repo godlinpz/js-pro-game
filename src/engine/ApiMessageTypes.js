@@ -11,6 +11,7 @@ const ApiMessageTypes = [
     'agreeFight',
     'startFight',
     'rejectFight',
+    'setDeck',
 ].map((msgType) => [msgType, 'on' + msgType[0].toUpperCase() + msgType.substr(1)]);
 
 const useApiMessageTypes = (api, socket) => {

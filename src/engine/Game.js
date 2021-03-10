@@ -5,6 +5,7 @@ import Engine from '../engine/Engine';
 import sprites from '../configs/sprites/sprites.json';
 import _ from 'lodash';
 import TripleTriadPlayer from '../solver/TripleTriadPlayer.mjs';
+import allPokemons from '../solver/pokemonsDataUpdated2.json';
 
 class Game {
     constructor(cfg) {
@@ -18,6 +19,7 @@ class Game {
             tripleTriad: new TripleTriadPlayer(),
             state: GameStates.start,
             api: this.createApi(cfg),
+            allPokemons,
         });
 
         this.api.connect();

@@ -1,12 +1,14 @@
 import EventSourceMixin from './EventSourceMixin';
 
-import Play from '../solver/TripleTriadPlayer.mjs';
+import PlayMachine from '../solver/TripleTriadPlayer.mjs';
 
 class TripleTriadGame {
     constructor(game) {
         Object.assign(this, {
-            game: game,
-            play: new Play(),
+            game,
+            playMachine: new PlayMachine(),
+            board: null,
+            allPokemons,
         });
         this.reset();
     }
@@ -17,11 +19,14 @@ class TripleTriadGame {
             hands: [],
             lastTurn: [],
             current: null,
+            board: false,
         });
     }
 
     fight(players) {
         this.reset();
+
+        this.current = players[0];
 
         this.players[players[0].playerId] = players[0];
         this.players[players[1].playerId] = players[1];
@@ -32,7 +37,16 @@ class TripleTriadGame {
     }
 
     getHand(player) {
-        return (this.hands[player.playerId] = this.play.pokesToHandCfg(hand));
+        return this.hands[player.playerId];
+    }
+
+    setDeck(player, deck) {
+        player.deck = deck;
+    }
+
+    getOpponent(player) {
+        if (!player) player = this.current;
+        return this.players[this.players[0] === player ? 1 : 0];
     }
 
     turn() {}

@@ -110,6 +110,10 @@ class ClientApi {
     declineFight(enemy) {
         this.emit('declineFight', enemy.playerId);
     }
+
+    setDeck(deck) {
+        this.emit('setDeck', deck);
+    }
 }
 
 Object.assign(ClientApi.prototype, EventSourceMixin);

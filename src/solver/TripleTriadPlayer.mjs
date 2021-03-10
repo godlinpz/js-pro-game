@@ -113,8 +113,8 @@ class TripleTriadPlayer {
         return (topRates.reduce((sum, rate) => sum + rate, 0) / topRates.length) | 0;
     }
 
-    generateAiHand(deck, allPokes) {
-        const rate = this.deckRate(deck);
+    generateAiHand(opponentDeck, allPokes) {
+        const rate = this.deckRate(opponentDeck);
         const range = 5;
         const from = rate - range,
             to = rate + range;

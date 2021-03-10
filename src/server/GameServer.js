@@ -132,6 +132,12 @@ class GameServer extends Game {
         setTimeout(() => player.setState('main') + enemy.setState('main'), 2000);
 
         this.api.startFight(player, enemy);
+
+        const gameMaster = new TripleTriadGameServer(this);
+
+        gameMaster.fight(player, enemy);
+
+        player.currentGameMaster = enemy.currentGameMaster = gameMaster;
     }
 
     rejectFight(player, enemy) {
