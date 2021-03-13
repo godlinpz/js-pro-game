@@ -16,6 +16,7 @@ class GameServer extends Game {
         super(cfg);
 
         this.fightPairings = {};
+        this.fights = {};
     }
 
     onCreate() {}
@@ -135,10 +136,12 @@ class GameServer extends Game {
 
         const gameMaster = new TripleTriadGameServer(this);
 
-        gameMaster.fight(player, enemy);
-
         player.currentGameMaster = enemy.currentGameMaster = gameMaster;
+
+        gameMaster.fight(player, enemy);
     }
+
+    onEndFight(gameMaster) {}
 
     rejectFight(player, enemy) {
         player.state = 'main';

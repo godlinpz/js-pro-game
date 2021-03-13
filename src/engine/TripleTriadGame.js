@@ -6,9 +6,12 @@ class TripleTriadGame {
     constructor(game) {
         Object.assign(this, {
             game,
+            api: game.api,
             playMachine: new PlayMachine(),
             board: null,
             allPokemons,
+            maxTurnTime: 60, // seconds
+            maxHandBuildTime: 120, // seconds
         });
         this.reset();
     }
@@ -17,7 +20,8 @@ class TripleTriadGame {
         Object.assign(this, {
             players: [],
             hands: [],
-            lastTurn: [],
+            pokes: [],
+            lastTurn: null,
             current: null,
             board: false,
         });
@@ -28,12 +32,15 @@ class TripleTriadGame {
 
         this.current = players[0];
 
-        this.players[players[0].playerId] = players[0];
-        this.players[players[1].playerId] = players[1];
+        this.players = [...players];
     }
 
     setHand(player, hand) {
-        this.hands[player.playerId] = this.play.pokesToHandCfg(hand);
+        this.hands[player.playerId] = hand;
+    }
+
+    setPokes(player, pokes) {
+        this.setHand(player, this.playMachine.pokesToHandCfg(pokes));
     }
 
     getHand(player) {
@@ -44,9 +51,13 @@ class TripleTriadGame {
         player.deck = deck;
     }
 
-    getOpponent(player) {
+    getOpponent(player = null) {
         if (!player) player = this.current;
         return this.players[this.players[0] === player ? 1 : 0];
+    }
+
+    getPlayerById(id) {
+        return this.players[this.players[0].playerId === id ? 0 : 1];
     }
 
     turn() {}

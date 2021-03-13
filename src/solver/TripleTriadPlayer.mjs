@@ -21,7 +21,7 @@ class TripleTriadPlayer {
     */
 
     play({ ai, currentPlayer, hands, move, board }) {
-        for (let owner in hands) hands[owner] = this.normaliseHand(hands[owner], owner);
+        hands = this.normaliseHands(hands);
 
         board = board ? this.normaliseBoard(board) : [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -83,8 +83,13 @@ class TripleTriadPlayer {
         return { move, ...result, empty: solver.epmtyCells(board) };
     }
 
+    normaliseHands(hands) {
+        for (let owner in hands) hands[owner] = this.normaliseHand(hands[owner], owner);
+        return hands;
+    }
+
     normaliseHand(hand, owner) {
-        console.log(hand);
+        // console.log(hand);
         const pokes = hand.map(({ id, hits }) => ({ id, hits, owner, holder: owner, rate: solver.pokeRate(hits) }));
 
         return { owner, pokes };
@@ -123,13 +128,15 @@ class TripleTriadPlayer {
 
         const hand = [];
         for (let i = 0; i < 5; ++i) hand.push(candidates[randomInt(0, candidates.length)]);
+
+        return hand;
     }
 
-    pokesToHandCfg(hand) {
+    pokesToHandCfg(pokes) {
         const suff = ++this.globalHandIdSuffix * 10;
         // шоб максимально уникальные айдишники давало
-        const idHead = '' + Date.now() + randomInt(1000, 10000) + hand[0].attacks[0] + randomInt(suff, suff * 10);
-        return hand.map((p, idx) => [idHead + '_' + idx, p.attacks[1]]);
+        const idHead = '' + Date.now() + randomInt(1000, 10000) + pokes[0].attacks[0] + randomInt(suff, suff * 10);
+        return hand.map((p, idx) => ({ id: idHead + '_' + idx, hits: p.attacks[1], poke: p }));
     }
 }
 
