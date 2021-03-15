@@ -18,10 +18,12 @@ class GameClient extends Game {
     constructor(cfg) {
         super(cfg);
 
-        this.player = null;
-        this.playerLayer = 2;
-        this.playerName = '';
-        this.gameMaster = new TripleTriadGame(this);
+        Object.assign(this, {
+            player: null,
+            playerLayer: 2,
+            playerName: '',
+            gameMaster: null,
+        });
     }
 
     onCreate() {
@@ -147,6 +149,7 @@ class GameClient extends Game {
             this.showInfoMessage(['', enemy.playerName, ' AGREED the fight!']);
             setTimeout(() => this.player.setState('main'), 1000);
 
+            this.gameMaster = new TripleTriadGame(this);
             this.gameMaster.fight([current, enemy]);
             this.trigger('fight', { master: this.gameMaster });
         }

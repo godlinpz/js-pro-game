@@ -12,6 +12,13 @@ const ApiMessageTypes = [
     'startFight',
     'rejectFight',
     'setDeck',
+    'chooseYourHand',
+    'commonError',
+    'nextTurn',
+    'turnDone',
+    'fightTimeout',
+    'giveUp',
+    'fightEnd',
 ].map((msgType) => [msgType, 'on' + msgType[0].toUpperCase() + msgType.substr(1)]);
 
 const useApiMessageTypes = (api, socket) => {

@@ -24,7 +24,7 @@ class TripleTriadGameServer extends TripleTriadGame {
 
         if (opponent.isNpc) {
             if (!deck || !deck.length) {
-                this.endFight('Player deck was not submitted. You can`t fight.');
+                this.endFight(null, 'Player deck was not submitted. You can`t fight.');
             } else this.setPokes(opponent, this.playMachine.generateAiHand(player.deck, this.game.allPokemons));
         } else if (this.hands[player.playerId] && this.hands[opponent.playerId]) this.nextTurn();
     }

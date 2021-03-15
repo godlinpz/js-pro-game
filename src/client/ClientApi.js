@@ -87,6 +87,48 @@ class ClientApi {
         game.onRejectFight(enemy);
     }
 
+    onChooseYourHand(socket, { timeout }) {
+        const gm = this.cfg.game.gameMaster;
+
+        if (gm) gm.trigger('chooseYourHand', { timeout });
+    }
+
+    onCommonError(socket, { message }) {
+        const gm = this.cfg.game.gameMaster;
+
+        if (gm) gm.onCommonError(message);
+    }
+
+    onNextTurn(socket, data) {
+        const gm = this.cfg.game.gameMaster;
+
+        if (gm) gm.trigger('nextTurn', data);
+    }
+
+    onTurnDone(socket, data) {
+        const gm = this.cfg.game.gameMaster;
+
+        if (gm) gm.trigger('turnDone', data);
+    }
+
+    onFightTimeout(socket, data) {
+        const gm = this.cfg.game.gameMaster;
+
+        if (gm) gm.trigger('fightTimeout', data);
+    }
+
+    onGiveUp(socket, data) {
+        const gm = this.cfg.game.gameMaster;
+
+        if (gm) gm.trigger('giveUp', data);
+    }
+
+    onFightEnd(socket, data) {
+        const gm = this.cfg.game.gameMaster;
+
+        if (gm) gm.onFightEnd(data);
+    }
+
     emit(msgType, data = null) {
         if (!this.spamTimer) {
             this.spamTimer = true;
