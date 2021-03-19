@@ -11,6 +11,8 @@ import GameStates from '../engine/GameStates';
 
 import _ from 'lodash';
 
+import TripleTriadGameServer from './TripleTriadGameServer';
+
 class GameServer extends Game {
     constructor(cfg) {
         super(cfg);
@@ -105,12 +107,15 @@ class GameServer extends Game {
 
     agreeFight(player, enemy) {
         const pair = this.getPair(player, enemy);
+        console.log('agreeFight', player.playerId, enemy.playerId);
 
         if (pair.info) {
             pair.info.agree[player.playerId] = true;
 
             if (pair.info.agree[enemy.playerId]) this.startFight(player, enemy);
         } else this.fightPairings[pair.id] = { time: Date.now(), agree: { [player.playerId]: true } };
+
+        if (enemy.isNpc) this.agreeFight(enemy, player);
     }
 
     declineFight(player, enemy) {
@@ -129,6 +134,8 @@ class GameServer extends Game {
         player.state = 'fight';
         enemy.state = 'fight';
 
+        console.log('startFight', player.playerId, enemy.playerId);
+
         /* TODO: УБРАТЬ КОСТЫЛЬ!!! */
         setTimeout(() => player.setState('main') + enemy.setState('main'), 2000);
 
@@ -136,7 +143,7 @@ class GameServer extends Game {
 
         const gameMaster = new TripleTriadGameServer(this);
 
-        gameMaster.fight(player, enemy);
+        gameMaster.fight([player, enemy]);
     }
 
     onEndFight(gameMaster) {}
@@ -144,7 +151,7 @@ class GameServer extends Game {
     rejectFight(player, enemy) {
         player.state = 'main';
         enemy.state = 'main';
-        this.api.rejectFight(player, enemy);
+        if (!enemy.isNpc) this.api.rejectFight(player, enemy);
     }
 
     static init() {

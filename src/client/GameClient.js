@@ -10,7 +10,7 @@ import ClientApi from './ClientApi';
 import Game from '../engine/Game';
 import GameStates from '../engine/GameStates';
 
-import TripleTriadGame from '../client/TripleTriadGameClient';
+import TripleTriadGameClient from '../client/TripleTriadGameClient';
 
 import $ from 'jquery';
 
@@ -149,9 +149,10 @@ class GameClient extends Game {
             this.showInfoMessage(['', enemy.playerName, ' AGREED the fight!']);
             setTimeout(() => this.player.setState('main'), 1000);
 
-            this.gameMaster = new TripleTriadGame(this);
-            this.gameMaster.fight([current, enemy]);
+            this.gameMaster = new TripleTriadGameClient(this);
             this.trigger('fight', { master: this.gameMaster });
+
+            this.gameMaster.fight([current, enemy]);
         }
     }
 

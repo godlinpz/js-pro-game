@@ -21,9 +21,15 @@ const ApiMessageTypes = [
     'fightEnd',
 ].map((msgType) => [msgType, 'on' + msgType[0].toUpperCase() + msgType.substr(1)]);
 
+function handleMsg(api, handlerName, socket, ...args) {
+    api.log && api.log({ log: 'INCOMING', id: socket.id, handlerName, ...args });
+    return api[handlerName](socket, ...args);
+}
+
 const useApiMessageTypes = (api, socket) => {
     ApiMessageTypes.forEach(
-        ([msgType, handler]) => api[handler] && socket.on(msgType, (...args) => api[handler](socket, ...args)),
+        ([msgType, handlerName]) =>
+            api[handlerName] && socket.on(msgType, (...args) => handleMsg(api, handlerName, socket, ...args)),
     );
 };
 

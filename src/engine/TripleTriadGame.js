@@ -9,7 +9,6 @@ class TripleTriadGame {
             api: game.api,
             playMachine: new PlayMachine(),
             board: null,
-            allPokemons,
             maxTurnTime: 60, // seconds
             maxHandBuildTime: 120, // seconds
         });
@@ -66,6 +65,10 @@ class TripleTriadGame {
     }
 
     turn() {}
+
+    endFight(message, winner) {
+        this.trigger('endFight', { message, winner });
+    }
 }
 
 Object.assign(TripleTriadGame.prototype, EventSourceMixin);

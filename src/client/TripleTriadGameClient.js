@@ -6,15 +6,16 @@ class TripleTriadGameClient extends TripleTriadGame {
     }
 
     onCommonError(message) {
-        this.trigger('commonError', { timeout });
+        console.log('TT Error', message);
+        this.trigger('commonError', { message });
     }
 
     onFightEnd({ message, winner }) {
-        this.trigger('commonError', { message, winner });
+        this.endFight(message, winner);
     }
-
     onEvent(eventType, data) {
-        this.emit(eventType, data);
+        console.log('TT Event', eventType, data);
+        this.trigger(eventType, data);
     }
 
     chooseHand(hand, deck) {

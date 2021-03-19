@@ -4,6 +4,10 @@ class TripleTriadGameServer extends TripleTriadGame {
     constructor(game) {
         super(game);
         this.turnTimer = 0;
+
+        // TODO for debug only - remove:
+        this.maxTurnTime = 15; // seconds
+        this.maxHandBuildTime = 15; // seconds
     }
 
     fight(players) {
@@ -93,11 +97,13 @@ class TripleTriadGameServer extends TripleTriadGame {
     }
 
     notifyAll(type, data) {
+        console.log('notifyAll', type, data);
+
         this.each((p) => !p.isNpc && this.api[type](p, data));
     }
 
     startTimer(timeout, message, player = null) {
-        this.turnTimer = setTimeout(() => this.onTimeOut(message, player), timeout);
+        this.turnTimer = setTimeout(() => this.onTimeOut(message, player), timeout * 1000);
     }
 
     onTimeOut(message, player = null) {
@@ -107,7 +113,7 @@ class TripleTriadGameServer extends TripleTriadGame {
         } else {
         }
 
-        this.notifyAll('fightTimeout', { message, winner: winner.playerId });
+        this.notifyAll('fightTimeout', { message, winner: (winner && winner.playerId) || null });
 
         this.endFight(winner);
     }
@@ -121,6 +127,8 @@ class TripleTriadGameServer extends TripleTriadGame {
         this.notifyAll('fightEnd', { message, winner: winner && winner.playerId });
 
         this.each((p) => (p.currentGameMaster = null));
+
+        super.endFight(winner, message);
     }
 }
 

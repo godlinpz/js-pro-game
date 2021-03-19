@@ -1,0 +1,606 @@
+{"0":"admin","log":"INCOMING","id":"2PcMsq0w8dlfWYepAAAD","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"2PcMsq0w8dlfWYepAAAD","name":"admin","skin":"boy1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"2PcMsq0w8dlfWYepAAAD","layer":2,"cellX":9,"cellY":11,"skin":"boy1","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"2PcMsq0w8dlfWYepAAAD"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"2PcMsq0w8dlfWYepAAAD","name":"admin","skin":"boy1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"2PcMsq0w8dlfWYepAAAD","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"2PcMsq0w8dlfWYepAAAD","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"2PcMsq0w8dlfWYepAAAD","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"2PcMsq0w8dlfWYepAAAD","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"2PcMsq0w8dlfWYepAAAD","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"2PcMsq0w8dlfWYepAAAD","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"2PcMsq0w8dlfWYepAAAD","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"2PcMsq0w8dlfWYepAAAD","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"2PcMsq0w8dlfWYepAAAD","handlerName":"onAgreeFight"}
+
+{"0":"transport close","log":"INCOMING","id":"2PcMsq0w8dlfWYepAAAD","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"2PcMsq0w8dlfWYepAAAD","log":"SOCKET BROADCAST","id":"2PcMsq0w8dlfWYepAAAD"}
+
+{"0":"welcome","1":{"player_id":"_ArFGzqUZMObJp9iAAAF"},"log":"SOCKET EMIT","id":"_ArFGzqUZMObJp9iAAAF"}
+
+{"0":"welcome","1":{"player_id":"9zVWV4jxsPNuCLuwAAAB"},"log":"SOCKET EMIT","id":"9zVWV4jxsPNuCLuwAAAB"}
+
+{"0":"admin","log":"INCOMING","id":"9zVWV4jxsPNuCLuwAAAB","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"9zVWV4jxsPNuCLuwAAAB","name":"admin","skin":"girl3","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"girl2","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy3","isNpc":true,"name":"Anonymous"},{"id":"9zVWV4jxsPNuCLuwAAAB","layer":2,"cellX":9,"cellY":11,"skin":"girl3","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"9zVWV4jxsPNuCLuwAAAB"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"9zVWV4jxsPNuCLuwAAAB","name":"admin","skin":"girl3","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"9zVWV4jxsPNuCLuwAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"9zVWV4jxsPNuCLuwAAAB","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"9zVWV4jxsPNuCLuwAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"9zVWV4jxsPNuCLuwAAAB","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"9zVWV4jxsPNuCLuwAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"9zVWV4jxsPNuCLuwAAAB","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"9zVWV4jxsPNuCLuwAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"9zVWV4jxsPNuCLuwAAAB","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"9zVWV4jxsPNuCLuwAAAB","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"9zVWV4jxsPNuCLuwAAAB","state":"fight"}]},"room":"game"}
+
+{"0":"welcome","1":{"player_id":"co-4Qw8B7AB4agyLAAAB"},"log":"SOCKET EMIT","id":"co-4Qw8B7AB4agyLAAAB"}
+
+{"0":"admin","log":"INCOMING","id":"co-4Qw8B7AB4agyLAAAB","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"co-4Qw8B7AB4agyLAAAB","name":"admin","skin":"girl1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"girl1","isNpc":true,"name":"Anonymous"},{"id":"co-4Qw8B7AB4agyLAAAB","layer":2,"cellX":9,"cellY":11,"skin":"girl1","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"co-4Qw8B7AB4agyLAAAB"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"co-4Qw8B7AB4agyLAAAB","name":"admin","skin":"girl1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"co-4Qw8B7AB4agyLAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"co-4Qw8B7AB4agyLAAAB","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"co-4Qw8B7AB4agyLAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"co-4Qw8B7AB4agyLAAAB","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"co-4Qw8B7AB4agyLAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"co-4Qw8B7AB4agyLAAAB","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"co-4Qw8B7AB4agyLAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"co-4Qw8B7AB4agyLAAAB","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"co-4Qw8B7AB4agyLAAAB","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"co-4Qw8B7AB4agyLAAAB","state":"fight"}]},"room":"game"}
+
+{"0":"welcome","1":{"player_id":"ea07hAK0CvucnMUMAAAB"},"log":"SOCKET EMIT","id":"ea07hAK0CvucnMUMAAAB"}
+
+{"0":"admin","log":"INCOMING","id":"ea07hAK0CvucnMUMAAAB","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"ea07hAK0CvucnMUMAAAB","name":"admin","skin":"girl2","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"girl2","isNpc":true,"name":"Anonymous"},{"id":"ea07hAK0CvucnMUMAAAB","layer":2,"cellX":9,"cellY":11,"skin":"girl2","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"ea07hAK0CvucnMUMAAAB"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"ea07hAK0CvucnMUMAAAB","name":"admin","skin":"girl2","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"ea07hAK0CvucnMUMAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"ea07hAK0CvucnMUMAAAB","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"ea07hAK0CvucnMUMAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"ea07hAK0CvucnMUMAAAB","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"ea07hAK0CvucnMUMAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"ea07hAK0CvucnMUMAAAB","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"ea07hAK0CvucnMUMAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"ea07hAK0CvucnMUMAAAB","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"ea07hAK0CvucnMUMAAAB","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"ea07hAK0CvucnMUMAAAB","state":"fight"}]},"room":"game"}
+
+{"0":"welcome","1":{"player_id":"DNA3fBcBEf5y-Pd0AAAB"},"log":"SOCKET EMIT","id":"DNA3fBcBEf5y-Pd0AAAB"}
+
+{"0":"admin","log":"INCOMING","id":"DNA3fBcBEf5y-Pd0AAAB","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"DNA3fBcBEf5y-Pd0AAAB","name":"admin","skin":"girl3","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy3","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"DNA3fBcBEf5y-Pd0AAAB","layer":2,"cellX":9,"cellY":11,"skin":"girl3","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"DNA3fBcBEf5y-Pd0AAAB"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"DNA3fBcBEf5y-Pd0AAAB","name":"admin","skin":"girl3","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"DNA3fBcBEf5y-Pd0AAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"DNA3fBcBEf5y-Pd0AAAB","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"DNA3fBcBEf5y-Pd0AAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"DNA3fBcBEf5y-Pd0AAAB","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"DNA3fBcBEf5y-Pd0AAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"DNA3fBcBEf5y-Pd0AAAB","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"DNA3fBcBEf5y-Pd0AAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"DNA3fBcBEf5y-Pd0AAAB","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"DNA3fBcBEf5y-Pd0AAAB","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"DNA3fBcBEf5y-Pd0AAAB","state":"fight"}]},"room":"game"}
+
+{"0":"welcome","1":{"player_id":"Oofnyp4ECd2FpSFzAAAB"},"log":"SOCKET EMIT","id":"Oofnyp4ECd2FpSFzAAAB"}
+
+{"0":"admin","log":"INCOMING","id":"Oofnyp4ECd2FpSFzAAAB","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"Oofnyp4ECd2FpSFzAAAB","name":"admin","skin":"boy2","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"girl1","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"Oofnyp4ECd2FpSFzAAAB","layer":2,"cellX":9,"cellY":11,"skin":"boy2","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"Oofnyp4ECd2FpSFzAAAB"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"Oofnyp4ECd2FpSFzAAAB","name":"admin","skin":"boy2","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"Oofnyp4ECd2FpSFzAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"Oofnyp4ECd2FpSFzAAAB","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"Oofnyp4ECd2FpSFzAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"Oofnyp4ECd2FpSFzAAAB","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"Oofnyp4ECd2FpSFzAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"Oofnyp4ECd2FpSFzAAAB","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"Oofnyp4ECd2FpSFzAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"Oofnyp4ECd2FpSFzAAAB","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"Oofnyp4ECd2FpSFzAAAB","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"Oofnyp4ECd2FpSFzAAAB","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":120},"to":"Oofnyp4ECd2FpSFzAAAB"}
+
+{"0":"welcome","1":{"player_id":"znVzFiIkT4XKEbkFAAAB"},"log":"SOCKET EMIT","id":"znVzFiIkT4XKEbkFAAAB"}
+
+{"0":"admin","log":"INCOMING","id":"znVzFiIkT4XKEbkFAAAB","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"znVzFiIkT4XKEbkFAAAB","name":"admin","skin":"boy2","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"girl1","isNpc":true,"name":"Anonymous"},{"id":"znVzFiIkT4XKEbkFAAAB","layer":2,"cellX":9,"cellY":11,"skin":"boy2","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"znVzFiIkT4XKEbkFAAAB"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"znVzFiIkT4XKEbkFAAAB","name":"admin","skin":"boy2","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"znVzFiIkT4XKEbkFAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"znVzFiIkT4XKEbkFAAAB","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"znVzFiIkT4XKEbkFAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"znVzFiIkT4XKEbkFAAAB","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"znVzFiIkT4XKEbkFAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"znVzFiIkT4XKEbkFAAAB","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"znVzFiIkT4XKEbkFAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"znVzFiIkT4XKEbkFAAAB","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"znVzFiIkT4XKEbkFAAAB","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"znVzFiIkT4XKEbkFAAAB","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":120},"to":"znVzFiIkT4XKEbkFAAAB"}
+
+{"0":"welcome","1":{"player_id":"ACKNukoeXqYIy_jaAAAB"},"log":"SOCKET EMIT","id":"ACKNukoeXqYIy_jaAAAB"}
+
+{"0":"admin","log":"INCOMING","id":"ACKNukoeXqYIy_jaAAAB","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"ACKNukoeXqYIy_jaAAAB","name":"admin","skin":"girl3","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"girl3","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"girl2","isNpc":true,"name":"Anonymous"},{"id":"ACKNukoeXqYIy_jaAAAB","layer":2,"cellX":9,"cellY":11,"skin":"girl3","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"ACKNukoeXqYIy_jaAAAB"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"ACKNukoeXqYIy_jaAAAB","name":"admin","skin":"girl3","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"ACKNukoeXqYIy_jaAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"ACKNukoeXqYIy_jaAAAB","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"ACKNukoeXqYIy_jaAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"ACKNukoeXqYIy_jaAAAB","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"ACKNukoeXqYIy_jaAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"ACKNukoeXqYIy_jaAAAB","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"ACKNukoeXqYIy_jaAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"ACKNukoeXqYIy_jaAAAB","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"ACKNukoeXqYIy_jaAAAB","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"ACKNukoeXqYIy_jaAAAB","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"ACKNukoeXqYIy_jaAAAB"}
+
+{"0":"welcome","1":{"player_id":"mGMwThXeYokH46oOAAAB"},"log":"SOCKET EMIT","id":"mGMwThXeYokH46oOAAAB"}
+
+{"0":"admin","log":"INCOMING","id":"mGMwThXeYokH46oOAAAB","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"mGMwThXeYokH46oOAAAB","name":"admin","skin":"girl1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy2","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"girl1","isNpc":true,"name":"Anonymous"},{"id":"mGMwThXeYokH46oOAAAB","layer":2,"cellX":9,"cellY":11,"skin":"girl1","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"mGMwThXeYokH46oOAAAB"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"mGMwThXeYokH46oOAAAB","name":"admin","skin":"girl1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"mGMwThXeYokH46oOAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"mGMwThXeYokH46oOAAAB","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"mGMwThXeYokH46oOAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"mGMwThXeYokH46oOAAAB","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"mGMwThXeYokH46oOAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"mGMwThXeYokH46oOAAAB","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"mGMwThXeYokH46oOAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"mGMwThXeYokH46oOAAAB","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"mGMwThXeYokH46oOAAAB","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"mGMwThXeYokH46oOAAAB","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"mGMwThXeYokH46oOAAAB"}
+
+{"log":"EMIT TO","msgType":"fightTimeout","message":{"message":"A fighter was late to choose his hand. Fight will not start.","winner":null},"to":"mGMwThXeYokH46oOAAAB"}
+
+{"log":"EMIT TO","msgType":"fightEnd","message":{"message":"End of fight","winner":null},"to":"mGMwThXeYokH46oOAAAB"}
+
+{"0":"transport close","log":"INCOMING","id":"mGMwThXeYokH46oOAAAB","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"mGMwThXeYokH46oOAAAB","log":"SOCKET BROADCAST","id":"mGMwThXeYokH46oOAAAB"}
+
+{"0":"welcome","1":{"player_id":"u5On-qXTYEPny9CaAAAD"},"log":"SOCKET EMIT","id":"u5On-qXTYEPny9CaAAAD"}
+
+{"0":"transport close","log":"INCOMING","id":"u5On-qXTYEPny9CaAAAD","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"u5On-qXTYEPny9CaAAAD","log":"SOCKET BROADCAST","id":"u5On-qXTYEPny9CaAAAD"}
+
+{"0":"welcome","1":{"player_id":"izfdfYCpkQ8-N93BAAAF"},"log":"SOCKET EMIT","id":"izfdfYCpkQ8-N93BAAAF"}
+
+{"0":"welcome","1":{"player_id":"IOJ-gh2mga3Q9ecGAAAB"},"log":"SOCKET EMIT","id":"IOJ-gh2mga3Q9ecGAAAB"}
+
+{"0":"admin","log":"INCOMING","id":"IOJ-gh2mga3Q9ecGAAAB","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"IOJ-gh2mga3Q9ecGAAAB","name":"admin","skin":"boy1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy3","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"IOJ-gh2mga3Q9ecGAAAB","layer":2,"cellX":9,"cellY":11,"skin":"boy1","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"IOJ-gh2mga3Q9ecGAAAB"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"IOJ-gh2mga3Q9ecGAAAB","name":"admin","skin":"boy1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"IOJ-gh2mga3Q9ecGAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"IOJ-gh2mga3Q9ecGAAAB","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"IOJ-gh2mga3Q9ecGAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"IOJ-gh2mga3Q9ecGAAAB","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"IOJ-gh2mga3Q9ecGAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"IOJ-gh2mga3Q9ecGAAAB","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"IOJ-gh2mga3Q9ecGAAAB","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"IOJ-gh2mga3Q9ecGAAAB","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"IOJ-gh2mga3Q9ecGAAAB","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"IOJ-gh2mga3Q9ecGAAAB","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"IOJ-gh2mga3Q9ecGAAAB"}
+
+{"log":"EMIT TO","msgType":"fightTimeout","message":{"message":"A fighter was late to choose his hand. Fight will not start.","winner":null},"to":"IOJ-gh2mga3Q9ecGAAAB"}
+
+{"log":"EMIT TO","msgType":"fightEnd","message":{"message":"End of fight","winner":null},"to":"IOJ-gh2mga3Q9ecGAAAB"}
+
+{"0":"transport close","log":"INCOMING","id":"IOJ-gh2mga3Q9ecGAAAB","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"IOJ-gh2mga3Q9ecGAAAB","log":"SOCKET BROADCAST","id":"IOJ-gh2mga3Q9ecGAAAB"}
+
+{"0":"welcome","1":{"player_id":"-DbvxPvCe5SvCDXsAAAD"},"log":"SOCKET EMIT","id":"-DbvxPvCe5SvCDXsAAAD"}
+
+{"0":"admin","log":"INCOMING","id":"-DbvxPvCe5SvCDXsAAAD","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"-DbvxPvCe5SvCDXsAAAD","name":"admin","skin":"boy3","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy3","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"-DbvxPvCe5SvCDXsAAAD","layer":2,"cellX":9,"cellY":11,"skin":"boy3","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"-DbvxPvCe5SvCDXsAAAD"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"-DbvxPvCe5SvCDXsAAAD","name":"admin","skin":"boy3","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"-DbvxPvCe5SvCDXsAAAD","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"-DbvxPvCe5SvCDXsAAAD","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"-DbvxPvCe5SvCDXsAAAD","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"-DbvxPvCe5SvCDXsAAAD","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"-DbvxPvCe5SvCDXsAAAD","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"-DbvxPvCe5SvCDXsAAAD","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"-DbvxPvCe5SvCDXsAAAD","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"-DbvxPvCe5SvCDXsAAAD","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"-DbvxPvCe5SvCDXsAAAD","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"-DbvxPvCe5SvCDXsAAAD","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"-DbvxPvCe5SvCDXsAAAD"}
+
+{"log":"EMIT TO","msgType":"fightTimeout","message":{"message":"A fighter was late to choose his hand. Fight will not start.","winner":null},"to":"-DbvxPvCe5SvCDXsAAAD"}
+
+{"log":"EMIT TO","msgType":"fightEnd","message":{"message":"End of fight","winner":null},"to":"-DbvxPvCe5SvCDXsAAAD"}
+
+{"0":"transport close","log":"INCOMING","id":"-DbvxPvCe5SvCDXsAAAD","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"-DbvxPvCe5SvCDXsAAAD","log":"SOCKET BROADCAST","id":"-DbvxPvCe5SvCDXsAAAD"}
+
+{"0":"welcome","1":{"player_id":"nsFRQI1cOw7Ao9hdAAAF"},"log":"SOCKET EMIT","id":"nsFRQI1cOw7Ao9hdAAAF"}
+
+{"0":"transport close","log":"INCOMING","id":"nsFRQI1cOw7Ao9hdAAAF","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"nsFRQI1cOw7Ao9hdAAAF","log":"SOCKET BROADCAST","id":"nsFRQI1cOw7Ao9hdAAAF"}
+
+{"0":"welcome","1":{"player_id":"wTH4VBqt2QtlCMCOAAAH"},"log":"SOCKET EMIT","id":"wTH4VBqt2QtlCMCOAAAH"}
+
+{"0":"transport close","log":"INCOMING","id":"wTH4VBqt2QtlCMCOAAAH","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"wTH4VBqt2QtlCMCOAAAH","log":"SOCKET BROADCAST","id":"wTH4VBqt2QtlCMCOAAAH"}
+
+{"0":"welcome","1":{"player_id":"5FNGv39FJmukOfOPAAAJ"},"log":"SOCKET EMIT","id":"5FNGv39FJmukOfOPAAAJ"}
+
+{"0":"admin","log":"INCOMING","id":"5FNGv39FJmukOfOPAAAJ","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"5FNGv39FJmukOfOPAAAJ","name":"admin","skin":"girl1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy3","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"5FNGv39FJmukOfOPAAAJ","layer":2,"cellX":9,"cellY":11,"skin":"girl1","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"5FNGv39FJmukOfOPAAAJ"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"5FNGv39FJmukOfOPAAAJ","name":"admin","skin":"girl1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"5FNGv39FJmukOfOPAAAJ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"5FNGv39FJmukOfOPAAAJ","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"5FNGv39FJmukOfOPAAAJ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"5FNGv39FJmukOfOPAAAJ","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"5FNGv39FJmukOfOPAAAJ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"5FNGv39FJmukOfOPAAAJ","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"5FNGv39FJmukOfOPAAAJ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"5FNGv39FJmukOfOPAAAJ","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"5FNGv39FJmukOfOPAAAJ","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"5FNGv39FJmukOfOPAAAJ","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"5FNGv39FJmukOfOPAAAJ"}
+
+{"log":"EMIT TO","msgType":"fightTimeout","message":{"message":"A fighter was late to choose his hand. Fight will not start.","winner":null},"to":"5FNGv39FJmukOfOPAAAJ"}
+
+{"log":"EMIT TO","msgType":"fightEnd","message":{"message":"End of fight","winner":null},"to":"5FNGv39FJmukOfOPAAAJ"}
+
+{"0":"transport close","log":"INCOMING","id":"5FNGv39FJmukOfOPAAAJ","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"5FNGv39FJmukOfOPAAAJ","log":"SOCKET BROADCAST","id":"5FNGv39FJmukOfOPAAAJ"}
+
+{"0":"welcome","1":{"player_id":"ZZB93IUVHuX7h1PtAAAL"},"log":"SOCKET EMIT","id":"ZZB93IUVHuX7h1PtAAAL"}
+
+{"0":"admin","log":"INCOMING","id":"ZZB93IUVHuX7h1PtAAAL","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"ZZB93IUVHuX7h1PtAAAL","name":"admin","skin":"girl1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy3","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"ZZB93IUVHuX7h1PtAAAL","layer":2,"cellX":9,"cellY":11,"skin":"girl1","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"ZZB93IUVHuX7h1PtAAAL"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"ZZB93IUVHuX7h1PtAAAL","name":"admin","skin":"girl1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"ZZB93IUVHuX7h1PtAAAL","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"ZZB93IUVHuX7h1PtAAAL","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"ZZB93IUVHuX7h1PtAAAL","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"ZZB93IUVHuX7h1PtAAAL","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"ZZB93IUVHuX7h1PtAAAL","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"ZZB93IUVHuX7h1PtAAAL","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"ZZB93IUVHuX7h1PtAAAL","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"ZZB93IUVHuX7h1PtAAAL","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"ZZB93IUVHuX7h1PtAAAL","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"ZZB93IUVHuX7h1PtAAAL","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"ZZB93IUVHuX7h1PtAAAL"}
+
+{"log":"EMIT TO","msgType":"fightTimeout","message":{"message":"A fighter was late to choose his hand. Fight will not start.","winner":null},"to":"ZZB93IUVHuX7h1PtAAAL"}
+
+{"log":"EMIT TO","msgType":"fightEnd","message":{"message":"End of fight","winner":null},"to":"ZZB93IUVHuX7h1PtAAAL"}
+
+{"0":"ping timeout","log":"INCOMING","id":"ZZB93IUVHuX7h1PtAAAL","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"ZZB93IUVHuX7h1PtAAAL","log":"SOCKET BROADCAST","id":"ZZB93IUVHuX7h1PtAAAL"}
+
+{"0":"welcome","1":{"player_id":"Nrm2dEJAUNgBdvpuAAAN"},"log":"SOCKET EMIT","id":"Nrm2dEJAUNgBdvpuAAAN"}
+
+{"0":"transport close","log":"INCOMING","id":"Nrm2dEJAUNgBdvpuAAAN","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"Nrm2dEJAUNgBdvpuAAAN","log":"SOCKET BROADCAST","id":"Nrm2dEJAUNgBdvpuAAAN"}
+
+{"0":"welcome","1":{"player_id":"otb5NaQ7wUt2VloXAAAP"},"log":"SOCKET EMIT","id":"otb5NaQ7wUt2VloXAAAP"}
+
+{"0":"admin","log":"INCOMING","id":"otb5NaQ7wUt2VloXAAAP","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"otb5NaQ7wUt2VloXAAAP","name":"admin","skin":"girl1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy3","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"otb5NaQ7wUt2VloXAAAP","layer":2,"cellX":9,"cellY":11,"skin":"girl1","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"otb5NaQ7wUt2VloXAAAP"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"otb5NaQ7wUt2VloXAAAP","name":"admin","skin":"girl1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"otb5NaQ7wUt2VloXAAAP","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"otb5NaQ7wUt2VloXAAAP","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"otb5NaQ7wUt2VloXAAAP","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"otb5NaQ7wUt2VloXAAAP","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"otb5NaQ7wUt2VloXAAAP","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"otb5NaQ7wUt2VloXAAAP","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"otb5NaQ7wUt2VloXAAAP","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"otb5NaQ7wUt2VloXAAAP","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"otb5NaQ7wUt2VloXAAAP","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"otb5NaQ7wUt2VloXAAAP","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"otb5NaQ7wUt2VloXAAAP"}
+
+{"0":"ping timeout","log":"INCOMING","id":"otb5NaQ7wUt2VloXAAAP","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"otb5NaQ7wUt2VloXAAAP","log":"SOCKET BROADCAST","id":"otb5NaQ7wUt2VloXAAAP"}
+
+{"log":"EMIT TO","msgType":"fightTimeout","message":{"message":"A fighter was late to choose his hand. Fight will not start.","winner":null},"to":"otb5NaQ7wUt2VloXAAAP"}
+
+{"log":"EMIT TO","msgType":"fightEnd","message":{"message":"End of fight","winner":null},"to":"otb5NaQ7wUt2VloXAAAP"}
+
+{"0":"welcome","1":{"player_id":"XxsRz1nwozlamGTMAAAR"},"log":"SOCKET EMIT","id":"XxsRz1nwozlamGTMAAAR"}
+
+{"0":"transport close","log":"INCOMING","id":"XxsRz1nwozlamGTMAAAR","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"XxsRz1nwozlamGTMAAAR","log":"SOCKET BROADCAST","id":"XxsRz1nwozlamGTMAAAR"}
+
+{"0":"welcome","1":{"player_id":"CGsryKUWupVtSlblAAAT"},"log":"SOCKET EMIT","id":"CGsryKUWupVtSlblAAAT"}
+
+{"0":"transport close","log":"INCOMING","id":"CGsryKUWupVtSlblAAAT","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"CGsryKUWupVtSlblAAAT","log":"SOCKET BROADCAST","id":"CGsryKUWupVtSlblAAAT"}
+
+{"0":"welcome","1":{"player_id":"Cn3WeJ3lMteVojClAAAV"},"log":"SOCKET EMIT","id":"Cn3WeJ3lMteVojClAAAV"}
+
+{"0":"admin","log":"INCOMING","id":"Cn3WeJ3lMteVojClAAAV","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"Cn3WeJ3lMteVojClAAAV","name":"admin","skin":"girl3","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy3","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"Cn3WeJ3lMteVojClAAAV","layer":2,"cellX":9,"cellY":11,"skin":"girl3","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"Cn3WeJ3lMteVojClAAAV"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"Cn3WeJ3lMteVojClAAAV","name":"admin","skin":"girl3","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"Cn3WeJ3lMteVojClAAAV","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"Cn3WeJ3lMteVojClAAAV","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"Cn3WeJ3lMteVojClAAAV","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"Cn3WeJ3lMteVojClAAAV","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"Cn3WeJ3lMteVojClAAAV","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"Cn3WeJ3lMteVojClAAAV","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"Cn3WeJ3lMteVojClAAAV","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"Cn3WeJ3lMteVojClAAAV","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"Cn3WeJ3lMteVojClAAAV","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"Cn3WeJ3lMteVojClAAAV","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"Cn3WeJ3lMteVojClAAAV"}
+
+{"0":"ping timeout","log":"INCOMING","id":"Cn3WeJ3lMteVojClAAAV","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"Cn3WeJ3lMteVojClAAAV","log":"SOCKET BROADCAST","id":"Cn3WeJ3lMteVojClAAAV"}
+
+{"log":"EMIT TO","msgType":"fightTimeout","message":{"message":"A fighter was late to choose his hand. Fight will not start.","winner":null},"to":"Cn3WeJ3lMteVojClAAAV"}
+
+{"log":"EMIT TO","msgType":"fightEnd","message":{"message":"End of fight","winner":null},"to":"Cn3WeJ3lMteVojClAAAV"}
+
+{"0":"welcome","1":{"player_id":"n4S1fJF6xMPR3gL2AAAX"},"log":"SOCKET EMIT","id":"n4S1fJF6xMPR3gL2AAAX"}
+
+{"0":"transport close","log":"INCOMING","id":"n4S1fJF6xMPR3gL2AAAX","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"n4S1fJF6xMPR3gL2AAAX","log":"SOCKET BROADCAST","id":"n4S1fJF6xMPR3gL2AAAX"}
+
+{"0":"welcome","1":{"player_id":"GrcKgklWjDtoSzp8AAAZ"},"log":"SOCKET EMIT","id":"GrcKgklWjDtoSzp8AAAZ"}
+
+{"0":"admin","log":"INCOMING","id":"GrcKgklWjDtoSzp8AAAZ","handlerName":"onJoin"}
+
+{"0":"join","1":{"player":{"id":"GrcKgklWjDtoSzp8AAAZ","name":"admin","skin":"boy1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"playersList":[{"id":"1","layer":2,"cellX":2,"cellY":11,"skin":"boy3","isNpc":true,"name":"Anonymous"},{"id":"2","layer":2,"cellX":7,"cellY":13,"skin":"boy1","isNpc":true,"name":"Anonymous"},{"id":"GrcKgklWjDtoSzp8AAAZ","layer":2,"cellX":9,"cellY":11,"skin":"boy1","isNpc":false,"name":"admin"}]},"log":"SOCKET EMIT","id":"GrcKgklWjDtoSzp8AAAZ"}
+
+{"log":"BROADCAST","msgType":"newPlayer","message":{"id":"GrcKgklWjDtoSzp8AAAZ","name":"admin","skin":"boy1","isNpc":false,"cellX":9,"cellY":11,"layer":2},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"GrcKgklWjDtoSzp8AAAZ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"GrcKgklWjDtoSzp8AAAZ","x":9,"y":12,"oldX":9,"oldY":11},"room":"game"}
+
+{"0":"down","log":"INCOMING","id":"GrcKgklWjDtoSzp8AAAZ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"GrcKgklWjDtoSzp8AAAZ","x":9,"y":13,"oldX":9,"oldY":12},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"GrcKgklWjDtoSzp8AAAZ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"GrcKgklWjDtoSzp8AAAZ","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"GrcKgklWjDtoSzp8AAAZ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"GrcKgklWjDtoSzp8AAAZ","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"GrcKgklWjDtoSzp8AAAZ","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"GrcKgklWjDtoSzp8AAAZ","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"GrcKgklWjDtoSzp8AAAZ"}
+
+{"log":"EMIT TO","msgType":"fightTimeout","message":{"message":"A fighter was late to choose his hand. Fight will not start.","winner":null},"to":"GrcKgklWjDtoSzp8AAAZ"}
+
+{"log":"EMIT TO","msgType":"fightEnd","message":{"message":"End of fight","winner":null},"to":"GrcKgklWjDtoSzp8AAAZ"}
+
+{"0":"right","log":"INCOMING","id":"GrcKgklWjDtoSzp8AAAZ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"GrcKgklWjDtoSzp8AAAZ","x":9,"y":13,"oldX":8,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"GrcKgklWjDtoSzp8AAAZ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"playerMove","message":{"id":"GrcKgklWjDtoSzp8AAAZ","x":8,"y":13,"oldX":9,"oldY":13},"room":"game"}
+
+{"0":"left","log":"INCOMING","id":"GrcKgklWjDtoSzp8AAAZ","handlerName":"onMove"}
+
+{"log":"BROADCAST","msgType":"meetPlayers","message":{"meet":[{"id":"GrcKgklWjDtoSzp8AAAZ","state":"main"},{"id":2,"state":"main"}]},"room":"game"}
+
+{"0":"2","log":"INCOMING","id":"GrcKgklWjDtoSzp8AAAZ","handlerName":"onAgreeFight"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":"GrcKgklWjDtoSzp8AAAZ","state":"fight"},{"id":2,"state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"GrcKgklWjDtoSzp8AAAZ"}
+
+{"log":"BROADCAST","msgType":"startFight","message":{"pair":[{"id":2,"state":"fight"},{"id":"GrcKgklWjDtoSzp8AAAZ","state":"fight"}]},"room":"game"}
+
+{"log":"EMIT TO","msgType":"chooseYourHand","message":{"timeout":15},"to":"GrcKgklWjDtoSzp8AAAZ"}
+
+{"log":"EMIT TO","msgType":"fightTimeout","message":{"message":"A fighter was late to choose his hand. Fight will not start.","winner":null},"to":"GrcKgklWjDtoSzp8AAAZ"}
+
+{"log":"EMIT TO","msgType":"fightEnd","message":{"message":"End of fight","winner":null},"to":"GrcKgklWjDtoSzp8AAAZ"}
+
+{"log":"EMIT TO","msgType":"fightTimeout","message":{"message":"A fighter was late to choose his hand. Fight will not start.","winner":null},"to":"GrcKgklWjDtoSzp8AAAZ"}
+
+{"log":"EMIT TO","msgType":"fightEnd","message":{"message":"End of fight","winner":null},"to":"GrcKgklWjDtoSzp8AAAZ"}
+

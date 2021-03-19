@@ -1,3 +1,4 @@
+import { appendFileSync } from 'fs';
 import EventSourceMixin from '../engine/EventSourceMixin';
 import { useApiMessageTypes } from '../engine/ApiMessageTypes';
 import _ from 'lodash';
@@ -11,21 +12,37 @@ class ServerApi {
         this.io.on('connection', (socket) => this.initSocket(socket));
     }
 
+    log(data) {
+        appendFileSync('api_log.txt', JSON.stringify(data) + '\n\n');
+    }
+
     initSocket(socket) {
         useApiMessageTypes(this, socket);
 
         console.log('New connection!');
 
         const welcomeMessage = { player_id: socket.id };
-        socket.emit('welcome', welcomeMessage);
+        this.socketEmit(socket, 'welcome', welcomeMessage);
     }
 
     emitTo(msgType, message, to) {
+        this.log({ log: 'EMIT TO', msgType, message, to });
         this.io.to(to).emit(msgType, message);
     }
 
     broadcast(msgType, message, room = 'game') {
+        this.log({ log: 'BROADCAST', msgType, message, room });
         this.io.to(room).emit(msgType, message);
+    }
+
+    socketEmit(sock, ...args) {
+        this.log({ log: 'SOCKET EMIT', id: sock.id, ...args });
+        sock.emit(...args);
+    }
+
+    socketBroadcast(sock, ...args) {
+        this.log({ log: 'SOCKET BROADCAST', id: sock.id, ...args });
+        sock.broadcast.emit(...args);
     }
 
     onJoin(socket, name) {
@@ -35,7 +52,7 @@ class ServerApi {
         game.createPlayer(player);
         const response = { player, playersList: game.getPlayersList() };
         socket.join('game');
-        socket.emit('join', response);
+        this.socketEmit(socket, 'join', response);
         this.broadcast('newPlayer', player);
     }
 
@@ -57,7 +74,7 @@ class ServerApi {
         const { game } = this;
         console.log('Disconnection: ' + reason);
         game.removePlayer(socket.id);
-        socket.broadcast.emit('playerDisconnect', socket.id);
+        this.socketBroadcast(socket, 'playerDisconnect', socket.id);
     }
 
     onAgreeFight(socket, enemyId) {
@@ -122,6 +139,34 @@ class ServerApi {
 
     rejectFight(player, enemy) {
         this.emitTo('rejectFight', { id: player.playerId, state: player.state }, enemy.playerId);
+    }
+
+    chooseYourHand(player, data) {
+        this.emitTo('chooseYourHand', data, player.playerId);
+    }
+
+    fightTimeout(player, data) {
+        this.emitTo('fightTimeout', data, player.playerId);
+    }
+
+    giveUp(player, data) {
+        this.emitTo('giveUp', data, player.playerId);
+    }
+
+    commonError(player, data) {
+        this.emitTo('commonError', data, player.playerId);
+    }
+
+    fightEnd(player, data) {
+        this.emitTo('fightEnd', data, player.playerId);
+    }
+
+    nextTurn(player, data) {
+        this.emitTo('nextTurn', data, player.playerId);
+    }
+
+    turnDone(player, data) {
+        this.emitTo('turnDone', data, player.playerId);
     }
 }
 
