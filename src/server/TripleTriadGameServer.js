@@ -9,6 +9,8 @@ class TripleTriadGameServer extends TripleTriadGame {
     fight(players) {
         super.fight(players);
 
+        this.each((p) => (p.currentGameMaster = this));
+
         // random first player
         const firstPlayer = (Math.random() * 2) | 0;
         this.current = this.players[firstPlayer];
@@ -86,12 +88,12 @@ class TripleTriadGameServer extends TripleTriadGame {
 
     countCardHolders(cards) {
         const init = {};
-        this.players.forEach((p) => (init[p.playerId] = 0));
+        this.each((p) => (init[p.playerId] = 0));
         return cards.reduce((sum, card) => card && ++sum[card.holder] && sum, init);
     }
 
     notifyAll(type, data) {
-        this.players.forEach((p) => !p.isNpc && this.api[type](p, data));
+        this.each((p) => !p.isNpc && this.api[type](p, data));
     }
 
     startTimer(timeout, message, player = null) {
@@ -117,6 +119,8 @@ class TripleTriadGameServer extends TripleTriadGame {
 
     endFight(winner = null, message = 'End of fight') {
         this.notifyAll('fightEnd', { message, winner: winner && winner.playerId });
+
+        this.each((p) => (p.currentGameMaster = null));
     }
 }
 

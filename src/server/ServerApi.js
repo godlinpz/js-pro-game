@@ -76,8 +76,30 @@ class ServerApi {
     }
 
     onSetDeck(socket, deck) {
+        const { game } = this;
         const player = game.getPlayerById(socket.id);
         game.setDeck(player, deck);
+    }
+
+    onChooseHand(socket, { hand, deck }) {
+        const { game } = this;
+        const player = game.getPlayerById(socket.id);
+        const gm = player && player.currentGameMaster;
+        if (gm) gm.onHandChosen(player, hand, deck);
+    }
+
+    onTurn(socket, move) {
+        const { game } = this;
+        const player = game.getPlayerById(socket.id);
+        const gm = player && player.currentGameMaster;
+        if (gm) gm.onTurn(player, move);
+    }
+
+    onGiveUp(socket) {
+        const { game } = this;
+        const player = game.getPlayerById(socket.id);
+        const gm = player && player.currentGameMaster;
+        if (gm) gm.onGiveUp(player);
     }
 
     meetPlayers(player, player2) {

@@ -90,7 +90,7 @@ class ClientApi {
     onChooseYourHand(socket, { timeout }) {
         const gm = this.cfg.game.gameMaster;
 
-        if (gm) gm.trigger('chooseYourHand', { timeout });
+        if (gm) gm.onEvent('chooseYourHand', { timeout });
     }
 
     onCommonError(socket, { message }) {
@@ -102,25 +102,25 @@ class ClientApi {
     onNextTurn(socket, data) {
         const gm = this.cfg.game.gameMaster;
 
-        if (gm) gm.trigger('nextTurn', data);
+        if (gm) gm.onEvent('nextTurn', data);
     }
 
     onTurnDone(socket, data) {
         const gm = this.cfg.game.gameMaster;
 
-        if (gm) gm.trigger('turnDone', data);
+        if (gm) gm.onEvent('turnDone', data);
     }
 
     onFightTimeout(socket, data) {
         const gm = this.cfg.game.gameMaster;
 
-        if (gm) gm.trigger('fightTimeout', data);
+        if (gm) gm.onEvent('fightTimeout', data);
     }
 
     onGiveUp(socket, data) {
         const gm = this.cfg.game.gameMaster;
 
-        if (gm) gm.trigger('giveUp', data);
+        if (gm) gm.onEvent('giveUp', data);
     }
 
     onFightEnd(socket, data) {
@@ -153,8 +153,16 @@ class ClientApi {
         this.emit('declineFight', enemy.playerId);
     }
 
-    setDeck(deck) {
-        this.emit('setDeck', deck);
+    chooseHand(hand, deck) {
+        this.emit('chooseHand', { hand, deck });
+    }
+
+    turn(move) {
+        this.emit('turn', move);
+    }
+
+    giveUp() {
+        this.emit('giveUp');
     }
 }
 

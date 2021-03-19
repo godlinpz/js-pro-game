@@ -136,8 +136,6 @@ class GameServer extends Game {
 
         const gameMaster = new TripleTriadGameServer(this);
 
-        player.currentGameMaster = enemy.currentGameMaster = gameMaster;
-
         gameMaster.fight(player, enemy);
     }
 

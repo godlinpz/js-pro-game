@@ -35,6 +35,11 @@ class TripleTriadGame {
         this.players = [...players];
     }
 
+    // applies a func to every player
+    each(func) {
+        this.players.forEach(func);
+    }
+
     setHand(player, hand) {
         this.hands[player.playerId] = hand;
     }

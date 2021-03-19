@@ -235,6 +235,11 @@ class GameClient extends Game {
         meetMsg.timeout = setTimeout(() => $meetMsg.hide(), 3000);
     }
 
+    showFullscreenAlert(msg) {
+        //TODO: make fullscreen alerts
+        this.showInfoMessage(['ALERT', '', msg]);
+    }
+
     movePlayerTo(newX, newY, player) {
         if (player) {
             const [dx, dy] = [newX - player.cell.cellX, newY - player.cell.cellY];
