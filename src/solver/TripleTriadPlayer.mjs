@@ -29,28 +29,14 @@ class TripleTriadPlayer {
             ? this.aiMove({ currentPlayer, hands, board })
             : this.playerMove({ currentPlayer, move, board });
 
-        if (ai && result.move) {
+        if (result.move) {
             hands = { ...hands };
             const hits = result.move.hits;
-            let found = false;
 
             // console.log('FILTER', result.move.hits, hands[currentPlayer].pokes);
             hands[currentPlayer] = { ...hands[currentPlayer] };
 
-            hands[currentPlayer].pokes = hands[currentPlayer].pokes.filter((p) => {
-                let filter = true;
-                if (
-                    !found &&
-                    (found =
-                        p.hits[0] === hits[0] &&
-                        p.hits[1] === hits[1] &&
-                        p.hits[2] === hits[2] &&
-                        p.hits[3] === hits[3])
-                )
-                    filter = false;
-
-                return filter;
-            });
+            hands[currentPlayer].pokes = hands[currentPlayer].pokes.filter((p) => p.id !== result.move.id);
             // console.log('FILTERED', hands[currentPlayer].pokes);
         }
 
@@ -89,8 +75,10 @@ class TripleTriadPlayer {
     }
 
     normaliseHand(hand, owner) {
-        // console.log(hand);
-        const pokes = hand.map(({ id, hits }) => ({ id, hits, owner, holder: owner, rate: solver.pokeRate(hits) }));
+        console.log('normaliseHand', owner, hand);
+        const pokes =
+            hand.pokes ||
+            hand.map(({ id, hits, poke }) => ({ id, hits, owner, holder: owner, rate: solver.pokeRate(hits), poke }));
 
         return { owner, pokes };
     }
@@ -136,7 +124,7 @@ class TripleTriadPlayer {
         const suff = ++this.globalHandIdSuffix * 10;
         // шоб максимально уникальные айдишники давало
         const idHead = '' + Date.now() + randomInt(1000, 10000) + pokes[0].attacks[0] + randomInt(suff, suff * 10);
-        return hand.map((p, idx) => ({ id: idHead + '_' + idx, hits: p.attacks[1], poke: p }));
+        return pokes.map((p, idx) => ({ id: idHead + '_' + idx, hits: p.attacks[1], poke: p }));
     }
 }
 

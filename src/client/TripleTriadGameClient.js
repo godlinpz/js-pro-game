@@ -3,6 +3,11 @@ import TripleTriadGame from '../engine/TripleTriadGame';
 class TripleTriadGameClient extends TripleTriadGame {
     constructor(game) {
         super(game);
+        this.player = game.player;
+    }
+
+    fight(players) {
+        this.opponent = this.getOpponent(this.player);
     }
 
     onCommonError(message) {
@@ -19,8 +24,8 @@ class TripleTriadGameClient extends TripleTriadGame {
     }
 
     chooseHand(hand, deck) {
-        super.setDeck(this.player, deck);
-        super.setHand(this.player, hand);
+        super.setDeck(this.game.player, deck);
+        super.setHand(this.game.player, hand);
 
         this.api.chooseHand(hand, deck);
     }
@@ -31,6 +36,10 @@ class TripleTriadGameClient extends TripleTriadGame {
 
     giveUp() {
         this.api.giveUp();
+    }
+
+    onInitialHands(hands) {
+        this.trigger('initialHands', { player: hands[this.player.playerId], opponent: hands[this.opponent.playerId] });
     }
 }
 

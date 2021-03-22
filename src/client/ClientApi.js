@@ -129,9 +129,17 @@ class ClientApi {
         if (gm) gm.onFightEnd(data);
     }
 
+    onInitialState(socket, { hands }) {
+        const gm = this.cfg.game.gameMaster;
+
+        if (gm) gm.onInitialState(hands);
+    }
+
     emit(msgType, data = null) {
+        console.log('Trying to emit...', msgType);
         if (!this.spamTimer) {
             this.spamTimer = true;
+            console.log('Emitting...', msgType);
             this.io.emit(msgType, data);
             setTimeout(() => (this.spamTimer = false), 100);
         }

@@ -1,9 +1,13 @@
+import _ from 'lodash';
 import TripleTriadGame from '../engine/TripleTriadGame';
 
 class TripleTriadGameServer extends TripleTriadGame {
     constructor(game) {
         super(game);
         this.turnTimer = 0;
+        this.waitingFor = '';
+
+        console.log('New TripleTriadGameServer!');
 
         // TODO for debug only - remove:
         this.maxTurnTime = 15; // seconds
@@ -20,25 +24,40 @@ class TripleTriadGameServer extends TripleTriadGame {
         this.current = this.players[firstPlayer];
 
         this.notifyAll('chooseYourHand', { timeout: this.maxHandBuildTime });
-        this.startTimer(this.maxHandBuildTime, 'A fighter was late to choose his hand. Fight will not start.');
+        this.startTimer(
+            'chooseYourHand',
+            this.maxHandBuildTime,
+            'A fighter was late to choose his hand. Fight will not start.',
+        );
     }
 
     onHandChosen(player, hand, deck) {
-        this.setPokes(player, hand);
+        if (this.clearTimer('chooseYourHand')) {
+            this.setPokes(player, hand);
+            this.setDeck(player, deck);
 
-        const opponent = this.getOpponent(player);
+            const opponent = this.getOpponent(player);
 
-        if (opponent.isNpc) {
-            if (!deck || !deck.length) {
-                this.endFight(null, 'Player deck was not submitted. You can`t fight.');
-            } else this.setPokes(opponent, this.playMachine.generateAiHand(player.deck, this.game.allPokemons));
-        } else if (this.hands[player.playerId] && this.hands[opponent.playerId]) this.nextTurn();
+            if (opponent.isNpc) {
+                if (!deck || !deck.length) {
+                    this.endFight(null, 'Player deck was not submitted. You can`t fight.');
+                } else this.setPokes(opponent, this.playMachine.generateAiHand(deck, this.game.allPokemons));
+            }
+            if (this.hands[player.playerId] && this.hands[opponent.playerId]) this.beginGame();
+        }
+    }
+
+    beginGame() {
+        this.notifyAll('initialHands', { hands: this.hands });
+        setTimeout(() => this.nextTurn(), 500);
     }
 
     onTurn(player, move) {
-        if (player === this.current) {
-            this.turn(move);
-        } else this.notifyAll('commonError', { message: 'Wrong player tried to make a move!' });
+        if (this.clearTimer('turn')) {
+            if (player === this.current) {
+                this.turn(move);
+            } else this.notifyAll('commonError', { message: 'Wrong player tried to make a move!' });
+        }
     }
 
     nextTurn() {
@@ -50,31 +69,32 @@ class TripleTriadGameServer extends TripleTriadGame {
         });
 
         if (this.current.isNpc) this.turn();
-        else this.startTimer(this.maxTurnTime, 'A fighter was late to make his move.');
+        else this.startTimer('turn', this.maxTurnTime, 'A fighter was late to make his move.', this.current);
     }
 
     turn(move = null) {
-        const { hands, board } = this;
-
         this.lastTurn = this.playMachine.play({
             ai: this.current.isNpc,
             currentPlayer: this.current.playerId,
-            hands,
-            board,
+            hands: this.hands,
+            board: this.board,
             move,
         });
 
-        this.board = lastTurn.board;
+        _.assign(this, _.pick(this.lastTurn, 'board', 'hands'));
 
-        this.notifyAll('turnDone', { player: this.current, turn: this.lastTurn });
+        this.notifyAll('turnDone', { player: this.current.playerId, turn: this.lastTurn });
 
         if (this.board.indexOf(0) >= 0) {
-            this.current = this.opponent();
+            this.current = this.getOpponent();
             this.nextTurn();
         } else {
             const hands = this.lastTurn.hands;
             const boardCounts = this.countCardHolders(this.board);
-            const result = this.players.map(({ playerId: id }) => boardCounts[id] + hands[id].length);
+            const result = this.players.map(({ playerId: id }) => boardCounts[id] + hands[id].pokes.length);
+
+            console.log('countCardHolders', boardCounts);
+            console.log('Game result', result);
 
             let message = '';
             let winner = null;
@@ -93,7 +113,10 @@ class TripleTriadGameServer extends TripleTriadGame {
     countCardHolders(cards) {
         const init = {};
         this.each((p) => (init[p.playerId] = 0));
-        return cards.reduce((sum, card) => card && ++sum[card.holder] && sum, init);
+        return cards.reduce((sum, card) => {
+            if (card) ++sum[card.holder];
+            return sum;
+        }, init);
     }
 
     notifyAll(type, data) {
@@ -102,8 +125,15 @@ class TripleTriadGameServer extends TripleTriadGame {
         this.each((p) => !p.isNpc && this.api[type](p, data));
     }
 
-    startTimer(timeout, message, player = null) {
+    startTimer(waitingFor, timeout, message, player = null) {
         this.turnTimer = setTimeout(() => this.onTimeOut(message, player), timeout * 1000);
+        this.waitingFor = waitingFor;
+    }
+
+    clearTimer(waitingFor) {
+        const ok = !waitingFor || waitingFor === this.waitingFor;
+        ok && clearTimeout(this.turnTimer);
+        return ok;
     }
 
     onTimeOut(message, player = null) {
@@ -124,6 +154,8 @@ class TripleTriadGameServer extends TripleTriadGame {
     }
 
     endFight(winner = null, message = 'End of fight') {
+        this.clearTimer();
+
         this.notifyAll('fightEnd', { message, winner: winner && winner.playerId });
 
         this.each((p) => (p.currentGameMaster = null));

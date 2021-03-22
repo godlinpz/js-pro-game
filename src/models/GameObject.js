@@ -32,7 +32,7 @@ class GameObject extends MovableObject {
         if (delay) this.stateDelay = setTimeout(() => this.setState(state), delay);
         else {
             this.state = state;
-            this.animationStartTime = this.cell.map.engine.lastRenderTime;
+            this.cell && (this.animationStartTime = this.cell.map.engine.lastRenderTime);
         }
     }
 

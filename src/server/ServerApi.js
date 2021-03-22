@@ -168,6 +168,10 @@ class ServerApi {
     turnDone(player, data) {
         this.emitTo('turnDone', data, player.playerId);
     }
+
+    initialHands(player, data) {
+        this.emitTo('initialHands', data, player.playerId);
+    }
 }
 
 Object.assign(ServerApi.prototype, EventSourceMixin);

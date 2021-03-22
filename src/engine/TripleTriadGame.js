@@ -18,8 +18,8 @@ class TripleTriadGame {
     reset() {
         Object.assign(this, {
             players: [],
-            hands: [],
-            pokes: [],
+            hands: {},
+            // pokes: [],
             lastTurn: null,
             current: null,
             board: false,

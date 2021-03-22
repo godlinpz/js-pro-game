@@ -19,6 +19,9 @@ const ApiMessageTypes = [
     'fightTimeout',
     'giveUp',
     'fightEnd',
+    'chooseHand',
+    'turn',
+    'initialHands',
 ].map((msgType) => [msgType, 'on' + msgType[0].toUpperCase() + msgType.substr(1)]);
 
 function handleMsg(api, handlerName, socket, ...args) {
