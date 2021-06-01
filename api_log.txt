@@ -2798,3 +2798,7 @@
 
 {"0":"welcome","1":{"player_id":"57L0MTFbwtycIyLuAAAD"},"log":"SOCKET EMIT","id":"57L0MTFbwtycIyLuAAAD"}
 
+{"0":"transport close","log":"INCOMING","id":"57L0MTFbwtycIyLuAAAD","handlerName":"onDisconnect"}
+
+{"0":"playerDisconnect","1":"57L0MTFbwtycIyLuAAAD","log":"SOCKET BROADCAST","id":"57L0MTFbwtycIyLuAAAD"}
+
