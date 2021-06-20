@@ -63,10 +63,11 @@ class ServerApi {
             const [dx, dy] = game.directionToOffset(moveCfg);
             const player = game.getPlayerById(socket.id);
             const target = game.movePlayerBy(dx, dy, player);
-            if (target) this.broadcast('playerMove', { id, ...target });
-
-            socket.isMoving = true;
-            setTimeout(() => (socket.isMoving = false), player.speed * 0.9);
+            if (player) {
+                if (target) this.broadcast('playerMove', { id, ...target });
+                socket.isMoving = true;
+                setTimeout(() => (socket.isMoving = false), player.speed * 0.9);
+            }
         }
     }
 
@@ -81,7 +82,7 @@ class ServerApi {
         const { game } = this;
         const player = game.getPlayerById(socket.id);
         const enemy = game.getPlayerById(enemyId);
-        game.agreeFight(player, enemy);
+        if (player && enemy) game.agreeFight(player, enemy);
     }
 
     onDeclineFight(socket, enemyId) {
@@ -89,13 +90,13 @@ class ServerApi {
         const player = game.getPlayerById(socket.id);
         const enemy = game.getPlayerById(enemyId);
 
-        game.declineFight(player, enemy);
+        if (player && enemy) game.declineFight(player, enemy);
     }
 
     onSetDeck(socket, deck) {
         const { game } = this;
         const player = game.getPlayerById(socket.id);
-        game.setDeck(player, deck);
+        if (player) game.setDeck(player, deck);
     }
 
     onChooseHand(socket, { hand, deck }) {
@@ -120,12 +121,13 @@ class ServerApi {
     }
 
     meetPlayers(player, player2) {
-        this.broadcast('meetPlayers', {
-            meet: [
-                { id: player.playerId, state: player.state },
-                { id: player2.playerId, state: player2.state },
-            ],
-        });
+        if (player && player2)
+            this.broadcast('meetPlayers', {
+                meet: [
+                    { id: player.playerId, state: player.state },
+                    { id: player2.playerId, state: player2.state },
+                ],
+            });
     }
 
     startFight(player, enemy) {

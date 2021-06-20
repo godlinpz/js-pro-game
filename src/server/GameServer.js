@@ -93,16 +93,21 @@ class GameServer extends Game {
     }
 
     getPair(player, enemy) {
-        let pairId = [player.playerId, enemy.playerId].sort().join('--');
-        let pairInfo = this.fightPairings[pairId];
+        let pair = null;
+        if (player && enemy) {
+            let pairId = [player.playerId, enemy.playerId].sort().join('--');
+            let pairInfo = this.fightPairings[pairId];
 
-        if (pairInfo && pairInfo.time + 7 * 60 * 1000 < Date.now()) {
-            delete this.fightPairings[pairId];
-            pairId = false;
-            pairInfo = false;
+            if (pairInfo && pairInfo.time + 7 * 60 * 1000 < Date.now()) {
+                delete this.fightPairings[pairId];
+                pairId = false;
+                pairInfo = false;
+            }
+
+            pair = { info: pairInfo, id: pairId };
         }
 
-        return { info: pairInfo, id: pairId };
+        return pair;
     }
 
     agreeFight(player, enemy) {

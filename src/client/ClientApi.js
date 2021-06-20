@@ -37,19 +37,21 @@ class ClientApi {
         const { game } = this.cfg;
         const { x, y, oldX, oldY, id } = moveCfg;
         const player = game.getPlayerById(id);
-        const { cellX, cellY } = player.cell;
+        if (player) {
+            const { cellX, cellY } = player.cell;
 
-        // console.log('onPlayerMove', cellX, cellY, oldX, oldY);
+            // console.log('onPlayerMove', cellX, cellY, oldX, oldY);
 
-        game.movePlayerTo(x, y, player);
-        /*
-        if( player.isInsideWindow() )
-        else
-        {
-            const {x: newX, y: newY} = game.map.cell(x, y).worldPosition();
-            player.moveTo(newX, newY, false);
+            game.movePlayerTo(x, y, player);
+            /*
+            if( player.isInsideWindow() )
+            else
+            {
+                const {x: newX, y: newY} = game.map.cell(x, y).worldPosition();
+                player.moveTo(newX, newY, false);
+            }
+            */
         }
-        */
     }
 
     onPlayerDisconnect(socket, id) {
@@ -61,30 +63,33 @@ class ClientApi {
         const { game } = this.cfg;
         const player = game.getPlayerById(meetPlayer1.id);
         const player2 = game.getPlayerById(meetPlayer2.id);
-        player.setState(meetPlayer1.state);
-        player2.setState(meetPlayer2.state);
 
-        game.onMeetPlayers(player, player2);
+        if (player && player2) {
+            player.setState(meetPlayer1.state);
+            player2.setState(meetPlayer2.state);
+            game.onMeetPlayers(player, player2);
+        }
     }
 
     onStartFight(socket, { pair: [pair1, pair2] }) {
         const { game } = this.cfg;
-
         const player = game.getPlayerById(pair1.id);
         const player2 = game.getPlayerById(pair2.id);
 
-        player.setState(pair1.state);
-        player2.setState(pair2.state);
-
-        game.onStartFight(player, player2);
+        if (player && player2) {
+            player.setState(pair1.state);
+            player2.setState(pair2.state);
+            game.onStartFight(player, player2);
+        }
     }
 
     onRejectFight(socket, { id: enemyId, state }) {
         const { game } = this.cfg;
         const enemy = game.getPlayerById(enemyId);
-        enemy.setState(state);
-
-        game.onRejectFight(enemy);
+        if (enemy) {
+            enemy.setState(state);
+            game.onRejectFight(enemy);
+        }
     }
 
     onChooseYourHand(socket, { timeout }) {
